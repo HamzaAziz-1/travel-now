@@ -1,8 +1,8 @@
+import "./App.css";
+import Layout from "./components/Layout/Layout";
 
-const App = () => {
-  return (
-    <div>App</div>
-  )
+function App() {
+  return <Layout />;
 }
 
-export default App
+export default App;
