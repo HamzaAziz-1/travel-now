@@ -7,7 +7,6 @@ const SingleOrderItemSchema = mongoose.Schema({
     required: true,
   },
   duration: { type: Number, required: true },
-
   availableDays: { type: [String], required: true },
   timeSlots: {
     type: [
@@ -29,7 +28,7 @@ const SingleOrderItemSchema = mongoose.Schema({
     required: true,
   },
   endTime: {
-    type: Date,
+    type: String,
   },
 });
 

@@ -7,7 +7,7 @@ const {
 } = require("../utils");
 
 const getAllUsers = async (req, res) => {
-  const users = await User.find({ role: { $in: ["tourist", "guide"] } }).select(
+  const users = await User.find({ role: { $in: ["tourist", "vendor"] } }).select(
     "-password"
   );
   res.status(StatusCodes.OK).json({ users });

@@ -12,7 +12,6 @@ const {
   updateTour,
   deleteTour,
   uploadImages,
-  uploadImage,
   getFeaturedTour,
   getTourBySearch,
   getTourCount,

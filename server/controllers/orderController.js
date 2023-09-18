@@ -6,22 +6,6 @@ const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const { checkPermissions } = require("../utils");
 
-const scheduleOrderStatusUpdate = () => {
-  cron.schedule("0 0 * * *", async () => {
-    try {
-      const orders = await Order.find({ status: { $in: ["paid"] } });
-      for (const order of orders) {
-        if (order.endTime && order.endTime <= new Date()) {
-          order.status = "completed";
-          await order.save();
-        }
-      }
-    } catch (error) {
-      console.error("Error updating order statuses:", error);
-    }
-  });
-};
-
 const createPaymentIntent = async ({ amount, currency }) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: Math.round(amount * 100),
@@ -179,5 +163,4 @@ module.exports = {
   getCurrentUserOrders,
   createOrder,
   updateOrder,
-  scheduleOrderStatusUpdate,
 };
