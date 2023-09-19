@@ -14,5 +14,4 @@ module.exports = {
   sendVerificationEmail,
   sendResetPasswordEmail,
   createHash,
-  capturePayment
 };
