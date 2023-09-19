@@ -7,6 +7,7 @@ const SingleOrderItemSchema = mongoose.Schema({
     required: true,
   },
   duration: { type: Number, required: true },
+  price: { type: Number, required: true },
   availableDays: { type: [String], required: true },
   timeSlots: {
     type: [
@@ -45,7 +46,7 @@ const OrderSchema = mongoose.Schema(
     orderItems: [SingleOrderItemSchema],
     status: {
       type: String,
-      enum: ["pending", "paid", "completed", "canceled"],
+      enum: ["pending", "paid", "completed", "cancelled"],
       default: "pending",
     },
     user: {

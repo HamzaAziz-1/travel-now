@@ -161,11 +161,14 @@ const forgotPassword = async (req, res) => {
     user.passwordToken = createHash(passwordToken);
     user.passwordTokenExpirationDate = passwordTokenExpirationDate;
     await user.save();
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: "Please check your email for reset password link" });
+  }
+  else {
+    res.status(StatusCodes.BAD_REQUEST).json({msg:"Email does not exist"})
   }
 
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: "Please check your email for reset password link" });
 };
 const resetPassword = async (req, res) => {
   const { token, email, password } = req.body;

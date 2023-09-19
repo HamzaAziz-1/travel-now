@@ -56,12 +56,13 @@ const createOrder = async (req, res) => {
         `Cannot book the selected time slot as it is already booked`
       );
     }
-    const { vendor, duration, _id } =
+    const { vendor, duration, _id,price } =
       dbTour;
     const singleOrderItem = {
       amount: item.amount,
       vendor,
       duration,
+      price,
       date: item.date,
       availableDays: item.availableDays, // use selected available days from the item
       timeSlots: item.timeSlots, // use selected time slots from the item

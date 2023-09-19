@@ -14,6 +14,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: [true, "Please provide email"],
+    minlength:[10,"Minimum Length should be 10"],
+    maxlength:[35,"Maximum Length should be 35"],
     validate: {
       validator: validator.isEmail,
       message: "Please provide valid email",
