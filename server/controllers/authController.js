@@ -164,11 +164,9 @@ const forgotPassword = async (req, res) => {
     res
       .status(StatusCodes.OK)
       .json({ msg: "Please check your email for reset password link" });
+  } else {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "Email does not exist" });
   }
-  else {
-    res.status(StatusCodes.BAD_REQUEST).json({msg:"Email does not exist"})
-  }
-
 };
 const resetPassword = async (req, res) => {
   const { token, email, password } = req.body;
