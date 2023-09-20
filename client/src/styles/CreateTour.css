@@ -1,0 +1,119 @@
+.create-tour-form {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.create-tour-heading h1 {
+  color: #4b6584;
+}
+
+.create-tour-form-loading {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.create-tour-alert {
+  margin-bottom: 20px;
+}
+
+.create-tour-day-name-picker {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.create-tour-day-name {
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: #7d8dbf;
+  color: #fff;
+}
+
+.create-tour-day-name.selected {
+  background-color: #5a8d66;
+  color: #fff;
+}
+
+.create-tour-time-slot {
+  display: flex;
+  align-items: center;
+}
+
+.create-tour-time-slot input[type="time"] {
+  width: 150px;
+  margin-right: 10px;
+}
+
+.create-tour-remove-time-slot {
+  margin-left: 10px;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.create-tour-add-time-slot {
+  margin-top: 10px;
+}
+
+.create-tour-form-group {
+  margin-bottom: 20px;
+}
+
+.create-tour-form-label {
+  font-weight: bold;
+}
+
+.create-tour-form-control {
+  border-color: #ced4da;
+  box-shadow: none;
+}
+
+.create-tour-form-control:focus {
+  border-color: #80bdff;
+  box-shadow: none;
+}
+
+.create-tour-form-control:disabled {
+  background-color: #e9ecef;
+}
+
+.create-tour-form-control.is-invalid {
+  border-color: #dc3545;
+}
+
+.create-tour-form-control.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: none;
+}
+
+.create-tour-form-control-feedback {
+  color: #dc3545;
+}
+
+.create-tour-custom-file-label::after {
+  content: "Browse";
+}
+
+.create-tour-custom-file-label.selected::after {
+  content: "Change";
+}
+
+.create-tour-invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
+.create-tour-valid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #28a745;
+}

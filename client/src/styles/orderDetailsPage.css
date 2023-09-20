@@ -1,0 +1,85 @@
+.order-details {
+  background-color: #fff;
+  color: #212529;
+  padding: 20px;
+ 
+}
+
+.order-details h2 {
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #495057;
+}
+
+.order-details .order-card {
+  border-radius: 15px;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+  border-color: #dee2e6;
+  margin-bottom: 20px;
+}
+
+.order-details .order-card-header {
+  background-color: #6c757d;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.order-details .order-image {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.order-details .order-title {
+  font-weight: bold;
+  color: #495057;
+}
+
+.order-details .info-icon {
+  margin-right: 10px;
+  color: #6c757d;
+}
+
+.order-details .chat-btn {
+  display: block;
+  padding: 10px;
+  border: 2px solid #ff9100;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-size: 1.2rem;
+  color: #ff8000;
+}
+
+.order-details .chat-btn:hover {
+  background-color: #ff3c00;
+  color: #fff;
+}
+
+.spinner-container {
+  color: #ffaa00;
+}
+
+.order-details .map-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%;  /* Updated aspect ratio */
+  height: 0;
+  margin-top: 10px;
+  border: 1px solid #dee2e6; /* Added border to distinguish the map area */
+  border-radius: 10px; /* Added border radius to match with the overall design */
+}
+
+.order-details .map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 10px; /* Added border radius to match with the overall design */
+}
+
+.order-details .location-card {
+  position: sticky;
+  top: 20px;
+}
