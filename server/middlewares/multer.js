@@ -17,7 +17,7 @@ const upload = multer({
       cb(new Error("Only images are allowed."));
     }
   },
-}).array("images", 4); // Handle up to 4 images with the fieldname "images"
+}).array("images", 4); 
 
 
 

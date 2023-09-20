@@ -103,7 +103,7 @@ const uploadImages = async (req, res) => {
   }
 
   // Ensure there are at least 1 and at most 4 images
-  if (uploadedImages.length < 1 || uploadedImages.length > 4) {
+  if (uploadedImages.length > 4) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Upload between 1 to 4 images" });
