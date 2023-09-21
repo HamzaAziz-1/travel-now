@@ -1,0 +1,113 @@
+.booking {
+  padding: 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid #D1D5DB; 
+  position: sticky;
+  top: 80px;
+  background-color: #F3F4F6;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.booking__top h3 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #374151;
+}
+
+.booking__top h3 span {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #9CA3AF;
+}
+
+.booking__top span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4B5563;
+}
+
+.booking__top span i {
+  color: #F59E0B;
+}
+
+.booking__top {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #D1D5DB;
+}
+
+.booking__form {
+  padding-top: 2rem;
+}
+
+.booking__form h5 {
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  color: #4B5563;
+  font-weight: 600;
+}
+
+.booking__form input, .booking__form select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  color: #1F2937;
+  font-size: 1.1rem;
+  border: 1px solid #D1D5DB;
+  background-color: #F3F4F6;
+}
+
+.booking__form input:focus, .booking__form select:focus {
+  outline: none;
+  border: 1px solid #EF4444;
+}
+
+.booking__info-form {
+  padding: 1.5rem;
+  border: 1px solid #D1D5DB;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.booking__bottom li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.booking__bottom li h5,
+.booking__bottom li span {
+  font-size: 1.2rem;
+  color: #4B5563;
+  font-weight: 600;
+}
+
+.booking__bottom {
+  margin-top: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.total h5,
+.total span {
+  color: #1F2937;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+
+.primary__btn {
+  background-color: #3B82F6;
+  border-color: #3B82F6;
+  color: #ffffff;
+  padding: 0.75rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.primary__btn:hover {
+  background-color: #2563EB;
+  border-color: #2563EB;
+}
