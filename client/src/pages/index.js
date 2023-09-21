@@ -19,6 +19,7 @@ import VendorDashboard from "./vendor/VendorDashboard";
 import AttractionList from "./attraction/AttractionList";
 import PlaceDetails from "./attraction/PlaceDetails";
 import Spinner from "../components/Spinner/Spinner";
+import ShowTours from "./ShowTours";
 export {
   AdminDashboard,
   ManageUsers,
@@ -41,4 +42,5 @@ export {
   AttractionList,
   PlaceDetails,
   Spinner,
+  ShowTours
 };

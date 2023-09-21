@@ -18,12 +18,14 @@ import {
   AttractionList,
   PlaceDetails,
   Spinner,
+  ManageOrders,
+  ManageUsers,
+  ShowTours
 } from "../pages";
 import Home from "../pages/Home";
 import Tours from "../pages/Tours";
 import TourDetails from "../pages/TourDetails";
 import PrivateRoute from "../shared/PrivateRoute";
-import ShowTours from "../pages/ShowTours";
 import Checkout from "../pages/Checkout";
 import Newsletter from "../shared/Newsletter";
 import SearchResultList from "../pages/SearchResultList";
@@ -138,6 +140,21 @@ const Routers = () => {
           </PrivateRoute>
         }
       />
+
+      <Route
+        path="/admin/dashboard"
+        element={
+          <PrivateRoute roles={"admin"}>
+            <AdminDashboard />
+          </PrivateRoute>
+        }
+      >
+        <Route path="manageusers" element={<ManageUsers />} />
+        <Route path="viewtours" element={<ShowTours />} />
+        <Route path="updateprofile" element={<UpdateProfile />} />
+        <Route path="manageorders" element={<ManageOrders />} />
+      </Route>
+
       <Route path="update-profile" element={<UpdateProfile />} />
     </Routes>
   );
