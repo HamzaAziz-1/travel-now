@@ -1,7 +1,7 @@
 import { Row, Col, Container } from "react-bootstrap";
 const Spinner = () => {
   return (
-    <Container>
+    <Container className="mt-5">
       <Row className="justify-content-center">
         <Col xs={12} className="text-center">
           <div className="spinner-grow text-warning" role="status">
