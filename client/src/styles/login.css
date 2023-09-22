@@ -8,16 +8,16 @@
   object-fit: contain;
 }
 .login__form .form-group {
-  margin-bottom: 1rem;  /* Adjust the space between form groups */
+  margin-bottom: 1rem; /* Adjust the space between form groups */
 }
 
 .form-label {
-  font-weight: bold;  /* Make label texts bold */
-  color: #333;  /* Adjust the color of the labels */
+  font-weight: bold; /* Make label texts bold */
+  color: #333; /* Adjust the color of the labels */
 }
 
 .auth__btn {
-  margin-top: 1rem;  /* Add some margin to the button */
+  margin-top: 1rem; /* Add some margin to the button */
   /* Rest of your CSS rules for .auth__btn */
 }
 .login__form {
@@ -87,8 +87,8 @@
   font-weight: 500;
 }
 .error-message {
-  color:white;
-  font-weight:500;
+  color: white;
+  font-weight: 500;
   override-colors: red;
 }
 
@@ -123,8 +123,6 @@
     margin-top: 70px;
   }
 }
-
-
 
 @media only screen and (max-width: 576px) {
   .login__form {
