@@ -37,13 +37,23 @@ const getAllTours = async (req, res) => {
 
 const getVerifiedTours = async (req, res) => {
   const page = parseInt(req.query.page);
-  const tours = await Tour.find({ verified: true })
-    .skip(page * 8)
-    .limit(8)
-    .populate("reviews");
+  const pageSize = 8;
+  const skip = (page - 1) * pageSize;
 
-  res.status(StatusCodes.OK).json({ tours });
+  try {
+    const tours = await Tour.find({ verified: true })
+      .skip(skip)
+      .limit(pageSize)
+      .populate("reviews");
+
+    res.status(StatusCodes.OK).json({ tours });
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: error.message });
+  }
 };
+
 
 const getSingleTour = async (req, res) => {
   const { id: tourId } = req.params;
