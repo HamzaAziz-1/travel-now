@@ -28,11 +28,12 @@ const createTour = async (req, res) => {
 
 const getAllTours = async (req, res) => {
   const page = parseInt(req.query.page);
+  const count = await Tour.countDocuments({})
   const tours = await Tour.find({})
-    .skip(page * 8)
-    .limit(8);
+    // .skip(page * 8)
+    // .limit(8);
 
-  res.status(StatusCodes.OK).json({ tours });
+  res.status(StatusCodes.OK).json({ tours,count });
 };
 
 const getVerifiedTours = async (req, res) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import CommonSection from "../shared/CommonSection";
 import Spinner from "../components/Spinner/Spinner";
 import "../styles/tour.css";
@@ -7,62 +7,71 @@ import SearchBar from "./../shared/SearchBar";
 import Newsletter from "./../shared/Newsletter";
 import { Container, Row, Col } from "react-bootstrap";
 import { useGlobalContext } from "../context/AuthContext";
+import useFetch from "../hooks/useFetch";
+import axios from "axios";
 
 const Tours = () => {
-  const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(1); // Start from page 1
-  const useFetch = (url) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const { user } = useGlobalContext();
-    useEffect(() => {
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { user } = useGlobalContext();
+
+  // Use the custom hook for fetching data
+  const {
+    data: tourData,
+    loading: tourLoading,
+    error: tourError,
+  } = useFetch(`/api/v1/tours/verified?page=${page}`);
+
+  useEffect(() => {
+    if (tourData) {
+      setTours(tourData.tours);
+    }
+  }, [tourData]);
+
+  // Fetch tourCount only once during initial load
+  const tourCountData = useFetch("/api/v1/tours/search/getTourCount");
+
+  // Compute pageCount using useMemo
+  const pageCount = useMemo(() => {
+    if (tourCountData.data) {
+      const count = tourCountData.data.data;
+      return Math.ceil(count / 8);
+    }
+    return 0;
+  }, [tourCountData.data]);
+
+  // Fetch data when the page changes
+  useEffect(() => {
+    if (page > 0 && page <= pageCount) {
       const fetchData = async () => {
         setLoading(true);
         try {
-          const res = await fetch(url);
-
-          if (!res.ok) {
-            setError("Failed to fetch");
-          } else {
-            const result = await res.json();
-            setData(result.tours);
-          }
-
-          setLoading(false);
+          const response = await axios.get(
+            `/api/v1/tours/verified?page=${page}`
+          );
+          setTours(response.data.tours);
         } catch (err) {
           setError(err.message);
+        } finally {
           setLoading(false);
         }
       };
 
       fetchData();
-    }, [url]);
-
-    return {
-      data,
-      error,
-      loading,
-    };
-  };
-
-  const {
-    data: tours,
-    loading,
-    error,
-  } = useFetch(`/api/v1/tours/verified?page=${page}`);
-  const { data: tourCount } = useFetch(`/api/v1/tours/search/getTourCount`);
-
-  useEffect(() => {
-    const pages = Math.ceil(tourCount / 8);
-    setPageCount(pages);
-  }, [tourCount]);
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= pageCount) {
-      setPage(newPage);
     }
-  };
+  }, [page, pageCount]);
+
+ const handlePageChange = (newPage) => {
+   if (newPage >= 1 && newPage <= pageCount) {
+     setPage(newPage);
+     setTimeout(() => {
+       window.scrollTo({ top: 250, behavior: "smooth" });
+     }, 0); 
+   }
+ };
+
 
   return (
     <>
@@ -97,7 +106,7 @@ const Tours = () => {
               {/* Pagination */}
               <div className="text-center mt-4">
                 <button
-                  className="btn btn-outline-primary mx-1"
+                  className="btn btn-outline-warning mx-1"
                   onClick={() => handlePageChange(page - 1)}
                   disabled={page === 1}
                 >
@@ -109,15 +118,16 @@ const Tours = () => {
                     onClick={() => handlePageChange(index + 1)}
                     className={`btn ${
                       page === index + 1
-                        ? "btn-primary active__page"
-                        : "btn-outline-primary"
+                        ? "btn-warning active__page"
+                        : "btn-outline-warning"
                     } mx-1`}
                   >
                     {index + 1}
                   </button>
                 ))}
                 <button
-                  className="btn btn-outline-primary mx-1"
+                  className="btn btn-outline-warning mx-1"
+                  type="button"
                   onClick={() => handlePageChange(page + 1)}
                   disabled={page === pageCount}
                 >
