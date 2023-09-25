@@ -1,21 +1,19 @@
-import React, { useState, useEffect, useMemo } from "react";
+/* eslint-disable no-unused-vars */
+import { useState, useEffect, useMemo } from "react";
 import CommonSection from "../shared/CommonSection";
 import Spinner from "../components/Spinner/Spinner";
 import "../styles/tour.css";
 import TourCard from "./../shared/TourCard";
 import SearchBar from "./../shared/SearchBar";
-import Newsletter from "./../shared/Newsletter";
 import { Container, Row, Col } from "react-bootstrap";
-import { useGlobalContext } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
 import axios from "axios";
 
 const Tours = () => {
-  const [page, setPage] = useState(1); // Start from page 1
+  const [page, setPage] = useState(1); 
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { user } = useGlobalContext();
 
   // Use the custom hook for fetching data
   const {
@@ -101,44 +99,45 @@ const Tours = () => {
                 ))}
               </Row>
               {!loading && tours.length === 0 && (
-                <p className="text-center">No tours found.</p>
+                <h2 className="text-center">No tours found.</h2>
               )}
               {/* Pagination */}
-              <div className="text-center mt-4">
-                <button
-                  className="btn btn-outline-warning mx-1"
-                  onClick={() => handlePageChange(page - 1)}
-                  disabled={page === 1}
-                >
-                  &lt; Prev
-                </button>
-                {Array.from({ length: pageCount }, (_, index) => (
+              {tours.length>0 && (
+                <div className="text-center mt-4">
                   <button
-                    key={index}
-                    onClick={() => handlePageChange(index + 1)}
-                    className={`btn ${
-                      page === index + 1
-                        ? "btn-warning active__page"
-                        : "btn-outline-warning"
-                    } mx-1`}
+                    className="btn btn-outline-warning mx-1"
+                    onClick={() => handlePageChange(page - 1)}
+                    disabled={page === 1}
                   >
-                    {index + 1}
+                    &lt; Prev
                   </button>
-                ))}
-                <button
-                  className="btn btn-outline-warning mx-1"
-                  type="button"
-                  onClick={() => handlePageChange(page + 1)}
-                  disabled={page === pageCount}
-                >
-                  Next &gt;
-                </button>
-              </div>
+                  {Array.from({ length: pageCount }, (_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handlePageChange(index + 1)}
+                      className={`btn ${
+                        page === index + 1
+                          ? "btn-warning active__page"
+                          : "btn-outline-warning"
+                      } mx-1`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                  <button
+                    className="btn btn-outline-warning mx-1"
+                    type="button"
+                    onClick={() => handlePageChange(page + 1)}
+                    disabled={page === pageCount}
+                  >
+                    Next &gt;
+                  </button>
+                </div>
+              )}
             </>
           )}
         </Container>
       </section>
-      <Newsletter />
     </>
   );
 };

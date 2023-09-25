@@ -34,8 +34,6 @@ const quick__links2 = [
 ];
 
 const Footer = () => {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="footer">
       <Container>
@@ -114,7 +112,7 @@ const Footer = () => {
                   Email:
                 </h6>
 
-                <p className="mb-0">tour_explorer@gmail.com</p>
+                <p className="mb-0">travel.now@gmail.com</p>
               </ListGroupItem>
               <ListGroupItem className="ps-0 border-0 d-flex align-items-center gap-3">
                 <h6 className="mb-0 d-flex align-items-center gap-2">
@@ -129,11 +127,6 @@ const Footer = () => {
             </ListGroup>
           </Col>
 
-          <Col lg="12" className="text-center pt-5">
-            <p className="copyright">
-              Copyright {year}, Tour Explorer. All rights reserved.
-            </p>
-          </Col>
         </Row>
       </Container>
     </footer>

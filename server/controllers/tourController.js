@@ -28,12 +28,12 @@ const createTour = async (req, res) => {
 
 const getAllTours = async (req, res) => {
   const page = parseInt(req.query.page);
-  const count = await Tour.countDocuments({})
-  const tours = await Tour.find({})
-    // .skip(page * 8)
-    // .limit(8);
+  const count = await Tour.countDocuments({});
+  const tours = await Tour.find({});
+  // .skip(page * 8)
+  // .limit(8);
 
-  res.status(StatusCodes.OK).json({ tours,count });
+  res.status(StatusCodes.OK).json({ tours, count });
 };
 
 const getVerifiedTours = async (req, res) => {
@@ -54,7 +54,6 @@ const getVerifiedTours = async (req, res) => {
       .json({ error: error.message });
   }
 };
-
 
 const getSingleTour = async (req, res) => {
   const { id: tourId } = req.params;
@@ -102,7 +101,6 @@ const deleteTour = async (req, res) => {
   await tour.deleteOne();
   res.status(StatusCodes.OK).json({ msg: "Success! Tour removed." });
 };
-
 
 const uploadImages = async (req, res) => {
   const uploadedImages = req.files;
@@ -175,17 +173,39 @@ const featureTour = async (req, res) => {
 
 // get tour by search
 const getTourBySearch = async (req, res) => {
-  // here 'i' means case sensitive
-  const city = new RegExp(req.query.city, "i");
-  // const distance = parseInt(req.query.distance);
-  // const maxGroupSize = parseInt(req.query.maxGroupSize);
+  const { city, page, perPage } = req.query; // Include page and perPage query parameters
 
   try {
-    // gte means greater than equal
-    const tours = await Tour.find({
-      city,
-      verified: true,
-    }).populate("reviews");
+    const currentPage = parseInt(page) || 1;
+    const toursPerPage = parseInt(perPage) || 6; // Set a default value or adjust as needed
+    const skipCount = (currentPage - 1) * toursPerPage;
+
+    // Use a case-insensitive regex for city search
+    const cityRegex = new RegExp(city, "i");
+
+    // Use Mongoose aggregation to retrieve tours with pagination and case-insensitive search
+    const tours = await Tour.aggregate([
+      {
+        $match: {
+          city: cityRegex, // Match city with case-insensitive regex
+          verified: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "reviews", // Assuming the reviews collection name is "reviews"
+          localField: "_id",
+          foreignField: "tour", // Assuming a "tour" field in the reviews collection referencing the tour
+          as: "reviews",
+        },
+      },
+      {
+        $skip: skipCount, // Skip documents based on the current page
+      },
+      {
+        $limit: toursPerPage, // Limit the number of documents per page
+      },
+    ]);
 
     res.status(200).json({
       success: true,
@@ -195,10 +215,11 @@ const getTourBySearch = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       success: false,
-      message: "not found",
+      message: "Not found",
     });
   }
 };
+
 
 // get featured tour
 const getFeaturedTour = async (req, res) => {
