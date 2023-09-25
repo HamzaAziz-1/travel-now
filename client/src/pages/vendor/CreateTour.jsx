@@ -9,7 +9,7 @@ import { Container } from "react-bootstrap";
 import useLocalState from "../../utils/localState";
 import axios from "axios";
 import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
-import "../../styles/CreateTour.css";
+import "../../styles/create-tour.css";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];

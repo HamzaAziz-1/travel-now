@@ -7,7 +7,7 @@ import axios from "axios";
 import { BASE_URL } from "./../utils/config";
 import { useGlobalContext } from "./../context/AuthContext";
 import Pagination from "react-bootstrap/Pagination";
-import "../styles/showTours.css";
+import "../styles/show-tours.css";
 
 const ShowTours = () => {
   const [data, setData] = useState([]);

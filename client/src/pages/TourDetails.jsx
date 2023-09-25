@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/tour-details.css";
 import Carousel from "react-bootstrap/Carousel";
 import { Container, Row, Col, ListGroup } from "reactstrap";

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import "../../styles/UpdateProfile.css";
+import "../../styles/update-profile.css";
 import avatar from "../../assets/images/avatar.jpg";
 
 const UpdateProfile = () => {

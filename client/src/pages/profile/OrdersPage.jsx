@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import "../../styles/manageOrder.css";
+import "../../styles/manage-order.css";
 import { Alert, Table, Badge, Pagination } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import { useGlobalContext } from "../../context/AuthContext";

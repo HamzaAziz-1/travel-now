@@ -7,7 +7,7 @@ import {
   
 } from "@stripe/react-stripe-js";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../../styles/CheckoutForm.css";
+import "../../styles/checkout-form.css";
 
 const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState("");

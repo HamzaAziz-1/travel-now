@@ -6,7 +6,7 @@ import CreateTour from "./CreateTour";
 import ViewTours from "../ShowTours";
 import UpdateProfile from "../profile/UpdateProfile";
 import OrdersPage from "../profile/OrdersPage";
-import "../../styles/admindashboard.css";
+import "../../styles/admin-dashboard.css";
 
 const VendorDashboard = () => {
   const { user } = useGlobalContext();

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import { Link } from "react-router-dom";
-import "../../styles/manageOrder.css";
+import "../../styles/manage-order.css";
 import { Alert, Table, Badge, Pagination } from "react-bootstrap";
 
 function ManageOrders() {

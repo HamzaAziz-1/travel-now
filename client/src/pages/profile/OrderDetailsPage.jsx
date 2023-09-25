@@ -20,7 +20,7 @@ import {
   FaInfoCircle,
   FaCommentDots,
 } from "react-icons/fa";
-import "../../styles/orderDetailsPage.css";
+import "../../styles/order-details-page.css";
 import Button from "react-bootstrap/Button";
 import Contact from "../../shared/Contact";
 import { useGlobalContext } from "../../context/AuthContext";

@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { Container, Row, Col,Form } from "react-bootstrap";
 import TourCard from "../../shared/TourCard";
-import '../../styles/UpdateProfile.css'
+import '../../styles/update-profile.css'
 import avatar from "../../assets/images/user.png";
 
 const TourVendorDetails = () => {

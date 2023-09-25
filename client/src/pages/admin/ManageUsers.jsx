@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import { Row, Col, Pagination } from "react-bootstrap";
-import "../../styles/ManageUsers.css";
+import "../../styles/manage-users.css";
 
 function ManageUsers() {
   const [users, setUsers] = useState([]);

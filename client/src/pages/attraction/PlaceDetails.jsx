@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../../styles/PlaceDetails.css";
+import "../../styles/place-details.css";
 import Carousel from "react-bootstrap/Carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

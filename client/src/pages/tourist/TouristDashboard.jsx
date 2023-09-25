@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/AuthContext";
 import { Container, Row, Col, Nav } from "react-bootstrap";
-import "../../styles/admindashboard.css";
+import "../../styles/admin-dashboard.css";
 
 import UpdateProfile from "../profile/UpdateProfile";
 import OrdersPage from "../profile/OrdersPage";

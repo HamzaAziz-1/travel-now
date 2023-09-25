@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import { Container, Image } from "react-bootstrap";
 import useLocalState from "../../utils/localState";
 import axios from "axios";
-import "../../styles/CreateTour.css";
+import "../../styles/create-tour.css";
 import { useGlobalContext } from "../../context/AuthContext";
 import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
