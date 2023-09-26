@@ -11,7 +11,7 @@ const SharedLayout = () => {
   return (
     <Wrapper>
       <ToastContainer position="top-center" />
-      <main className="dashboard mt-5 pt-5">
+      <main className="dashboard">
         <SmallSidebar />
         <BigSidebar />
         <div>
