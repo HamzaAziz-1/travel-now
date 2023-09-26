@@ -6,6 +6,8 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const saveUser = (user) => {
     setUser(user);
   };
@@ -36,6 +38,10 @@ const updateUser = (newUser) => {
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+  };
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -47,7 +53,9 @@ const updateUser = (newUser) => {
         saveUser,
         user,
         logoutUser,
-        updateUser
+        updateUser,
+        isSidebarOpen,
+        toggleSidebar,
       }}
     >
       {children}

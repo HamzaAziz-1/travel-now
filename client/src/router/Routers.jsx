@@ -31,7 +31,7 @@ import Newsletter from "../shared/Newsletter";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
 import { useGlobalContext } from "../context/AuthContext";
-
+import SharedLayout from "../components/Shared-layout/SharedLayout";
 const Routers = () => {
   const { isLoading } = useGlobalContext();
   if (isLoading) {
@@ -141,7 +141,7 @@ const Routers = () => {
         }
       />
 
-      <Route
+      {/* <Route
         path="/admin/dashboard"
         element={
           <PrivateRoute roles={"admin"}>
@@ -153,8 +153,20 @@ const Routers = () => {
         <Route path="viewtours" element={<ShowTours />} />
         <Route path="updateprofile" element={<UpdateProfile />} />
         <Route path="manageorders" element={<ManageOrders />} />
+      </Route> */}
+      <Route
+        path="/admin/dashboard"
+        element={
+          <PrivateRoute roles={"admin"}>
+            <SharedLayout />
+          </PrivateRoute>
+        }
+      >
+        <Route index element={<UpdateProfile />} />
+        <Route path="manageusers" element={<ManageUsers />} />
+        <Route path="view-tours" element={<ShowTours />} />
+        <Route path="manageorders" element={<ManageOrders />} />
       </Route>
-
       <Route path="update-profile" element={<UpdateProfile />} />
     </Routes>
   );
