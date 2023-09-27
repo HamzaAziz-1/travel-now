@@ -38,7 +38,9 @@ const updateUser = (newUser) => {
   };
 
   useEffect(() => {
-    fetchUser();
+    if (!user) {
+      fetchUser();
+    }
   }, []);
 
   return (
