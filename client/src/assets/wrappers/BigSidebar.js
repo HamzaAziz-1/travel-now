@@ -1,16 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Wrapper = styled.aside`
   display: none;
-  .toggle-btn {
-    background: transparent;
-    border-color: transparent;
-    font-size: 1.75rem;
-    color: var(--secondary-color);
-    cursor: pointer;
-    display: flex;
-    justify-content: flex-end;
-  }
   @media (min-width: 992px) {
     display: block;
     box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
@@ -71,5 +62,5 @@ const Wrapper = styled.aside`
       color: var(--primary-500);
     }
   }
-`;
-export default Wrapper;
+`
+export default Wrapper

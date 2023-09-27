@@ -39,103 +39,102 @@ const Header = () => {
     toggleSidebar();
   };
   return (
-    // <Wrapper>
-    //      <div className='nav-center'>
-    //     <button type='button' className='toggle-btn' onClick={toggle}>
-    //       <FaAlignLeft />
-    //     </button>
-    //     <div>
-    //       <Link to={"/home"} className="logo">
-    //         <img src={logo} alt="React Bootstrap logo" />
-    //       </Link>
-    //     </div>
-    //     <div className='btn-container'>
-    //       <button
-    //         type='button'
-    //         className='btn'
-    //         onClick={() => setShowLogout(!showLogout)}
-    //       >
-    //         <FaUserCircle />
-    //         {user?.name}
-    //         <FaCaretDown />
-    //       </button>
-    //       <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
-    //         <button
-    //           type='button'
-    //           className='dropdown-btn'
-    //           onClick={() => {logoutUser()
-    //           navigate('/login')}
-    //         }
-    //         >
-    //           logout
-    //         </button>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </Wrapper>
-    <Navbar
-      bg="dark"
-      variant="dark"
-      expand="lg"
-      fixed="top"
-      className="sticky__header"
-    >
-      <Container>
-        <Navbar.Brand>
-          <Link>
-           
-          </Link>
+    <Wrapper>
+         <div className='nav-center'>
+        <button type='button' className='toggle-btn' onClick={toggle}>
+          <FaAlignLeft />
+        </button>
+        <div>
           <Link to={"/home"} className="logo">
             <img src={logo} alt="React Bootstrap logo" />
           </Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav className="ms-auto me-3" navbarScroll>
-            {nav__links.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`nav-link ${
-                  window.location.pathname === link.path ? "active__link" : ""
-                }`}
-              >
-                {link.display}
-              </Link>
-            ))}
+        </div>
+        <div className='btn-container'>
+          <button
+            type='button'
+            className='btn'
+            onClick={() => setShowLogout(!showLogout)}
+          >
+            <FaUserCircle />
+            {user?.name}
+            <FaCaretDown />
+          </button>
+          <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
+            <button
+              type='button'
+              className='dropdown-btn'
+              onClick={() => {logoutUser()
+              navigate('/login')}
+            }
+            >
+              logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </Wrapper>
+    // <Navbar
+    //   bg="dark"
+    //   variant="dark"
+    //   expand="lg"
+    //   fixed="top"
+    //   className="sticky__header"
+    // >
+    //   <Container>
+    //     <Navbar.Brand>
+    //       <Link to={"/home"} className="logo">
+    //         <img src={logo} alt="React Bootstrap logo" />
+    //       </Link>
+    //     </Navbar.Brand>
+    //     <Navbar.Toggle aria-controls="navbarScroll" />
+    //     <Navbar.Collapse id="navbarScroll">
+    //       <Nav className="ms-auto me-3" navbarScroll>
+    //         {nav__links.map((link) => (
+    //           <Link
+    //             key={link.path}
+    //             to={link.path}
+    //             className={`nav-link ${
+    //               window.location.pathname === link.path ? "active__link" : ""
+    //             }`}
+    //           >
+    //             {link.display}
+    //           </Link>
+    //         ))}
+          
+    //         {user && (
+    //           <Link to={`/${user?.role}/dashboard`} className="nav-link">
+    //             Dashboard
+    //           </Link>
+    //         )}
 
-            {user && (
-              <Link to={`/${user?.role}/dashboard`} className="nav-link">
-                Dashboard
-              </Link>
-            )}
 
-            {user && (
-              <Button
-                className="btn btn-light"
-                onClick={() => {
-                  logoutUser();
-                  navigate("/login");
-                }}
-              >
-                Logout
-              </Button>
-            )}
-
-            {!user && (
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-            )}
-            {!user && (
-              <Link to="/register" className="nav-link">
-                Register
-              </Link>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    //       {user && (
+    //         <Button
+    //         className="btn btn-light"
+    //         onClick={() => {
+    //             logoutUser();
+    //             navigate("/login");
+    //           }}
+    //         >
+    //           Logout
+    //         </Button>
+    //       )}
+        
+    //         {!user && (
+    //           <Link to="/login" className="nav-link">
+    //             Login
+    //           </Link>
+    //         )}
+    //         {!user && (
+    //           <Link to="/register" className="nav-link">
+    //             Register
+    //           </Link>
+    //         )}
+    //             </Nav>
+         
+    //     </Navbar.Collapse>
+    //   </Container>
+    // </Navbar>
     // </header>
   );
 };
