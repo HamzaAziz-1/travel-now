@@ -1,4 +1,4 @@
-import { Button, NavDropdown, Image } from "react-bootstrap";
+import {  NavDropdown, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
@@ -58,7 +58,7 @@ const Header = () => {
                 className={`nav-link ${
                   window.location.pathname === link.path ? "active__link" : ""
                 }`}
-              >
+                >
                 {link.display}
               </Link>
             ))}
@@ -67,7 +67,7 @@ const Header = () => {
               <NavDropdown
                 title={
                   <>
-                    <Image src={user.image} className="logo" roundedCircle />
+                    <Image src={user?.image} className="logo" roundedCircle />
                     <span className="user-name">{displayName}</span>
                   </>
                 }
