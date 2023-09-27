@@ -1,5 +1,4 @@
 .header {
-  width: 100%;
   height: 80px;
   line-height: 80px;
 }
@@ -9,9 +8,12 @@
   height: 30px;
 }
 
-.navigation {
-  display: flex;
-  align-items: center;
+.logo{
+  width: auto;
+  height:30px;
+}
+.user-name {
+  margin-left: 8px;
 }
 
 .nav__item {
@@ -23,9 +25,9 @@
   color: #fff;
   font-size: 16px;
   font-weight: bold;
- 
 }
-.nav-link{
+
+.nav-link {
   margin-right: 12px;
 }
 
@@ -50,6 +52,50 @@
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
   z-index: 999;
 }
+
+/* Dropdown button */
+.navbar-nav .nav-link.nav-dropdown-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* Dropdown items */
+.navbar-nav .nav-link.nav-dropdown-toggle + .dropdown-menu {
+  background-color: #fff; /* Background color */
+  border: none; /* Remove border */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+/* Dropdown item styling */
+.navbar-nav .nav-link.nav-dropdown-toggle + .dropdown-menu .dropdown-item {
+  color: #333; /* Text color */
+  padding: 10px 20px; /* Adjust padding as needed */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Hover effect on dropdown items */
+.navbar-nav .nav-link.nav-dropdown-toggle + .dropdown-menu .dropdown-item:hover {
+  background-color: #f0f0f0; /* Background color on hover */
+  color: #333; /* Text color on hover */
+}
+
+/* Styling for the divider line */
+.navbar-nav .nav-link.nav-dropdown-toggle + .dropdown-menu .dropdown-divider {
+  border-top: 1px solid #ccc; /* Divider line color */
+}
+
+/* Styling for the logout button */
+.navbar-nav .nav-link.nav-dropdown-toggle + .dropdown-menu .logout-button {
+  background-color: #e74c3c; /* Background color for the logout button */
+  color: #fff; /* Text color for the logout button */
+}
+
+/* Hover effect on the logout button */
+.navbar-nav .nav-link.nav-dropdown-toggle + .dropdown-menu .logout-button:hover {
+  background-color: #c44131; /* Background color on hover */
+}
+
 
 /* Responsive Styles */
 @media only screen and (max-width: 992px) {

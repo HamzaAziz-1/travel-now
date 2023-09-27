@@ -1,4 +1,4 @@
-import {  Button } from "react-bootstrap";
+import { Button, NavDropdown, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
@@ -28,8 +28,11 @@ const nav__links = [
 ];
 
 const Header = () => {
-   const { user, logoutUser } = useGlobalContext();
+  const { user, logoutUser } = useGlobalContext();
   const navigate = useNavigate();
+
+  const userNameParts = user?.name?.split(" ");
+  const displayName = userNameParts?.slice(0, 2).join(" ");
 
   return (
     <Navbar
@@ -59,42 +62,50 @@ const Header = () => {
                 {link.display}
               </Link>
             ))}
-          
-            {user && (
-              <Link to={`/${user?.role}/dashboard`} className="nav-link">
-                Dashboard
-              </Link>
-            )}
 
-
-          {user && (
-            <Button
-            className="btn btn-light"
-            onClick={() => {
-                logoutUser();
-                navigate("/login");
-              }}
-            >
-              Logout
-            </Button>
-          )}
-        
-            {!user && (
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
+            {user ? (
+              <NavDropdown
+                title={
+                  <>
+                    <Image src={user.image} className="logo" roundedCircle />
+                    <span className="user-name">{displayName}</span>
+                  </>
+                }
+                id="basic-nav-dropdown"
+              >
+                <NavDropdown.Item href={`/${user?.role}/dashboard`}>
+                  Link 1
+                </NavDropdown.Item>
+                <NavDropdown.Item href={`/${user?.role}/link2`}>
+                  Link 2
+                </NavDropdown.Item>
+                <NavDropdown.Item href={`/${user?.role}/link3`}>
+                  Link 3
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  onClick={() => {
+                    logoutUser();
+                    navigate("/login");
+                  }}
+                >
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <>
+                <Link to="/login" className="nav-link">
+                  Login
+                </Link>
+                <Link to="/register" className="nav-link">
+                  Register
+                </Link>
+              </>
             )}
-            {!user && (
-              <Link to="/register" className="nav-link">
-                Register
-              </Link>
-            )}
-                </Nav>
-         
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    // </header>
   );
 };
 
