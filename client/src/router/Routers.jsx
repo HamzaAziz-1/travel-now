@@ -20,7 +20,7 @@ import {
   Spinner,
   ManageOrders,
   ManageUsers,
-  ShowTours
+  ShowTours,
 } from "../pages";
 import Home from "../pages/Home";
 import Tours from "../pages/Tours";
@@ -30,9 +30,14 @@ import Checkout from "../pages/Checkout";
 import Newsletter from "../shared/Newsletter";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
+import { useGlobalContext } from "../context/AuthContext";
 
 const Routers = () => {
   
+  const { loading } = useGlobalContext();
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
