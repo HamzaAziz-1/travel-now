@@ -17,9 +17,9 @@ const ShowTours = () => {
   const [filter, setFilter] = useState("all"); // State for the filter selection
 
   useEffect(() => {
-    if (user && user.role === "vendor") {
+    if (user?.role === "vendor") {
       axios
-        .get(`/api/v1/tours/vendor/${user.userId}`, {
+        .get(`/api/v1/tours/vendor/${user._id}`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -49,7 +49,6 @@ const ShowTours = () => {
       })
       .catch((err) => console.log(err));
   };
-
   const handleVerify = (id) => {
     axios
       .patch(`/api/v1/tours/verify/${id}`, {}, { withCredentials: true })
