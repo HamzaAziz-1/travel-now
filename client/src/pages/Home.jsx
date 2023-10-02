@@ -24,7 +24,7 @@ const Home = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="6">
+            <Col lg="6" >
               <div className="hero__content">
                 <div className="hero__subtitle d-flex align-items-center ">
                   <Subtitle subtitle={"Discover Before You GO"} />
