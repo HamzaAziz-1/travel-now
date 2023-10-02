@@ -7,6 +7,7 @@ const excludedRoutes = [
   "/admin/dashboard/viewtours",
   "/admin/dashboard/updateprofile",
   "/admin/dashboard/manageorders",
+  "/das"
 ];
-
-export default excludedRoutes;
+const excludedHeaderRoutes=["/das"]
+export {excludedRoutes,excludedHeaderRoutes};

@@ -4,7 +4,7 @@ import Footer from "../Footer/Footer";
  import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
  import { useLocation } from "react-router-dom";
-import excludedRoutes from "../../utils/routeConfig";
+import {excludedRoutes,excludedHeaderRoutes} from "../../utils/routeConfig";
 import { useGlobalContext } from "../../context/AuthContext";
  import Spinner from "../Spinner/Spinner";
 const Layout = () => {
@@ -15,11 +15,12 @@ if (isLoading) {
 }
   // Check if the current location path is in the excludedRoutes array
   const shouldExcludeFooter = excludedRoutes.includes(location.pathname);
+  const shouldExcludeHeader = excludedHeaderRoutes.includes(location.pathname);
 
   return (
     <>
       <ToastContainer position="top-center" />
-      <Header />
+      {!shouldExcludeHeader && <Header />}
       <Routers />
       {!shouldExcludeFooter && <Footer />}
     </>

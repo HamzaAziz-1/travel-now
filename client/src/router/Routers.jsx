@@ -31,7 +31,7 @@ import Newsletter from "../shared/Newsletter";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
 import { useGlobalContext } from "../context/AuthContext";
-
+import Dashboard from "../components/Dashboard/Dashboard";
 const Routers = () => {
   
   const { loading } = useGlobalContext();
@@ -48,6 +48,7 @@ const Routers = () => {
       <Route path="/tour/:id" element={<TourDetailsAdmin />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/das" element={<Dashboard />} />
       <Route path="/search/spots" element={<AttractionList />} />
       <Route
         path="/tourist/dashboard"
