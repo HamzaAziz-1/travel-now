@@ -1,13 +1,15 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useGlobalContext } from '../../context/AuthContext'
+import logo from "../../assets/images/logo1.png";
 
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+// const user = {
+//   name: "Tom Cook",
+//   email: "tom@example.com",
+//   imageUrl:
+//     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+// };
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
   { name: "Team", href: "#", current: false },
@@ -26,6 +28,8 @@ function classNames(...classes) {
 }
 
 export default function Dashboard() {
+  const { user } = useGlobalContext();
+
   return (
     <>
       {/*
@@ -40,17 +44,17 @@ export default function Dashboard() {
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <img
-                        className="h-8 w-8"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        className="h-7 w-auto "
+                        src={logo}
                         alt="Your Company"
                       />
                     </div>
-                    <div className="hidden md:block">
+                    <div className="hidden md:block ">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
                           <a
@@ -90,7 +94,7 @@ export default function Dashboard() {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              src={user.imageUrl}
+                              src={user?.image}
                               alt=""
                             />
                           </Menu.Button>
@@ -171,16 +175,16 @@ export default function Dashboard() {
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
-                        src={user.imageUrl}
+                        src={user?.image}
                         alt=""
                       />
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium leading-none text-white">
-                        {user.name}
+                        {user?.name}
                       </div>
                       <div className="text-sm font-medium leading-none text-gray-400">
-                        {user.email}
+                        {user?.email}
                       </div>
                     </div>
                     <button
@@ -220,70 +224,6 @@ export default function Dashboard() {
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             {/* Your content */}
-            <div className="">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id
-              officiis labore numquam explicabo dolorem eos ipsa quam, libero
-              sequi necessitatibus magni alias et dolor eum veritatis esse
-              voluptas recusandae ipsum eveniet ut neque praesentium quaerat.
-              Sequi repellendus totam reprehenderit excepturi. Accusamus commodi
-              perferendis ullam vero autem. Tenetur, quas ducimus enim fugiat
-              quo natus, asperiores voluptatum minus veritatis maiores earum.
-              Numquam, ipsa tenetur. Ea, ad odit nisi repellendus temporibus
-              voluptate quaerat eveniet aliquid ex voluptatum quod accusamus eum
-              tenetur nihil corporis est optio non voluptas beatae harum veniam
-              excepturi quisquam. Pariatur repudiandae aliquid dolor! Voluptate,
-              natus pariatur quos quod explicabo vitae dolor, fugiat officia
-              mollitia inventore quaerat dolore incidunt ea maiores placeat?
-              Deserunt corporis porro nihil ratione consequuntur consectetur,
-              cumque obcaecati modi reprehenderit et maxime voluptate non ullam,
-              facere voluptatibus voluptatum illo rem natus. Reiciendis unde
-              itaque esse, assumenda voluptate quo harum, temporibus adipisci
-              illum earum sed modi distinctio! Quisquam eligendi repellendus
-              amet libero ducimus, possimus incidunt molestiae, blanditiis
-              magnam aut voluptates sint quam rerum earum omnis natus aspernatur
-              id alias ipsam laboriosam consequuntur? Provident consectetur
-              debitis excepturi consequatur deleniti magni aliquam, voluptas
-              recusandae, quae, fuga quidem sequi error reprehenderit dolorem
-              doloremque quaerat id laudantium perspiciatis? Atque voluptatem
-              consequuntur, quos consequatur neque, doloremque necessitatibus
-              dignissimos labore in saepe unde ducimus accusantium fugit, ipsam
-              aliquam voluptas. Dolore, doloremque! Incidunt voluptatibus harum
-              obcaecati, voluptatem, nihil praesentium, culpa reprehenderit
-              distinctio placeat architecto corrupti veniam. Quibusdam impedit
-              minima laudantium corporis ea, aliquam modi, vitae doloribus
-              aspernatur unde nulla explicabo voluptas voluptates deserunt quam
-              libero aperiam dolores et asperiores. Sapiente animi vitae,
-              officia nulla ipsam tenetur pariatur? Maxime cum similique labore
-              blanditiis sed. Expedita ea dolor labore aut illum quas animi,
-              perspiciatis veritatis! Ab, incidunt quo? Eaque earum, ex
-              laboriosam esse perferendis dolor autem. Repudiandae illum
-              accusamus esse eos pariatur ipsam eius debitis nemo iste aperiam
-              ea quam quod vero repellendus, quae architecto ad recusandae
-              soluta consectetur eum facere dignissimos quos ratione voluptatum!
-              Neque nihil soluta id facilis reprehenderit, fugiat aperiam
-              necessitatibus quia voluptatum. Sunt optio explicabo blanditiis
-              error aliquid odit natus ipsum minima, eos, laboriosam libero
-              neque ullam sit aut, consequatur dolorem maiores. Voluptatibus
-              consequatur ratione deserunt corrupti porro at cumque earum
-              distinctio mollitia dicta amet vitae aliquid, nisi, alias impedit?
-              Aperiam temporibus hic et ex reiciendis nesciunt, fuga totam quam!
-              Inventore quae cum optio quis expedita illo, tempora iusto,
-              temporibus soluta, dicta accusamus libero aliquid voluptatem.
-              Exercitationem, amet corporis. Natus mollitia placeat earum
-              praesentium suscipit reprehenderit et, totam, repellat in ad sunt
-              enim alias! Hic mollitia doloribus repudiandae dolor? Vel optio ut
-              culpa ipsam eaque minus, autem fuga? Facere, numquam alias,
-              delectus quis, omnis recusandae dolorum deleniti mollitia officia
-              architecto asperiores et quaerat atque assumenda tempore odio
-              doloremque quas animi voluptatibus saepe ipsum ipsa. Perspiciatis
-              soluta suscipit architecto. Reprehenderit eligendi ipsam tempore
-              molestiae recusandae voluptatibus aperiam eaque, minima aspernatur
-              labore quibusdam sequi hic cumque pariatur delectus voluptatum,
-              impedit eius similique. Laborum beatae soluta perspiciatis sed
-              veritatis, accusamus voluptates vitae debitis exercitationem dolor
-              minima quis aut, libero ea necessitatibus id, dignissimos
-              perferendis reprehenderit quia dolorum!
-            </div>
           </div>
         </main>
       </div>

@@ -30,14 +30,9 @@ import Checkout from "../pages/Checkout";
 import Newsletter from "../shared/Newsletter";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
-import { useGlobalContext } from "../context/AuthContext";
 import Dashboard from "../components/Dashboard/Dashboard";
 const Routers = () => {
-  
-  const { loading } = useGlobalContext();
-  if (loading) {
-    return <Spinner />;
-  }
+    
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
