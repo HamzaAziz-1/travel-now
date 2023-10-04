@@ -17,7 +17,6 @@ import {
   VendorDashboard,
   AttractionList,
   PlaceDetails,
-  Spinner,
   ManageOrders,
   ManageUsers,
   ShowTours,
@@ -30,7 +29,6 @@ import Checkout from "../pages/Checkout";
 import Newsletter from "../shared/Newsletter";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
-import Dashboard from "../components/Dashboard/Dashboard";
 const Routers = () => {
     
   return (
@@ -43,7 +41,6 @@ const Routers = () => {
       <Route path="/tour/:id" element={<TourDetailsAdmin />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/das" element={<Dashboard />} />
       <Route path="/search/spots" element={<AttractionList />} />
       <Route
         path="/tourist/dashboard"
@@ -146,10 +143,10 @@ const Routers = () => {
           </PrivateRoute>
         }
       >
-        <Route path="manageusers" element={<ManageUsers />} />
-        <Route path="viewtours" element={<ShowTours />} />
-        <Route path="updateprofile" element={<UpdateProfile />} />
-        <Route path="manageorders" element={<ManageOrders />} />
+        <Route path="manage-users" element={<ManageUsers />} />
+        <Route path="view-tours" element={<ShowTours />} />
+        <Route path="update-profile" element={<UpdateProfile />} />
+        <Route path="view-orders" element={<ManageOrders />} />
       </Route>
 
       <Route path="update-profile" element={<UpdateProfile />} />

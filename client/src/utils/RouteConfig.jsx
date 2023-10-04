@@ -8,10 +8,10 @@ export const RouteConfig = () => {
   "/login",
   "/register",
   "/tours/search",
-  "/admin/dashboard/manageusers",
-  "/admin/dashboard/viewtours",
-  "/admin/dashboard/updateprofile",
-  "/admin/dashboard/manageorders",
+  "/admin/dashboard/manage-users",
+  "/admin/dashboard/view-tours",
+  "/admin/dashboard/update-profile",
+  "/admin/dashboard/view-orders",
   "/das",
 ];
 const excludedHeaderRoutes = ["/das"];

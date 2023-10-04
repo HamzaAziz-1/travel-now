@@ -7,6 +7,7 @@ import ViewTours from "../ShowTours";
 import UpdateProfile from "../profile/UpdateProfile";
 import OrdersPage from "../profile/OrdersPage";
 import "../../styles/admin-dashboard.css";
+import Spinner from "../../components/Spinner/Spinner";
 
 const VendorDashboard = () => {
   const { user } = useGlobalContext();
@@ -28,13 +29,7 @@ const VendorDashboard = () => {
   if (isLoading) {
     return (
       <div className="mt-5 pt-5">
-        <Row className="justify-content-center">
-          <Col xs={12} className="text-center">
-            <div className="spinner-grow text-danger" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </Col>
-        </Row>
+      <Spinner/>
       </div>
     );
   }

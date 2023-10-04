@@ -76,7 +76,7 @@ const Header = () => {
                 {userPaths.map((pathItem) => (
                   <NavDropdown.Item
                     key={pathItem.path}
-                    href={`/${user?.role}${pathItem.path}`}
+                    href={`/${user?.role}/dashboard${pathItem.path}`}
                   >
                     {pathItem.display}
                   </NavDropdown.Item>

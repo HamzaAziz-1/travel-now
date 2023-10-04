@@ -198,6 +198,7 @@ const ShowTours = () => {
               ))}
             </tbody>
           </Table>
+        
         </div>
       </div>
         <Pagination className="justify-content-center">
