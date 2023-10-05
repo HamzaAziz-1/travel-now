@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "../../assets/images/logo1.png";
 import "./header.css";
 import { useGlobalContext } from "../../context/AuthContext";
-import { admin, tourist, vendor } from "../../utils/userLinks";
+// import { admin, tourist, vendor } from "../../utils/userLinks";
 
 const nav__links = [
   {
@@ -31,8 +31,8 @@ const Header = () => {
   const { user, logoutUser } = useGlobalContext();
   const navigate = useNavigate();
   // Define user-specific paths based on the user's role
-  const userPaths =
-    user?.role === "admin" ? admin : user?.role === "vendor" ? vendor : tourist;
+  // const userPaths =
+    // user?.role === "admin" ? admin : user?.role === "vendor" ? vendor : tourist;
 
   return (
     <Navbar
@@ -73,16 +73,16 @@ const Header = () => {
                 }
                 id="basic-nav-dropdown"
               >
-                {userPaths.map((pathItem) => (
-                  <NavDropdown.Item
-                    key={pathItem.path}
-                    href={`/${user?.role}/dashboard${pathItem.path}`}
-                  >
-                    {pathItem.display}
-                  </NavDropdown.Item>
-                ))}
+                <NavDropdown.Item
+                  style={{}}
+                  href={`/${user?.role}/dashboard`}
+                  className="nav-dropdown"
+                >
+                  Dashboard
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
+                  className="nav-dropdown"
                   onClick={() => {
                     logoutUser();
                     navigate("/");

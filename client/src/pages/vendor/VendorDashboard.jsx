@@ -1,104 +1,83 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useGlobalContext } from "../../context/AuthContext";
-import { Container, Row, Col, Nav } from "react-bootstrap";
-import CreateTour from "./CreateTour";
-import ViewTours from "../ShowTours";
-import UpdateProfile from "../profile/UpdateProfile";
-import OrdersPage from "../profile/OrdersPage";
-import "../../styles/admin-dashboard.css";
-import Spinner from "../../components/Spinner/Spinner";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+import { FaUserFriends, FaClipboardList, FaEye, FaUser } from "react-icons/fa";
+import { Outlet } from "react-router-dom";
 
 const VendorDashboard = () => {
-  const { user } = useGlobalContext();
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState("ViewTours");
+  const [activeLink, setActiveLink] = useState("");
+  const location = useLocation();
+  const sidebarRef = React.createRef();
 
-  useEffect(() => {
-    if (!user) {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-      if (user.role !== "vendor") {
-        navigate("/home");
-      }
-    }
-  }, [user, navigate]);
+  const links = [
+    {
+      text: "Create Tour",
+      path: "/vendor/dashboard/create-tours",
+      icon: <FaUserFriends />,
+    },
+    {
+      text: "View Tours",
+      path: "/vendor/dashboard/view-tours",
+      icon: <FaEye />,
+    },
+    {
+      text: "View Profile",
+      path: "/vendor/dashboard",
+      icon: <FaUser />,
+    },
+    {
+      text: "View Orders",
+      path: "/vendor/dashboard/orders",
+      icon: <FaClipboardList />,
+    },
+  ];
 
-  if (isLoading) {
-    return (
-      <div className="mt-5 pt-5">
-      <Spinner/>
-      </div>
-    );
-  }
-
-  const renderPage = () => {
-    switch (page) {
-      case "CreateTour":
-        return <CreateTour />;
-      case "ViewTours":
-        return <ViewTours />;
-      case "UpdateProfile":
-        return <UpdateProfile />;
-      case "ViewOrders":
-        return <OrdersPage />;
-      default:
-        return <ViewTours />;
-    }
+  const handleLinkClick = (path) => {
+    setActiveLink(path);
   };
 
   return (
     <div className="dashboard mt-5">
       <Container fluid>
         <Row>
-          <Col md={2} className="dashboard__sidebar">
-            <Nav className="flex-column">
-              <Nav.Link
-                onClick={() => setPage("CreateTour")}
-                className={`dashboard__sidebar-link ${
-                  page === "CreateTour" ? "dashboard__sidebar-link--active" : ""
-                }`}
-              >
-                Create Tour
-              </Nav.Link>
-              <Nav.Link
-                onClick={() => setPage("ViewTours")}
-                className={`dashboard__sidebar-link ${
-                  page === "ViewTours" ? "dashboard__sidebar-link--active" : ""
-                }`}
-              >
-                View Tours
-              </Nav.Link>
-              <Nav.Link
-                onClick={() => setPage("UpdateProfile")}
-                className={`dashboard__sidebar-link ${
-                  page === "UpdateProfile"
-                    ? "dashboard__sidebar-link--active"
-                    : ""
-                }`}
-              >
-                Update Profile
-              </Nav.Link>
-              <Nav.Link
-                onClick={() => setPage("ViewOrders")}
-                className={`dashboard__sidebar-link ${
-                  page === "ViewOrders" ? "dashboard__sidebar-link--active" : ""
-                }`}
-              >
-                View Orders
-              </Nav.Link>
-            </Nav>
+          <Col
+            md={2}
+            className="dashboard__sidebar"
+            ref={sidebarRef}
+            style={{ overflow: "hidden" }}
+            bg="dark"
+            variant="dark"
+          >
+            <ul className="sidebar__menu">
+              {links.map((link, index) => (
+                <li
+                  key={index}
+                  className={`sidebar__menu-item ${
+                    location.pathname === link.path ? "active" : ""
+                  }`}
+                >
+                  <Link
+                    to={link.path}
+                    onClick={() => handleLinkClick(link.path)}
+                    className="sidebar__menu-link"
+                  >
+                    <span className="sidebar__menu-icon">{link.icon}</span>
+                    <span className="sidebar__menu-text">{link.text}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Col>
 
           <Col className="" md={10}>
-            {renderPage()}
+            <Outlet />
           </Col>
         </Row>
       </Container>
     </div>
   );
 };
+
 
 export default VendorDashboard;

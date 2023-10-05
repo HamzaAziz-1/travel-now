@@ -7,7 +7,9 @@
   width: 120px;
   height: 30px;
 }
-
+.nav-dropdown:hover{
+  background-color: var(--secondary-color) !important; 
+}
 .logo{
   width: auto;
   height:30px;

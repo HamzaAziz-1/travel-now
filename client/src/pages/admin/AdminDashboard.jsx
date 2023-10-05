@@ -5,7 +5,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { FaUserFriends, FaClipboardList, FaEye, FaUser } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
 
-const CustomSidebar = () => {
+const AdminDashboard = () => {
   const [activeLink, setActiveLink] = useState("");
   const location = useLocation();
   const sidebarRef = React.createRef();
@@ -23,7 +23,7 @@ const CustomSidebar = () => {
     },
     {
       text: "View Profile",
-      path: "/admin/dashboard/update-profile",
+      path: "/admin/dashboard",
       icon: <FaUser />,
     },
     {
@@ -80,4 +80,4 @@ const CustomSidebar = () => {
   );
 };
 
-export default CustomSidebar;
+export default AdminDashboard;

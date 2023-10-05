@@ -20,6 +20,7 @@ import {
   ManageOrders,
   ManageUsers,
   ShowTours,
+  OrdersPage,
 } from "../pages";
 import Home from "../pages/Home";
 import Tours from "../pages/Tours";
@@ -30,7 +31,6 @@ import Newsletter from "../shared/Newsletter";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
 const Routers = () => {
-    
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
@@ -42,15 +42,12 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/search/spots" element={<AttractionList />} />
-      <Route
-        path="/tourist/dashboard"
-        exact
-        element={
-          <PrivateRoute roles={"tourist"}>
-            <TouristDashboard />
-          </PrivateRoute>
-        }
-      ></Route>
+      <Route path="/users/:id" exact element={<TourVendorDetails />}></Route>
+      <Route path="/forgot-password" exact element={<ForgotPassword />}></Route>
+      <Route path="*" element={<Error />}></Route>
+      <Route path="/thank-you" element={<ThankYou />} />
+      <Route path="/tours/search" element={<SearchResultList />} />
+      <Route path="/:type/:id" element={<PlaceDetails />} />
       <Route
         path="/checkout"
         exact
@@ -60,26 +57,7 @@ const Routers = () => {
           </PrivateRoute>
         }
       ></Route>
-      <Route path="/users/:id" exact element={<TourVendorDetails />}></Route>
-      <Route path="/forgot-password" exact element={<ForgotPassword />}></Route>
-      <Route
-        path="/create-tour"
-        exact
-        element={
-          <PrivateRoute roles={"vendor"}>
-            <CreateTour />
-          </PrivateRoute>
-        }
-      ></Route>
-      <Route
-        path="/show-tours"
-        exact
-        element={
-          <PrivateRoute roles={["vendor", "admin"]}>
-            <ShowTours />
-          </PrivateRoute>
-        }
-      ></Route>
+
       <Route
         path="/orders/:orderId"
         exact
@@ -90,34 +68,13 @@ const Routers = () => {
         }
       ></Route>
 
-      <Route
-        path="/update-tour/:id"
-        exact
-        element={
-          <PrivateRoute roles={["admin", "vendor"]}>
-            <UpdateTour />
-          </PrivateRoute>
-        }
-      ></Route>
-
       <Route path="/user/verify-email" exact element={<Verify />}></Route>
       <Route
         path="/user/reset-password"
         exact
         element={<ResetPassword />}
       ></Route>
-      <Route
-        path="/vendor/dashboard"
-        element={
-          <PrivateRoute roles={"vendor"}>
-            <VendorDashboard />
-          </PrivateRoute>
-        }
-      ></Route>
-      <Route path="*" element={<Error />}></Route>
-      <Route path="/thank-you" element={<ThankYou />} />
-      <Route path="/tours/search" element={<SearchResultList />} />
-      <Route path="/:type/:id" element={<PlaceDetails />} />
+
       <Route
         path="/tourist/dashboard"
         element={
@@ -125,15 +82,24 @@ const Routers = () => {
             <TouristDashboard />
           </PrivateRoute>
         }
-      />
+      >
+        <Route index element={<UpdateProfile />} />
+        <Route path="orders" element={<OrdersPage />} />
+      </Route>
       <Route
-        path="/admin/dashboard"
+        path="/vendor/dashboard"
         element={
-          <PrivateRoute roles={"admin"}>
-            <AdminDashboard />
+          <PrivateRoute roles={"vendor"}>
+            <VendorDashboard />
           </PrivateRoute>
         }
-      />
+      >
+        <Route index element={<UpdateProfile />} />
+        <Route path="create-tours" element={<CreateTour />} />
+        <Route path="update-tour/:id" element={<UpdateTour />} />
+        <Route path="view-tours" element={<ShowTours />} />
+        <Route path="orders" element={<OrdersPage />} />
+      </Route>
 
       <Route
         path="/admin/dashboard"
@@ -145,11 +111,10 @@ const Routers = () => {
       >
         <Route path="manage-users" element={<ManageUsers />} />
         <Route path="view-tours" element={<ShowTours />} />
-        <Route path="update-profile" element={<UpdateProfile />} />
+        <Route path="update-tour/:id" element={<UpdateTour />} />
+        <Route index element={<UpdateProfile />} />
         <Route path="view-orders" element={<ManageOrders />} />
       </Route>
-
-      <Route path="update-profile" element={<UpdateProfile />} />
     </Routes>
   );
 };
