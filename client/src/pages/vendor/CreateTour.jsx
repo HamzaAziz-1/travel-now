@@ -266,7 +266,7 @@ const CreateTour = () => {
   return (
     <>
       <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
-        <Container className="create-tour-container mt-5 pt-2">
+        <Container className="create-tour-container mt-5 pt-2 mb-5 pb-5">
           <div className="create-tour-heading text-center mb-5">
             <h1>Create a Tour Package</h1>
           </div>

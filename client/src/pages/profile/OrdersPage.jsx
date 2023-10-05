@@ -98,7 +98,7 @@ function OrdersPage() {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{height:"100vh"}}>
       <h1 className="text-center mb-5 " style={{ color: "#4b6584" }}>
         Manage Orders
       </h1>

@@ -105,7 +105,7 @@ const ShowTours = () => {
 
   return (
     <Container className="show-tours-container">
-      <div className="tours-container mb-3">
+      <div className="tours-container mb-5">
         <h1 className="mb-3">Tour Packages</h1>
         <div className="filter-container mb-2">
           <select

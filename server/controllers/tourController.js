@@ -171,45 +171,50 @@ const featureTour = async (req, res) => {
   res.status(StatusCodes.OK).json({ tour });
 };
 
-// get tour by search
 const getTourBySearch = async (req, res) => {
   const { city, page, perPage } = req.query; // Include page and perPage query parameters
 
   try {
     const currentPage = parseInt(page) || 1;
-    const toursPerPage = parseInt(perPage) || 6; // Set a default value or adjust as needed
+    const toursPerPage = parseInt(perPage) || 8; // Set a default value or adjust as needed
     const skipCount = (currentPage - 1) * toursPerPage;
 
     // Use a case-insensitive regex for city search
     const cityRegex = new RegExp(city, "i");
 
     // Use Mongoose aggregation to retrieve tours with pagination and case-insensitive search
-    const tours = await Tour.aggregate([
-      {
-        $match: {
-          city: cityRegex, // Match city with case-insensitive regex
-          verified: true,
+    const [totalCount, tours] = await Promise.all([
+      Tour.countDocuments({
+        city: cityRegex, // Match city with case-insensitive regex
+        verified: true,
+      }),
+      Tour.aggregate([
+        {
+          $match: {
+            city: cityRegex,
+            verified: true,
+          },
         },
-      },
-      {
-        $lookup: {
-          from: "reviews", // Assuming the reviews collection name is "reviews"
-          localField: "_id",
-          foreignField: "tour", // Assuming a "tour" field in the reviews collection referencing the tour
-          as: "reviews",
+        {
+          $lookup: {
+            from: "reviews", // Assuming the reviews collection name is "reviews"
+            localField: "_id",
+            foreignField: "tour", // Assuming a "tour" field in the reviews collection referencing the tour
+            as: "reviews",
+          },
         },
-      },
-      {
-        $skip: skipCount, // Skip documents based on the current page
-      },
-      {
-        $limit: toursPerPage, // Limit the number of documents per page
-      },
+        {
+          $skip: skipCount, // Skip documents based on the current page
+        },
+        {
+          $limit: toursPerPage, // Limit the number of documents per page
+        },
+      ]),
     ]);
-
     res.status(200).json({
       success: true,
       message: "Successful",
+      totalCount,
       data: tours,
     });
   } catch (err) {
@@ -219,6 +224,7 @@ const getTourBySearch = async (req, res) => {
     });
   }
 };
+
 
 
 // get featured tour

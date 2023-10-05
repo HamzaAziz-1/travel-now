@@ -38,7 +38,12 @@ const SearchBar = () => {
     const result = await res.json();
 
     navigate(`/tours/search?city=${query}&maxGroupSize=${maxGroupSize}`, {
-      state: result.data,
+      state: {
+        data: result.data,
+        totalCount: result.totalCount, 
+        maxGroupSize: maxGroupSize,
+        query: query
+      },
     });
   };
    const handlePlacesChanged = async () => {

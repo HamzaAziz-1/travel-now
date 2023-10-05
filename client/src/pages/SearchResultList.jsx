@@ -1,30 +1,53 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import CommonSection from "./../shared/CommonSection";
 import { Container, Row, Col } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TourCard from "./../shared/TourCard";
+import { BASE_URL } from "./../utils/config"; // Import BASE_URL from your config file
 
 const SearchResultList = () => {
   const location = useLocation();
-  const [data] = useState(location.state);
+  const { data, totalCount, query, maxGroupSize } = location.state || {};
   const [page, setPage] = useState(1);
-  const [toursPerPage] = useState(6); 
+  const [toursPerPage] = useState(8);
   const [currentTours, setCurrentTours] = useState([]);
+  const navigate = useNavigate();
 
-  const totalPages = Math.ceil(data.length / toursPerPage);
+  const totalPages = Math.ceil(totalCount / toursPerPage);
 
   useEffect(() => {
-    // Calculate the index range for the current page
-    const startIndex = (page - 1) * toursPerPage;
-    const endIndex = startIndex + toursPerPage;
-    const toursToDisplay = data.slice(startIndex, endIndex);
+    // Fetch data from the backend when the page changes
+    const fetchData = async () => {
+      try {
+        const res = await fetch(
+          `${BASE_URL}/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}&page=${page}`
+        );
 
-    setCurrentTours(toursToDisplay);
-  }, [data, page, toursPerPage]);
+        if (!res.ok) {
+          throw new Error("Something went wrong");
+        }
+
+        const result = await res.json();
+
+        setCurrentTours(result.data);
+      } catch (error) {
+        console.error(error);
+        // Handle error
+      }
+    };
+
+    fetchData();
+  }, [page, query, maxGroupSize]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setPage(newPage);
+      navigate(
+        `/tours/search?city=${query}&maxGroupSize=${maxGroupSize}&page=${newPage}`,
+        {
+          state: { data, totalCount, query, maxGroupSize },
+        }
+      );
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };

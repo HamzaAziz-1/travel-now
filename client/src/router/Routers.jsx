@@ -95,7 +95,7 @@ const Routers = () => {
         }
       >
         <Route index element={<UpdateProfile />} />
-        <Route path="create-tours" element={<CreateTour />} />
+        <Route path="create-tour" element={<CreateTour />} />
         <Route path="update-tour/:id" element={<UpdateTour />} />
         <Route path="view-tours" element={<ShowTours />} />
         <Route path="orders" element={<OrdersPage />} />
