@@ -4,14 +4,15 @@
 
 .tours-container {
   text-align: center;
-  margin-top: 2em;
-  padding: 2em;
-  background-color: #f4f4f4;
+  margin-top: 1em;
+  padding: 1em;
+  /* background-color: #f4f4f4; */
   border-radius: 20px;
 }
 
 .tours-container h1 {
   color: #4b6584;
+  font-weight: bold;
   margin-bottom: 5em;
 }
 
@@ -104,4 +105,24 @@
 
 .custom-link:hover {
   color: #1a237e;
+}
+
+.pagination span {
+  width: 2rem;
+  height: 2rem;
+  padding: 5px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--secondary-color);
+  color: var(--heading-color);
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.active__page {
+  background: var(--secondary-color);
+  color: #fff !important;
 }

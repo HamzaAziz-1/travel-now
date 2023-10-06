@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
@@ -6,15 +6,14 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { BASE_URL } from "./../utils/config";
 import { useGlobalContext } from "./../context/AuthContext";
-import Pagination from "react-bootstrap/Pagination";
 import "../styles/show-tours.css";
 
 const ShowTours = () => {
   const [data, setData] = useState([]);
   const { user } = useGlobalContext();
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
-  const [filter, setFilter] = useState("all"); // State for the filter selection
+  const [itemsPerPage] = useState(6);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     if (user?.role === "vendor") {
@@ -79,17 +78,21 @@ const ShowTours = () => {
       .catch((err) => console.log(err));
   };
 
+  const filteredData = data.filter((tour) => {
+    if (filter === "verified") {
+      return tour.verified === true;
+    } else if (filter === "unverified") {
+      return tour.verified === false;
+    }
+    return true; // Show all if filter is "all"
+  });
+
+  const totalItems = filteredData.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
   const getCurrentItems = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    // Filter data based on the selected filter value
-    let filteredData = data;
-    if (filter === "verified") {
-      filteredData = data.filter((tour) => tour.verified === true);
-    } else if (filter === "unverified") {
-      filteredData = data.filter((tour) => tour.verified === false);
-    }
 
     return filteredData.slice(indexOfFirstItem, indexOfLastItem);
   };
@@ -105,9 +108,9 @@ const ShowTours = () => {
 
   return (
     <Container className="show-tours-container">
-      <div className="tours-container mb-5">
-        <h1 className="mb-3">Tour Packages</h1>
-        <div className="filter-container mb-2">
+      <div className="tours-container">
+        <h1 className="mb-4">Tour Packages</h1>
+        <div className="filter-container mb-4">
           <select
             id="filter"
             value={filter}
@@ -198,30 +201,40 @@ const ShowTours = () => {
               ))}
             </tbody>
           </Table>
-        
         </div>
       </div>
-        <Pagination className="justify-content-center">
-          <Pagination.Prev
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          />
-          {Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map(
-            (_, index) => (
-              <Pagination.Item
-                key={index + 1}
-                active={index + 1 === currentPage}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </Pagination.Item>
-            )
-          )}
-          <Pagination.Next
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
-          />
-        </Pagination>
+      {/* Custom pagination */}
+      <div className="custom-pagination-container text-center">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          className={`btn btn-outline-warning mx-1 ${
+            currentPage === 1 ? "disabled" : ""
+          }`}
+        >
+          &lt; Prev
+        </button>
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`btn ${
+              currentPage === index + 1
+                ? "btn-warning active__page"
+                : "btn-outline-warning"
+            } mx-1`}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          className={`btn btn-outline-warning mx-1 ${
+            currentPage === totalPages ? "disabled" : ""
+          }`}
+        >
+          Next &gt;
+        </button>
+      </div>
     </Container>
   );
 };
