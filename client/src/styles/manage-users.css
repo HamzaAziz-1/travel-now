@@ -12,7 +12,7 @@
 .custom-link:hover {
   color: #1a237e;
 }
-  .pagination-arrow {
+.pagination-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
