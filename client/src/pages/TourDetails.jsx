@@ -78,7 +78,6 @@ const TourDetails = () => {
     duration,
     availableDays,
     timeSlots,
-    averageRating,
     vendor,
   } = tour;
 
@@ -135,6 +134,7 @@ const TourDetails = () => {
 
   useEffect(() => {
     fetchReviews();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -313,7 +313,8 @@ const TourDetails = () => {
                               <span className="d-flex align-items-center">
                                 {[...Array(5)].map((star, i) => {
                                   return (
-                                    <i
+                                    <i 
+                                      key={i}
                                       className={
                                         i < review.rating
                                           ? "ri-star-s-fill"
