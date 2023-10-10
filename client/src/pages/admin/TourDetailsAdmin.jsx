@@ -5,8 +5,6 @@ import { useParams } from "react-router-dom";
 import calculateAvgRating from "../../utils/avgRating";
 import Newsletter from "../../shared/Newsletter";
 import Carousel from "react-bootstrap/Carousel";
-
-import { BASE_URL } from "../../utils/config";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
@@ -52,7 +50,7 @@ const TourDetailsAdmin = () => {
   // const { user } = useGlobalContext();
 
   // fetch data from database
-  const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
+  const { data: tour, loading, error } = useFetch(`tours/${id}`);
 
   // destructure properties from tour object
   const {
