@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import calculateAvgRating from "../../utils/avgRating";
 import Newsletter from "../../shared/Newsletter";
+import Carousel from "react-bootstrap/Carousel";
 
 import { BASE_URL } from "../../utils/config";
 import axios from "axios";
@@ -55,7 +56,7 @@ const TourDetailsAdmin = () => {
 
   // destructure properties from tour object
   const {
-    image,
+    images,
     name,
     description,
     price,
@@ -93,7 +94,13 @@ const TourDetailsAdmin = () => {
             <Row className="justify-content-center">
               <Col lg="8">
                 <div className="tour__content">
-                  <img src={image} alt="tour" />
+                  <Carousel>
+                    {images?.map((photo, index) => (
+                      <Carousel.Item key={index}>
+                        <img alt="tour" className="tour-image" src={photo} />
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
 
                   <div className="tour__info">
                     <h2>{name}</h2>

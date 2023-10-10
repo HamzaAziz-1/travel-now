@@ -146,7 +146,7 @@ const ShowTours = () => {
                   <td>
                     <Link
                       className="action-link"
-                      to={`/update-tour/${tour.id}`}
+                      to={`/vendor/dashboard/update-tour/${tour.id}`}
                     >
                       <Button variant="outline-info">Update</Button>
                     </Link>

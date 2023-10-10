@@ -12,9 +12,9 @@ export const RouteConfig = () => {
     "/admin/dashboard/view-orders",
     "/vendor/dashboard",
     "/vendor/dashboard/create-tour",
-    "/vendor/dashboard/update-tour/:id",
     "/vendor/dashboard/view-tours",
     "/vendor/dashboard/orders",
+    "/vendor/dashboard/update-tour/:id",
   ];
 const excludedHeaderRoutes = ["/das"];
 
