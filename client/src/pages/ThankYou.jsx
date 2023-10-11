@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState , useEffect} from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -38,7 +37,7 @@ const ThankYou = () => {
           <Col lg="12" className="pt-5 text-center">
             <div className="thank__you">
               <span>
-                <i class="ri-checkbox-circle-line"></i>
+                <i className="ri-checkbox-circle-line"></i>
               </span>
               <h1 className="mb-3 fw-semibold">Thank You</h1>
               <h3 className="mb-4">your tour is booked.</h3>

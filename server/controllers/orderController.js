@@ -78,6 +78,9 @@ const createOrder = async (req, res) => {
   const total = subtotal;
   // get client secret
   console.log(total);
+
+
+  
   const paymentIntent = await createPaymentIntent({
     amount: total,
     currency: "PKR",
