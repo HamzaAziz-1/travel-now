@@ -27,11 +27,6 @@ const CreateTour = () => {
   const [formValidated, setFormValidated] = useState(false);
   const searchBoxMeetingPointRef = useRef(null);
   const [meetingPoint, setMeetingPoint] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [latitude, setLatitude] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [longitude, setLongitude] = useState("");
-  
 
   const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState();
   const navigate = useNavigate();
@@ -121,75 +116,18 @@ const CreateTour = () => {
     if (places && places.length > 0) {
       const addressComponents = places[0].address_components;
       let cityName = "";
-      let provinceName = "";
-      let countryName = "";
-
       for (let i = 0; i < addressComponents.length; i++) {
         const component = addressComponents[i];
         if (component.types.includes("locality")) {
           cityName = component.long_name;
         }
-        if (component.types.includes("administrative_area_level_1")) {
-          provinceName = component.long_name;
-        }
-        if (component.types.includes("country")) {
-          countryName = component.long_name;
-        }
       }
-
-      const fullAddress = `${cityName}, ${provinceName}, ${countryName}`;
-
       if (cityName) {
         setCity(cityName);
-        // Use the Geocoding API to get the bounding box of the city
-        const response = await axios.get(
-          "https://maps.googleapis.com/maps/api/geocode/json",
-          {
-            params: {
-              address: fullAddress,
-              key: "AIzaSyD2HrxZqzn7dVRWyIK7UIv66zWB8UBy-zw",
-            },
-          }
-        );
-
-        const results = response.data.results;
-        console.log(results);
-        if (results.length > 0) {
-          setLatitude(results[0].geometry.location.lat);
-          setLongitude(results[0].geometry.location.lng);
-        }
       }
     } else {
       console.log("City not found");
     }
-  };
-
-  const getDetailedAddress = (addressComponents) => {
-    let streetNumber = "";
-    let route = "";
-    let locality = "";
-    let administrativeAreaLevel1 = "";
-    let country = "";
-    let postalCode = "";
-
-    for (let i = 0; i < addressComponents.length; i++) {
-      const component = addressComponents[i];
-      if (component.types.includes("street_number")) {
-        streetNumber = component.long_name;
-      } else if (component.types.includes("route")) {
-        route = component.long_name;
-      } else if (component.types.includes("locality")) {
-        locality = component.long_name;
-      } else if (component.types.includes("administrative_area_level_1")) {
-        administrativeAreaLevel1 = component.long_name;
-      } else if (component.types.includes("country")) {
-        country = component.long_name;
-      } else if (component.types.includes("postal_code")) {
-        postalCode = component.long_name;
-      }
-    }
-
-    return `${streetNumber} ${route}, ${locality}, ${administrativeAreaLevel1}, ${country}, ${postalCode}`;
   };
 
   const handleMeetingPointPlacesChanged = () => {
@@ -199,9 +137,8 @@ const CreateTour = () => {
 
     const places = searchBoxMeetingPointRef.current.getPlaces();
     if (places && places.length > 0) {
-      const detailedAddress = getDetailedAddress(places[0].address_components);
-
-      setMeetingPoint(detailedAddress);
+          const formattedAddress = places[0].formatted_address;
+      setMeetingPoint(formattedAddress);
     } else {
       console.log("Meeting point not found");
     }
@@ -314,6 +251,7 @@ const CreateTour = () => {
                       placeholder="Enter city name of the tour"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
+                      required
                     />
                   </StandaloneSearchBox>
                 </Form.Group>
@@ -348,10 +286,12 @@ const CreateTour = () => {
                     ref={searchBoxMeetingPointRef}
                     onLoad={(ref) => (searchBoxMeetingPointRef.current = ref)}
                     onPlacesChanged={handleMeetingPointPlacesChanged}
+                    
                   >
                     <Form.Control
                       type="text"
                       placeholder="Enter a meeting point to meet tourist"
+                      required
                       value={meetingPoint}
                       onChange={(e) => setMeetingPoint(e.target.value)}
                     />
