@@ -130,7 +130,7 @@ const UpdateTour = () => {
         return;
       }
 
-      if (images) {
+      if (images?.length>0) {
         const formData = new FormData();
         images.forEach((image) => {
           formData.append(`images`, image);
@@ -215,23 +215,6 @@ const UpdateTour = () => {
 
       if (cityName) {
         setCity(cityName);
-        // Use the Geocoding API to get the bounding box of the city
-        const response = await axios.get(
-          "https://maps.googleapis.com/maps/api/geocode/json",
-          {
-            params: {
-              address: fullAddress,
-              key: "AIzaSyD2HrxZqzn7dVRWyIK7UIv66zWB8UBy-zw",
-            },
-          }
-        );
-
-        const results = response.data.results;
-        console.log(results);
-        if (results.length > 0) {
-          setLatitude(results[0].geometry.location.lat);
-          setLongitude(results[0].geometry.location.lng);
-        }
       }
     } else {
       console.log("City not found");
@@ -244,8 +227,8 @@ const UpdateTour = () => {
 
     const places = searchBoxMeetingPointRef.current.getPlaces();
     if (places && places.length > 0) {
-      const fullAddress = places[0].formatted_address;
-      setMeetingPoint(fullAddress);
+      const formattedAddress = places[0].formatted_address;
+      setMeetingPoint(formattedAddress);
     } else {
       console.log("Meeting point not found");
     }
