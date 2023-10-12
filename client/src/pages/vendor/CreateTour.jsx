@@ -10,49 +10,9 @@ import useLocalState from "../../utils/localState";
 import axios from "axios";
 import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 import "../../styles/create-tour.css";
-
+import DayNamePicker from "../../components/Forms/DayNamePicker";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
-console.log(apiKey);
-
-// eslint-disable-next-line react/prop-types
-const DayNamePicker = ({ selectedDays, onDayChange }) => {
-  const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  const handleDayClick = (day) => {
-    if (selectedDays.includes(day)) {
-      onDayChange(selectedDays.filter((selectedDay) => selectedDay !== day));
-    } else {
-      onDayChange([...selectedDays, day]);
-    }
-  };
-
-  return (
-    <div className="create-tour-day-name-picker">
-      {days.map((day) => (
-        <div
-          key={day}
-          className={
-            selectedDays.includes(day)
-              ? "create-tour-day-name selected"
-              : "create-tour-day-name"
-          }
-          onClick={() => handleDayClick(day)}
-        >
-          {day}
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const CreateTour = () => {
   const searchBoxRef = useRef(null);
@@ -114,9 +74,7 @@ const CreateTour = () => {
         );
 
         const imageUrls = response.data.images;
-        // Now you have an array of image URLs to store in your tour schema
-        console.log("Uploaded image URLs:", imageUrls);
-
+       
         // Continue with creating the tour using the image URLs
         const tourData = {
           title,
@@ -125,7 +83,7 @@ const CreateTour = () => {
           city,
           duration,
           meetingPoint,
-          images: imageUrls, // Store the image URLs in the tour data
+          images: imageUrls, 
           availableDays,
           timeSlots,
         };

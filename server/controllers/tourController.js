@@ -76,7 +76,7 @@ const getToursByVendor = async (req, res) => {
 };
 const updateTour = async (req, res) => {
   const { id: tourId } = req.params;
-
+  console.log(req.body);
   const tour = await Tour.findOneAndUpdate({ _id: tourId }, req.body, {
     new: true,
     runValidators: true,

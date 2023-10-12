@@ -38,7 +38,7 @@ router
   .route("/:id")
   .get(getSingleTour)
   .patch(
-    [authenticateUser, authorizePermissions("admin", "vendor")],
+    [authenticateUser, authorizePermissions("admin", "vendor")],upload,
     updateTour
   )
   .delete(
@@ -52,7 +52,6 @@ router
 router
   .route("/feature/:id")
   .patch([authenticateUser, authorizePermissions("admin")], featureTour);
-// get tour by search
 router.get("/search/getTourBySearch", getTourBySearch);
 router.get("/search/getFeaturedTours", getFeaturedTour);
 router.get("/search/getTourCount", getTourCount);

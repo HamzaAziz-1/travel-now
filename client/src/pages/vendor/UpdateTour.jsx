@@ -12,6 +12,8 @@ import axios from "axios";
 import "../../styles/create-tour.css";
 import { useGlobalContext } from "../../context/AuthContext";
 import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import { toast } from "react-toastify";
+import Carousel from "react-bootstrap/Carousel";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
 
@@ -71,47 +73,47 @@ const UpdateTour = () => {
   const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState();
   const navigate = useNavigate();
   const tourId = useParams().id;
-  
+
   const searchBoxMeetingPointRef = useRef(null);
   const [meetingPoint, setMeetingPoint] = useState("");
 
   const { user } = useGlobalContext();
   useEffect(() => {
-    if (user && user.role !== "tourist") {
-      const fetchTour = async () => {
-        try {
-          const response = await axios.get(`/api/v1/tours/${tourId}`);
-          const {
-            title,
-            price,
-            description,
-            city,
-            duration,
-            images,
-            availableDays,
-            timeSlots,
-            meetingPoint,
-          } = response.data.tour;
-          setTitle(title);
-          setPrice(price);
-          setDescription(description);
-          setCity(city);
-          setDuration(duration);
-          setImgValue(images);
-          setAvailableDays(availableDays);
-          setTimeSlots(timeSlots);
-          setMeetingPoint(meetingPoint);
-          setTour(response.data.tour);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchTour();
-    }
+    const fetchTour = async () => {
+      try {
+        const response = await axios.get(`/api/v1/tours/${tourId}`);
+        const {
+          title,
+          price,
+          description,
+          city,
+          duration,
+          images,
+          availableDays,
+          timeSlots,
+          meetingPoint,
+        } = response.data.tour;
+        setTitle(title);
+        setPrice(price);
+        setDescription(description);
+        setCity(city);
+        setDuration(duration);
+        setImgValue(images);
+        setAvailableDays(availableDays);
+        setTimeSlots(timeSlots);
+        setMeetingPoint(meetingPoint);
+        setTour(response.data.tour);
+      } catch (error) {
+        const { msg } = error.response.data;
+        toast.error(msg ? msg : "An error Occured");
+      }
+    };
+    fetchTour();
   }, [tourId, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let updatedImages = imgValue;
     hideAlert();
     setLoading(true);
     const form = e.currentTarget;
@@ -128,32 +130,28 @@ const UpdateTour = () => {
         return;
       }
 
-      let updatedImageValue = imgValue; // Use the previous image value by default
-
-      if (images && images !== imgValue) {
-        // If the new image is different from the previous one, upload the new image
+      if (images) {
         const formData = new FormData();
-        formData.append("images", images);
-
+        images.forEach((image) => {
+          formData.append(`images`, image);
+        });
         try {
-          const {
-            data: {
-              image: { src },
-            },
-          } = await axios.post("/api/v1/tours/uploadImage", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-
-          updatedImageValue = src; // Use the uploaded image URL
+          const response = await axios.post(
+            "/api/v1/tours/uploadImage",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          updatedImages = response.data.images;
         } catch (error) {
           showAlert({ text: error.response.data.msg });
           setLoading(false);
           return;
         }
       }
-
       // Update the tour with the new data
       const tourData = {
         title,
@@ -161,7 +159,7 @@ const UpdateTour = () => {
         description,
         city,
         duration,
-        images: updatedImageValue, // Use the updated image URL
+        images: updatedImages,
         availableDays,
         meetingPoint,
         timeSlots,
@@ -411,17 +409,25 @@ const UpdateTour = () => {
                     <b>Images:</b>
                   </Form.Label>
                   {imgValue && (
-                    <Image
-                      src={imgValue}
-                      style={{ width: "50vw", height: "80vh" }}
-                      alt="Tour"
-                      thumbnail
-                    />
+                    <div className="text-center">
+                      <Carousel>
+                        {imgValue?.map((photo, index) => (
+                          <Carousel.Item key={index}>
+                            <img
+                              alt="tour"
+                              className="tour-image"
+                              src={photo}
+                              style={{ height: "40vh", width: "40vw" }}
+                            />
+                          </Carousel.Item>
+                        ))}
+                      </Carousel>
+                    </div>
                   )}
                   <Form.Control
                     type="file"
                     multiple
-                    onChange={(e) => setImages(e.target.files[0])}
+                    onChange={(e) => setImages(Array.from(e.target.files))}
                   />
                   <Form.Control.Feedback type="invalid">
                     Please provide an image.
