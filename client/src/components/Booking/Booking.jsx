@@ -282,6 +282,7 @@ const Booking = ({ tour }) => {
               placeholder="Guest"
               id="guestSize"
               minLength={1}
+              maxLength={5}
               value={booking.guestSize}
               required
               onChange={handleChange}

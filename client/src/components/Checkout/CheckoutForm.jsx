@@ -79,7 +79,7 @@ const CheckoutForm = () => {
   return (
     <div className="checkout-form mt-5 pt-5 mb-5 pb-5">
       <h1 className="py-3">Checkout</h1>
-      <h3>Total: {order.total }</h3>
+      <h3>Total: {order.total}{ " "} PKR</h3>
       <form onSubmit={handleSubmit} className="my-3" >
         <CardElement />
         <button className="my-3" disabled={!stripe || paymentProcessing}>

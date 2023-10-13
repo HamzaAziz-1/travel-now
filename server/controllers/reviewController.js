@@ -13,7 +13,7 @@ const createReview = async (req, res) => {
   if (!isValidTour) {
     throw new CustomError.NotFoundError(`No tour with id : ${tourId}`);
   }
-  const isOrder = await Order.findOne({ user: req.user.userId });
+  const isOrder = await Order.findOne({ user: req.user.userId,tour:tourId });
   if (!isOrder) {
      throw new CustomError.BadRequestError(
        "You haven't booked this tour."
@@ -35,7 +35,6 @@ const createReview = async (req, res) => {
     user: req.user.userId,
     status: "completed",
   });
-  console.log(isOrderCompleted)
   if (!isOrderCompleted) {
     throw new CustomError.BadRequestError(
       "Your Tour is not completed yet!"
@@ -49,7 +48,7 @@ const createReview = async (req, res) => {
 const getAllReviews = async (req, res) => {
   const reviews = await Review.find({}).populate({
     path: 'tour',
-    select: 'name company price',
+    select: 'city price',
   });
 
   res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
@@ -100,7 +99,7 @@ const deleteReview = async (req, res) => {
 
 const getSingleTourReviews = async (req, res) => {
   const { id: tourId } = req.params;
-  const reviews = await Review.find({ tour: tourId });
+  const reviews = await Review.find({ tour: tourId }).populate('user','name image');
   res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 };
 

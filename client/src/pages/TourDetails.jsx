@@ -298,8 +298,16 @@ const TourDetails = () => {
                     <ListGroup className="user__reviews">
                       {reviews?.map((review, index) => (
                         <div className="review__item" key={index}>
-                          <img src={avatar} alt="" />
-                          {console.log(review)}
+                          <div className="text-center">
+                            {" "}
+                            <img
+                              className="review_box review_box_img"
+                              src={review?.user?.image}
+                              alt=""
+                            />
+                            <p className="review_box">{review?.user?.name}</p>
+                          </div>
+
                           <div className="w-100">
                             <div className="d-flex align-items-center justify-content-between">
                               <div>
@@ -313,7 +321,7 @@ const TourDetails = () => {
                               <span className="d-flex align-items-center">
                                 {[...Array(5)].map((star, i) => {
                                   return (
-                                    <i 
+                                    <i
                                       key={i}
                                       className={
                                         i < review.rating
