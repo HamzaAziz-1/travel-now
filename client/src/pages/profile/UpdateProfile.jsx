@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/AuthContext";
 import { Form, Button, Container, Image, Row, Col } from "react-bootstrap";

@@ -11,7 +11,6 @@ import "../../styles/checkout-form.css";
 
 const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState("");
-  const [intentId, setIntentId] = useState("");
   const [order, setOrder] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [paymentProcessing, setPaymentProcessing] = useState(false);

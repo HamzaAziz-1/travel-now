@@ -5,7 +5,6 @@ import { Container, Row, Col, ListGroup } from "reactstrap";
 import { Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import calculateAvgRating from "./../utils/avgRating";
-import avatar from "../assets/images/avatar.jpg";
 import Booking from "../components/Booking/Booking";
 import Newsletter from "./../shared/Newsletter";
 import { Alert } from "react-bootstrap";
