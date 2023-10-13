@@ -20,7 +20,6 @@ const createPaymentIntent = async ({ amount, currency }) => {
 
 const createOrder = async (req, res) => {
   const { items: cartItems } = req.body;
-  console.log(req.body);
   if (!cartItems || cartItems.length < 1) {
     throw new CustomError.BadRequestError("No cart items provided");
   }
@@ -65,22 +64,19 @@ const createOrder = async (req, res) => {
       duration,
       price,
       date: item.date,
-      availableDays: item.availableDays, // use selected available days from the item
-      timeSlots: item.timeSlots, // use selected time slots from the item
+      availableDays: item.availableDays,
+      timeSlots: item.timeSlots,
       tour: _id,
-      // endTime: new Date(item.date + " " + item.timeSlots[0].end),
+      endTime: item.endTime,
     };
     // add item to order
     orderItems = [...orderItems, singleOrderItem];
     // calculate subtotal
     subtotal += item.amount * price;
   }
+  const serviceCharges = 500;
   // calculate total
-  const total = subtotal;
-  // get client secret
-  console.log(total);
-
-
+  const total = subtotal+serviceCharges;
   
   const paymentIntent = await createPaymentIntent({
     amount: total,

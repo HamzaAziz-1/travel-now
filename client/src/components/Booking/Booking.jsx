@@ -5,17 +5,15 @@ import { FormGroup, ListGroup, ListGroupItem, Button } from "reactstrap";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/AuthContext";
-import { Alert } from "react-bootstrap";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import { toast } from "react-toastify";
 
 const Booking = ({ tour }) => {
-  const { price, reviews, name,averageRating } = tour;
-  const [alertState, setAlertState] = useState({ message: "", variant: "" });
-  const [error, setError] = useState("");
+  const { price, reviews, name, averageRating } = tour;
   const navigate = useNavigate();
   const { user } = useGlobalContext();
   const [selectedDate, setSelectedDate] = useState();
@@ -92,10 +90,9 @@ const Booking = ({ tour }) => {
     setOrderItem((prev) => ({ ...prev, date: formattedDate }));
   };
 
-  const serviceFee = 1200;
+  const serviceFee = 500;
   const totalAmount =
     Number(price) * Number(booking.guestSize) + Number(serviceFee);
-
   // send data to the server
   const handleClick = async (e) => {
     e.preventDefault();
@@ -129,23 +126,19 @@ const Booking = ({ tour }) => {
 
     // Check if user is logged in
     if (!user || user === undefined || user === null) {
-      setAlertState({ message: "Please Login!", variant: "warning" });
+      toast.error("Please Login!");
       return; // stop further execution of the function
     }
     if (user.role !== "tourist") {
-      setAlertState({
-        message: "Only Tourists can book a tour",
-        variant: "warning",
-      });
-      return; 
+      toast.error("Only Tourists can book a tour");
+      return;
     }
-
+   
     try {
-      // Prepare cart items to be sent to the API
       const cartItems = [
         {
           ...orderItem,
-          date: selectedDate.toLocaleDateString("en-GB"),
+          endTime: selectedDate.toLocaleDateString("en-GB"),
         },
       ];
 
@@ -158,7 +151,8 @@ const Booking = ({ tour }) => {
         state: { order: result.order, clientSecret: result.clientSecret },
       });
     } catch (error) {
-      setError(error.response.data.msg);
+      const { msg } = error.response.data;
+      toast.error(msg ? msg : "An error occured");
     }
   };
 
@@ -287,6 +281,7 @@ const Booking = ({ tour }) => {
               type="number"
               placeholder="Guest"
               id="guestSize"
+              minLength={1}
               value={booking.guestSize}
               required
               onChange={handleChange}
@@ -323,12 +318,6 @@ const Booking = ({ tour }) => {
         <Button className="btn primary__btn w-100 mt-4" onClick={handleClick}>
           Book Now
         </Button>
-      </div>
-      <div className="my-2 text-center row align-items-center justify-content-center">
-        {alertState.message && (
-          <Alert variant="danger">{alertState.message}</Alert>
-        )}
-        {error && <Alert variant="danger">{error}</Alert>}
       </div>
     </div>
   );
