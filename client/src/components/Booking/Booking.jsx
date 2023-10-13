@@ -12,8 +12,8 @@ import { faStar, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 
-const Booking = ({ tour, avgRating }) => {
-  const { price, reviews, name } = tour;
+const Booking = ({ tour }) => {
+  const { price, reviews, name,averageRating } = tour;
   const [alertState, setAlertState] = useState({ message: "", variant: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -79,7 +79,6 @@ const Booking = ({ tour, avgRating }) => {
       setBooking((prev) => ({ ...prev, [id]: value }));
     }
   };
-  console.log(user);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -122,6 +121,7 @@ const Booking = ({ tour, avgRating }) => {
 
     if (booking.guestSize <= 0) {
       errors["guestSize"] = "Please select a valid guest size";
+      // eslint-disable-next-line no-unused-vars
       isValid = false;
     }
 
@@ -137,7 +137,7 @@ const Booking = ({ tour, avgRating }) => {
         message: "Only Tourists can book a tour",
         variant: "warning",
       });
-      return; // stop further execution of the function
+      return; 
     }
 
     try {
@@ -145,7 +145,7 @@ const Booking = ({ tour, avgRating }) => {
       const cartItems = [
         {
           ...orderItem,
-          date: selectedDate.toLocaleDateString("en-GB"), // Format the date
+          date: selectedDate.toLocaleDateString("en-GB"),
         },
       ];
 
@@ -154,13 +154,10 @@ const Booking = ({ tour, avgRating }) => {
 
       const result = res.data;
 
-      // Redirect to checkout page instead of thank-you page
       navigate("/checkout", {
         state: { order: result.order, clientSecret: result.clientSecret },
       });
     } catch (error) {
-      // Handle error
-
       setError(error.response.data.msg);
     }
   };
@@ -173,10 +170,10 @@ const Booking = ({ tour, avgRating }) => {
         </h3>
         <span className="tour__rating d-flex align-items-center ">
           <FontAwesomeIcon icon={faStar} />
-          {typeof avgRating === "number" && !isNaN(avgRating)
-            ? avgRating === 0
+          {typeof averageRating === "number" && !isNaN(averageRating)
+            ? averageRating === 0
               ? null
-              : avgRating
+              : averageRating
             : "N/A"}{" "}
           ({reviews?.length})
         </span>

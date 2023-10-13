@@ -20,6 +20,7 @@ const createPaymentIntent = async ({ amount, currency }) => {
 
 const createOrder = async (req, res) => {
   const { items: cartItems } = req.body;
+  console.log(req.body);
   if (!cartItems || cartItems.length < 1) {
     throw new CustomError.BadRequestError("No cart items provided");
   }
