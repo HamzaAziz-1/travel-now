@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
-import { Row, Col, Pagination } from "react-bootstrap";
+import { Pagination } from "react-bootstrap";
 import "../../styles/manage-users.css";
+import { toast } from "react-toastify";
 
 function ManageUsers() {
   const [users, setUsers] = useState([]);
@@ -43,7 +44,7 @@ function ManageUsers() {
           )
         );
       })
-      .catch((err) => console.error(err));
+      .catch((err) => toast.error(err));
   };
 
   const filteredUsers = users.filter(

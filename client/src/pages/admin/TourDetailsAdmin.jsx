@@ -8,6 +8,7 @@ import Carousel from "react-bootstrap/Carousel";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
+import { toast } from "react-toastify";
 
 const TourDetailsAdmin = () => {
   const useFetch = (url) => {
@@ -47,8 +48,6 @@ const TourDetailsAdmin = () => {
   const [tourVendor, setTourVendor] = useState(null);
   const { id } = useParams();
 
-  // const { user } = useGlobalContext();
-
   // fetch data from database
   const { data: tour, loading, error } = useFetch(`tours/${id}`);
 
@@ -76,7 +75,7 @@ const TourDetailsAdmin = () => {
         const response = await axios.get(`/api/v1/users/${vendor}`);
         setTourVendor(response.data);
       } catch (error) {
-        console.error("Error fetching tour vendor data:", error);
+        toast.error("Error fetching tour vendor data");
       }
     };
     fetchTourVendor();

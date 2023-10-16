@@ -127,7 +127,7 @@ const Booking = ({ tour }) => {
     // Check if user is logged in
     if (!user || user === undefined || user === null) {
       toast.error("Please Login!");
-      return; // stop further execution of the function
+      return; 
     }
     if (user.role !== "tourist") {
       toast.error("Only Tourists can book a tour");
@@ -142,7 +142,6 @@ const Booking = ({ tour }) => {
         },
       ];
 
-      // Include the access token in the Authorization header
       const res = await axios.post(`/api/v1/orders`, { items: cartItems });
 
       const result = res.data;

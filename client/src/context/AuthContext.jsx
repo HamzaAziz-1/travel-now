@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
@@ -41,7 +43,7 @@ const updateUser = (newUser) => {
     if (!user) {
       fetchUser();
     }
-  }, []);
+  }, [user]);
 
   return (
     <AppContext.Provider

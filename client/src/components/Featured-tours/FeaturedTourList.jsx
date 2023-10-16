@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import TourCard from "../../shared/TourCard";
-import { Col, Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import Spinner from "../Spinner/Spinner";
-import { BASE_URL } from "../../utils/config";
 
 const FeaturedTourList = () => {
   const useFetch = (url) => {
@@ -44,7 +43,7 @@ const FeaturedTourList = () => {
     data: featuredTours,
     loading,
     error,
-  } = useFetch(`${BASE_URL}/tours/search/getFeaturedTours`);
+  } = useFetch(`/tours/search/getFeaturedTours`);
 
   return (
     <>
