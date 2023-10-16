@@ -7,69 +7,53 @@ import TourCard from "./../shared/TourCard";
 import SearchBar from "./../shared/SearchBar";
 import { Container, Row, Col } from "react-bootstrap";
 import useFetch from "../hooks/useFetch";
-import axios from "axios";
 
 const Tours = () => {
-  const [page, setPage] = useState(1); 
+  const [page, setPage] = useState(1);
   const [tours, setTours] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Use the custom hook for fetching data
+  const tourDataUrl = `/api/v1/tours/verified?page=${page}`;
+  const tourCountUrl = "/api/v1/tours/search/getTourCount";
+
   const {
     data: tourData,
     loading: tourLoading,
     error: tourError,
-  } = useFetch(`/api/v1/tours/verified?page=${page}`);
+  } = useFetch(tourDataUrl);
 
   useEffect(() => {
     if (tourData) {
       setTours(tourData.tours);
     }
-  }, [tourData]);
+    setLoading(tourLoading); // Update the loading state
+  }, [tourData, tourLoading]);
 
-  // Fetch tourCount only once during initial load
-  const tourCountData = useFetch("/api/v1/tours/search/getTourCount");
+  const { data: tourCountData } = useFetch(tourCountUrl);
 
-  // Compute pageCount using useMemo
   const pageCount = useMemo(() => {
-    if (tourCountData.data) {
-      const count = tourCountData.data.data;
+    if (tourCountData) {
+      const count = tourCountData.data;
       return Math.ceil(count / 8);
     }
     return 0;
-  }, [tourCountData.data]);
+  }, [tourCountData]);
 
-  // Fetch data when the page changes
-  useEffect(() => {
-    if (page > 0 && page <= pageCount) {
-      const fetchData = async () => {
-        setLoading(true);
-        try {
-          const response = await axios.get(
-            `/api/v1/tours/verified?page=${page}`
-          );
-          setTours(response.data.tours);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchData();
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= pageCount) {
+      setPage(newPage);
+      setLoading(true); // Set loading to true when changing pages
+       window.scrollTo({ top: 50, behavior: "smooth" });
     }
-  }, [page, pageCount]);
+  };
 
- const handlePageChange = (newPage) => {
-   if (newPage >= 1 && newPage <= pageCount) {
-     setPage(newPage);
-     setTimeout(() => {
-       window.scrollTo({ top: 250, behavior: "smooth" });
-     }, 0); 
-   }
- };
-
+  // Check if the new data has been loaded
+  useEffect(() => {
+    if (tourData || error) {
+      setLoading(false);
+    }
+  }, [tourData, error]);
 
   return (
     <>
@@ -102,7 +86,7 @@ const Tours = () => {
                 <h2 className="text-center">No tours found.</h2>
               )}
               {/* Pagination */}
-              {tours.length>0 && (
+              {tours.length > 0 && (
                 <div className="text-center mt-4">
                   <button
                     className="btn btn-outline-warning mx-1"

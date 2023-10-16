@@ -3,7 +3,6 @@ import CommonSection from "./../shared/CommonSection";
 import { Container, Row, Col } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import TourCard from "./../shared/TourCard";
-import { BASE_URL } from "./../utils/config"; // Import BASE_URL from your config file
 
 const SearchResultList = () => {
   const location = useLocation();
@@ -20,7 +19,7 @@ const SearchResultList = () => {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}&page=${page}`
+          `/api/v1/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}&page=${page}`
         );
 
         if (!res.ok) {

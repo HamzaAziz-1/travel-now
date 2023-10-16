@@ -47,6 +47,7 @@ const Booking = ({ tour }) => {
     selectedDay: "",
     selectedTimeSlot: "",
     guestSize: "",
+    selectedDate:""
   });
   const [isValid, setIsValid] = useState(false);
 
@@ -76,6 +77,9 @@ const Booking = ({ tour }) => {
     }
     if (selectedDay === "") {
       errors.selectedDay = "Please select a day";
+    }
+    if (!selectedDate) {
+      errors.selectedDate = "Please select a date";
     }
     if (selectedTimeSlot === "") {
       errors.selectedTimeSlot = "Please select a time slot";
@@ -262,6 +266,9 @@ const Booking = ({ tour }) => {
               }}
               disabled={!selectedDay}
             />
+            {formErrors.selectedDate && (
+              <div className="error text-danger">{formErrors.selectedDate}</div>
+            )}
           </Form.Group>
 
           <FormGroup className="my-3">

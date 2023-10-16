@@ -1,28 +1,21 @@
-import React, { useRef,useState } from "react";
+import { useRef, useState } from "react";
 import "./search-bar.css";
 import { Col, Form, FormGroup } from "reactstrap";
-
-import { BASE_URL } from "./../utils/config";
 import { useNavigate } from "react-router-dom";
 import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
 const SearchBar = () => {
-  const locationRef = useRef("");
-
-  // const distanceRef = useRef(0);
   const maxGroupSizeRef = useRef(0);
-   const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const searchBoxRef = useRef(null);
-   const searchBoxOptions = {
-     types: ["(cities)"],
-   };
+  const searchBoxOptions = {
+    types: ["(cities)"],
+  };
 
   const searchHandler = async () => {
-    const location = locationRef.current.value;
-    // const distance = distanceRef.current.value;
     const maxGroupSize = maxGroupSizeRef.current.value;
 
     if (query === "" || maxGroupSize === "") {
@@ -30,7 +23,7 @@ const SearchBar = () => {
     }
 
     const res = await fetch(
-      `${BASE_URL}/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}`
+      `/api/v1/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}`
     );
 
     if (!res.ok) alert("Something went wrong");
@@ -40,48 +33,35 @@ const SearchBar = () => {
     navigate(`/tours/search?city=${query}&maxGroupSize=${maxGroupSize}`, {
       state: {
         data: result.data,
-        totalCount: result.totalCount, 
+        totalCount: result.totalCount,
         maxGroupSize: maxGroupSize,
-        query: query
+        query: query,
       },
     });
   };
-   const handlePlacesChanged = async () => {
-     if (!searchBoxRef.current) {
-       return;
-     }
 
-     const places = searchBoxRef.current.getPlaces();
-     if (places && places.length > 0) {
-       const addressComponents = places[0].address_components;
-       let cityName = "";
-       let provinceName = "";
-       let countryName = "";
+  const handlePlacesChanged = () => {
+    if (!searchBoxRef.current) {
+      return;
+    }
 
-       for (let i = 0; i < addressComponents.length; i++) {
-         const component = addressComponents[i];
-         if (component.types.includes("locality")) {
-           cityName = component.long_name;
-         }
-         if (component.types.includes("administrative_area_level_1")) {
-           provinceName = component.long_name;
-         }
-         if (component.types.includes("country")) {
-           countryName = component.long_name;
-         }
-       }
+    const places = searchBoxRef.current.getPlaces();
+    if (places && places.length > 0) {
+      const addressComponents = places[0].address_components;
+      let cityName = "";
 
-       const fullAddress = `${cityName}, ${provinceName}, ${countryName}`;
+      for (let i = 0; i < addressComponents.length; i++) {
+        const component = addressComponents[i];
+        if (component.types.includes("locality")) {
+          cityName = component.long_name;
+        }
+      }
 
-       if (cityName) {
-         setQuery(cityName);
-         console.log(cityName);
-       }
-     } else {
-       console.log("City not found");
-     }
-   };
-  
+      if (cityName) {
+        setQuery(cityName);
+      }
+    }
+  };
 
   return (
     <>
@@ -95,7 +75,7 @@ const SearchBar = () => {
                 </span>
                 <div>
                   <h6 className="text-center">Location</h6>
-                 
+
                   <StandaloneSearchBox
                     ref={searchBoxRef}
                     onLoad={(ref) => (searchBoxRef.current = ref)}
