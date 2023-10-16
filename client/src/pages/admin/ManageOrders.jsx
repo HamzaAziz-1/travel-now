@@ -19,37 +19,8 @@ function ManageOrders() {
       .get("/api/v1/orders")
       .then((response) => {
         const fetchedOrders = response.data.orders;
-        const userPromises = fetchedOrders.map((order) =>
-          axios.get(`/api/v1/users/${order.user}`)
-        );
-        const vendorPromises = fetchedOrders.map((order) =>
-          axios.get(`/api/v1/users/${order.orderItems[0].vendor}`)
-        );
-
-        Promise.all([...userPromises, ...vendorPromises])
-          .then((responses) => {
-            const users = responses
-              .slice(0, fetchedOrders.length)
-              .map((res) => res.data.user);
-            const vendors = responses
-              .slice(fetchedOrders.length)
-              .map((res) => res.data.user);
-            const ordersWithUserAndVendor = fetchedOrders.map(
-              (order, index) => ({
-                ...order,
-                user: users[index],
-                vendor: vendors[index],
-              })
-            );
-
-            setOrders(ordersWithUserAndVendor);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error("Error fetching data: ", error);
-            setError("Failed to fetch data");
-            setLoading(false);
-          });
+        setOrders(fetchedOrders);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -93,7 +64,7 @@ function ManageOrders() {
         return "secondary";
     }
   }
-
+console.log(orders);
   return (
     <div className="container mt-5">
       <h1 className="text-center mb-5" style={{ color: "#4b6584" }}>
@@ -136,7 +107,7 @@ function ManageOrders() {
                 <td>{order._id}</td>
                 <td>
                   <Link to={`/tour/${item.tour}`} className="custom-link">
-                    {item.name}
+                    Tour
                   </Link>
                 </td>
                 <td>
@@ -146,10 +117,10 @@ function ManageOrders() {
                 </td>
                 <td>
                   <Link
-                    to={`/users/${order.vendor._id}`}
+                    to={`/users/${item.vendor._id}`}
                     className="custom-link"
                   >
-                    {order.vendor.name}
+                    {item.vendor.name}
                   </Link>
                 </td>
                 <td>{order.total}</td>

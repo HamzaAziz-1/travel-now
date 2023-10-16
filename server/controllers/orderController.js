@@ -97,18 +97,50 @@ const createOrder = async (req, res) => {
 };
 
 const getAllOrders = async (req, res) => {
-   
-     const ordersStatus = await Order.find({ status: { $in: ["paid"] } });
-     for (const order of ordersStatus) {
-       if (order.orderItems[0].endTime && order.orderItems[0].endTime <= new Date()) {
-         order.status = "completed";
-         await order.save();
-       }
-     }
-   
-  const orders = await Order.find({ status: { $ne: "pending" } });
-  res.status(StatusCodes.OK).json({ orders, count: orders.length });
+    try {
+        const ordersStatus = await Order.find({ status: 'paid' })
+
+        for (const order of ordersStatus) {
+            let allItemsCompleted = true; 
+            for (const orderItem of order.orderItems) {
+                if (
+                    orderItem.endTime &&
+                    new Date(orderItem.date) <= new Date() && 
+                    new Date(orderItem.endTime) <= new Date() 
+                ) {
+                    let timeSlotIsValid = false; 
+                    const currentTime = new Date();
+                    for (const timeSlot of orderItem.timeSlots) {
+                        const startTime = new Date(orderItem.date + ' ' + timeSlot.start);
+                        const endTime = new Date(orderItem.date + ' ' + timeSlot.end);
+                        if (startTime <= currentTime && currentTime <= endTime) {
+                            timeSlotIsValid = true;
+                            break;
+                        }
+                    }
+                    if (!timeSlotIsValid) {
+                        allItemsCompleted = false;
+                        break; 
+                    }
+                }
+            }
+            
+            if (allItemsCompleted) {
+                order.status = 'completed';
+                await order.save();
+            }
+        }
+
+      const orders = await Order.find({ status: { $ne: 'pending' } })
+            .populate('user', 'name')
+            .populate('orderItems.vendor', 'name');
+
+        res.status(StatusCodes.OK).json({ orders, count: orders.length });
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
+    }
 };
+
 const getSingleOrder = async (req, res) => {
   const { id: orderId } = req.params;
   const order = await Order.findOne({ _id: orderId });

@@ -1,86 +1,73 @@
 import { useEffect, useState } from "react";
 import "../../styles/tour-details.css";
-import { Container, Row, Col } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import calculateAvgRating from "../../utils/avgRating";
-import Newsletter from "../../shared/Newsletter";
 import Carousel from "react-bootstrap/Carousel";
+import { Container, Row, Col } from "reactstrap";
+import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import {
+  FaStar,
+  FaMapMarkedAlt,
+  FaMoneyBillWave,
+  FaClock,
+  FaUsers,
+} from "react-icons/fa";
 import Spinner from "../../components/Spinner/Spinner";
-import { toast } from "react-toastify";
 
-const TourDetailsAdmin = () => {
-  const useFetch = (url) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-      const fetchData = async () => {
-        setLoading(true);
-        try {
-          const res = await fetch(url);
-
-          if (!res.ok) {
-            setError("failed to fetch");
-          }
-          const result = await res.json();
-
-          setData(result.tour);
-          setLoading(false);
-        } catch (err) {
-          setError(err.message);
-          setLoading(false);
-        }
-      };
-
-      fetchData();
-    }, [url]);
-
-    return {
-      data,
-      error,
-      loading,
-    };
-  };
-
+const TourDetails = () => {
   const [tourVendor, setTourVendor] = useState(null);
   const { id } = useParams();
+  const [reviews, setReviews] = useState([]);
+ 
 
   // fetch data from database
-  const { data: tour, loading, error } = useFetch(`tours/${id}`);
-
-  // destructure properties from tour object
-  const {
-    images,
-    name,
-    description,
-    price,
-    reviews,
-    city,
-    duration,
-    availableDays,
-    timeSlots,
-    vendor,
-  } = tour;
-
-  const { totalRating, avgRating } = calculateAvgRating(reviews);
+  const { data, loading, error } = useFetch(`/api/v1/tours/${id}`);
+  const tour = data?.tour;
+  useEffect(() => {
+    fetchReviews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
     const fetchTourVendor = async () => {
-      try {
-        const response = await axios.get(`/api/v1/users/${vendor}`);
-        setTourVendor(response.data);
-      } catch (error) {
-        toast.error("Error fetching tour vendor data");
+      if (tour && tour?.vendor) {
+        try {
+          const response = await axios.get(`/api/v1/users/${tour.vendor}`);
+          setTourVendor(response.data);
+        } catch (error) {
+          console.error("Error fetching tour vendor data:", error);
+        }
       }
     };
     fetchTourVendor();
-  }, [tour, vendor]);
+  }, [tour]);
 
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get(`/api/v1/reviews/tour/${id}`);
+      setReviews(response.data.reviews);
+    } catch (error) {
+      console.error("Failed to fetch reviews:", error);
+    }
+  };
+  if (loading) {
+    return <Spinner />;
+  }
+
+  const {
+    images,
+    title,
+    description,
+    price,
+    city,
+    duration,
+    availableDays,
+    timeSlots,
+    averageRating
+  } = tour;
   return (
     <>
       <section>
@@ -88,7 +75,7 @@ const TourDetailsAdmin = () => {
           {loading && <Spinner />}
           {error && <h4 className="text-center pt-5">{error}</h4>}
           {!loading && !error && (
-            <Row className="justify-content-center">
+            <Row className="align-items-center justify-content-center">
               <Col lg="8">
                 <div className="tour__content">
                   <Carousel>
@@ -99,24 +86,21 @@ const TourDetailsAdmin = () => {
                     ))}
                   </Carousel>
 
-                  <div className="tour__info">
-                    <h2>{name}</h2>
+                  <div className="tour__info text-center">
+                    <h2>{title}</h2>
 
-                    <div className="d-flex align-items-center gap-5">
+                    <div className="d-flex gap-5 tour-detail-icons">
                       <span className="tour__rating d-flex align-items-center gap-1">
-                        <i
-                          className="ri-star-s-fill"
-                          style={{ color: "var(--secondary-color)" }}
-                        ></i>
-                        {avgRating === 0 ? null : avgRating}
-                        {totalRating === 0 ? (
+                        <FaStar style={{ color: "var(--secondary-color)" }} />
+                        {averageRating === 0 ? null : averageRating}
+                        {averageRating === 0 ? (
                           "Not rated"
                         ) : (
                           <span>({reviews?.length})</span>
                         )}
                       </span>
 
-                      <span className="tour__availability">
+                      <span className="tour__availability d-flex gap-5">
                         Available days:{" "}
                         {availableDays &&
                           availableDays.map((day, index) => (
@@ -140,21 +124,21 @@ const TourDetailsAdmin = () => {
 
                     <div className="tour__extra-details">
                       <span>
-                        <i className="ri-map-pin-2-line"></i> {city}
+                        <FaMapMarkedAlt className="tour-icon" /> {city}
                       </span>
                       <span>
-                        <i className="ri-money-dollar-circle-line"></i> Rs{" "}
-                        {price} /per person
+                        <FaMoneyBillWave className="tour-icon" /> Rs {price}{" "}
+                        /per person
                       </span>
                       <span>
-                        <i className="ri-map-pin-time-line"></i> {duration} days
+                        <FaClock className="tour-icon" /> {duration} days
                       </span>
                       <span>
-                        <i className="ri-group-line"></i>
+                        <FaUsers className="tour-icon" />
                         {tourVendor && (
                           <Link
+                            className="tour-link"
                             to={`/users/${tourVendor.user._id}`}
-                            className="custom-link"
                           >
                             {tourVendor.user.name}
                           </Link>
@@ -164,15 +148,17 @@ const TourDetailsAdmin = () => {
                     <h5>Description</h5>
                     <p>{description}</p>
                   </div>
+
+                 
+                  {/* ========== tour reviews section end =========== */}
                 </div>
               </Col>
             </Row>
           )}
         </Container>
       </section>
-      <Newsletter />
     </>
   );
 };
 
-export default TourDetailsAdmin;
+export default TourDetails;
