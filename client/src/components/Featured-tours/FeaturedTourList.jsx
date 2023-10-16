@@ -43,11 +43,12 @@ const FeaturedTourList = () => {
     data: featuredTours,
     loading,
     error,
-  } = useFetch(`/tours/search/getFeaturedTours`);
-
+  } = useFetch(`/api/v1/tours/search/getFeaturedTours`);
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <>
-      {loading && <Spinner />}
       {error && <h4>{error}</h4>}
       {!loading &&
         !error &&
