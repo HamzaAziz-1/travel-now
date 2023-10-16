@@ -8,7 +8,7 @@ import calculateAvgRating from "./../utils/avgRating";
 import Booking from "../components/Booking/Booking";
 import Newsletter from "./../shared/Newsletter";
 import { Alert } from "react-bootstrap";
-import { BASE_URL } from "./../utils/config";
+import useFetch from "../hooks/useFetch";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "./../context/AuthContext";
@@ -22,52 +22,51 @@ import {
 import Spinner from "../components/Spinner/Spinner";
 
 const TourDetails = () => {
-  const useFetch = (url) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-      const fetchData = async () => {
-        setLoading(true);
-        try {
-          const res = await fetch(url);
-
-          if (!res.ok) {
-            setError("failed to fetch");
-          }
-          const result = await res.json();
-
-          setData(result.tour);
-          setLoading(false);
-        } catch (err) {
-          setError(err.message);
-          setLoading(false);
-        }
-      };
-
-      fetchData();
-    }, [url]);
-
-    return {
-      data,
-      error,
-      loading,
-    };
-  };
-
   const [tourVendor, setTourVendor] = useState(null);
   const { id } = useParams();
   const reviewMsgRef = useRef("");
   const [tourRating, setTourRating] = useState(null);
   const { user } = useGlobalContext();
   const [reviews, setReviews] = useState([]);
+  const reviewTitleRef = useRef("");
 
   // fetch data from database
-  const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
+  const { data, loading, error } = useFetch(`/api/v1/tours/${id}`);
+  const tour= data?.tour
+  useEffect(() => {
+    fetchReviews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
-  // destructure properties from tour object
+ useEffect(() => {
+   window.scrollTo(0, 0);
+
+   const fetchTourVendor = async () => {
+     if (tour && tour?.vendor) {
+       try {
+         const response = await axios.get(`/api/v1/users/${tour.vendor}`);
+         setTourVendor(response.data);
+       } catch (error) {
+         console.error("Error fetching tour vendor data:", error);
+       }
+     }
+   };
+   fetchTourVendor();
+ }, [tour]);
+
+
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get(`/api/v1/reviews/tour/${id}`);
+      setReviews(response.data.reviews);
+    } catch (error) {
+      console.error("Failed to fetch reviews:", error);
+    }
+  };
+  if (loading) {
+    return <Spinner />;
+  }
+ 
   const {
     images,
     title,
@@ -77,14 +76,11 @@ const TourDetails = () => {
     duration,
     availableDays,
     timeSlots,
-    vendor,
   } = tour;
-
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   // format date
   const options = { day: "numeric", month: "long", year: "numeric" };
-  const reviewTitleRef = useRef("");
 
   // submit request to the server
 
@@ -121,34 +117,6 @@ const TourDetails = () => {
       alert(err.response.data.msg);
     }
   };
-
-  const fetchReviews = async () => {
-    try {
-      const response = await axios.get(`/api/v1/reviews/tour/${id}`);
-      setReviews(response.data.reviews);
-    } catch (error) {
-      console.error("Failed to fetch reviews:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchReviews();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-
-    const fetchTourVendor = async () => {
-      try {
-        const response = await axios.get(`/api/v1/users/${vendor}`);
-        setTourVendor(response.data);
-      } catch (error) {
-        console.error("Error fetching tour vendor data:", error);
-      }
-    };
-    fetchTourVendor();
-  }, [tour, vendor]);
 
   return (
     <>

@@ -26,23 +26,30 @@ const Booking = ({ tour }) => {
     fullName: user?.name,
     phone: user?.phoneNo,
     guestSize: 1,
-    bookAt: "",
     startDate: "",
     endDate: "",
     date: new Date(),
   });
   const [orderItem, setOrderItem] = useState({
-    vendor: tour.vendor,
-    duration: tour.duration,
-    price: tour.price,
+    vendor: tour?.vendor,
+    duration: tour?.duration,
+    price: tour?.price,
     availableDays: [],
     timeSlots: [],
     date: new Date(),
     amount: 1,
-    tour: tour._id,
+    tour: tour?._id,
   });
 
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({
+    fullName: "",
+    phone: "",
+    selectedDay: "",
+    selectedTimeSlot: "",
+    guestSize: "",
+  });
+  const [isValid, setIsValid] = useState(false);
+
   // Converts a date to a day of the week (e.g., Monday, Tuesday, etc.)
   const getDayName = (date) => {
     const days = [
@@ -55,6 +62,34 @@ const Booking = ({ tour }) => {
       "Saturday",
     ];
     return days[date.getDay()];
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    // Validate each input
+    if (booking.fullName === "") {
+      errors.fullName = "Full Name is required";
+    }
+    if (booking.phone === "") {
+      errors.phone = "Phone Number is required";
+    }
+    if (selectedDay === "") {
+      errors.selectedDay = "Please select a day";
+    }
+    if (selectedTimeSlot === "") {
+      errors.selectedTimeSlot = "Please select a time slot";
+    }
+    if (booking.guestSize < 1 || booking.guestSize > 4) {
+      errors.guestSize = "Guest size must be between 1 and 4";
+    }
+
+    // Set form errors
+    setFormErrors(errors);
+
+    // Check if there are no errors
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+    setIsValid(!hasErrors);
   };
 
   const handleChange = (e) => {
@@ -93,47 +128,28 @@ const Booking = ({ tour }) => {
   const serviceFee = 500;
   const totalAmount =
     Number(price) * Number(booking.guestSize) + Number(serviceFee);
-  // send data to the server
+
   const handleClick = async (e) => {
     e.preventDefault();
 
     // Validate the form
-    const errors = {};
-    let isValid = true;
+    validateForm();
 
-    // Check if all fields are filled
-    for (const key in booking) {
-      if (booking[key] === "") {
-        errors[key] = "This field is required";
-        isValid = false;
-      }
-    }
-
-    // Check if selected day and time slot are selected
-    if (!selectedDay || !selectedTimeSlot) {
-      errors["selectedDay"] = "Please select an available day";
-      errors["selectedTimeSlot"] = "Please select a time slot";
-      isValid = false;
-    }
-
-    if (booking.guestSize <= 0) {
-      errors["guestSize"] = "Please select a valid guest size";
-      // eslint-disable-next-line no-unused-vars
-      isValid = false;
-    }
-
-    setFormErrors(errors);
-
-    // Check if user is logged in
     if (!user || user === undefined || user === null) {
       toast.error("Please Login!");
-      return; 
+      return;
     }
+
     if (user.role !== "tourist") {
       toast.error("Only Tourists can book a tour");
       return;
     }
-   
+
+    if (!isValid) {
+      console.log("Validation failed");
+      return;
+    }
+
     try {
       const cartItems = [
         {
@@ -149,9 +165,9 @@ const Booking = ({ tour }) => {
       navigate("/checkout", {
         state: { order: result.order, clientSecret: result.clientSecret },
       });
-    } catch (error) {
-      const { msg } = error.response.data;
-      toast.error(msg ? msg : "An error occured");
+    } catch (err) {
+      const msg = err?.response?.data?.msg;
+      toast.error(msg ? msg : "An error occurred");
     }
   };
 
@@ -185,7 +201,7 @@ const Booking = ({ tour }) => {
               placeholder="Full Name"
               id="fullName"
               required
-              value={user?.name}
+              value={booking.fullName}
               disabled
               onChange={handleChange}
             />
@@ -203,7 +219,7 @@ const Booking = ({ tour }) => {
               id="phone"
               required
               disabled
-              value={user?.phoneNo}
+              value={booking.phone}
               onChange={handleChange}
             />
             {formErrors.phone && (
@@ -273,7 +289,7 @@ const Booking = ({ tour }) => {
             )}
           </FormGroup>
           <Form.Label>
-            <b>Enter number of people</b>
+            <b>Enter the number of people</b>
           </Form.Label>
           <FormGroup>
             <input
