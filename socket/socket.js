@@ -44,7 +44,7 @@ io.on('connection',(socket)=>{
 
      });
      socket.on('sendMessage',(data)=>{
-          const user = findFriend(data.reseverId);
+          const user = findFriend(data.receiverId);
           
           if(user !== undefined){
                socket.to(user.socketId).emit('getMessage', data)
@@ -73,11 +73,11 @@ io.on('connection',(socket)=>{
 
 
      socket.on('typingMessage',(data)=>{
-          const user = findFriend(data.reseverId);
+          const user = findFriend(data.receiverId);
           if(user !== undefined){
                socket.to(user.socketId).emit('typingMessageGet',{
                     senderId : data.senderId,                   
-                    reseverId :  data.reseverId,
+                    receiverId :  data.receiverId,
                     msg : data.msg                    
                      
                })

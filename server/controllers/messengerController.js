@@ -88,7 +88,8 @@ module.exports.messageUploadDB = async (req, res) =>{
                message: insertMessage
           })
 
-     }catch (error){
+     } catch (error) {
+          console.log(error);
           res.status(500).json({
                error: {
                     errorMessage : 'Internal Sever Error'
@@ -158,7 +159,7 @@ module.exports.ImageMessageSend = (req,res) => {
               imageName 
           } = fields;
 
-          const newPath = __dirname + `../../../client/public/image/${imageName}`
+          const newPath = __dirname + `../../client/public/image/${imageName}`
           files.image.originalFilename = imageName;
 
           try{
