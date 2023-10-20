@@ -1,5 +1,5 @@
 require("express-async-errors");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 // express
 
 const express = require("express");
@@ -23,7 +23,7 @@ const userRouter = require("./routes/userRoutes");
 const tourRouter = require("./routes/tourRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const orderRouter = require("./routes/orderRoutes");
-const messengerRouter = require("./routes/messengerRoute")
+const messengerRouter = require("./routes/messengerRoute");
 // middlewares
 const notFoundMiddleware = require("./middlewares/not-found");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
