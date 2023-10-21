@@ -1,14 +1,23 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
-import { FaUserFriends, FaClipboardList, FaEye, FaUser } from "react-icons/fa";
-import { Outlet } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation, Outlet } from "react-router-dom";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import {
+  FaUserFriends,
+  FaClipboardList,
+  FaEye,
+  FaUser,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 
 const VendorDashboard = () => {
   const [activeLink, setActiveLink] = useState("");
   const location = useLocation();
   const sidebarRef = useRef(null);
+  const rightContentRef = useRef(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
+
   const links = [
     {
       text: "Create Tour",
@@ -31,74 +40,82 @@ const VendorDashboard = () => {
       icon: <FaClipboardList />,
     },
   ];
-  useEffect(() => {
-    const updateSidebarHeight = () => {
-      const contentHeight = sidebarRef.current.scrollHeight;
-      const windowHeight = window.innerHeight;
-
-      // Set the sidebar height based on the content height and window height
-      if (contentHeight < windowHeight) {
-        sidebarRef.current.style.height = "100";
-      } else {
-        sidebarRef.current.style.height = "auto";
-      }
-    };
-
-    // Call the function on component mount and window resize
-    updateSidebarHeight();
-    window.addEventListener("resize", updateSidebarHeight);
-
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", updateSidebarHeight);
-    };
-  }, []);
 
   const handleLinkClick = (path) => {
     setActiveLink(path);
+    if (isSmallScreen) {
+      setIsSidebarOpen(false);
+    }
   };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    const updateSidebarHeight = () => {
+      const contentHeight = rightContentRef.current.scrollHeight;
+      const windowHeight = window.innerHeight;
+      sidebarRef.current.style.height =
+        contentHeight < windowHeight ? "105vh" : "auto";
+    };
+
+    updateSidebarHeight(); // Initial call to set the sidebar height
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", updateSidebarHeight);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", updateSidebarHeight);
+    };
+  }, []);
 
   return (
     <div className="dashboard mt-5 pt-2">
       <Container fluid>
         <Row>
-          <Col
-            md={2}
-            className="dashboard__sidebar"
-            ref={sidebarRef}
-            style={{ overflow: "hidden" }}
-            bg="dark"
-            variant="dark"
-          >
-            <ul className="sidebar__menu">
-              {links.map((link, index) => (
-                <li
-                  key={index}
-                  className={`sidebar__menu-item ${
-                    location.pathname === link.path ? "active" : ""
-                  }`}
-                >
-                  <Link
-                    to={link.path}
-                    onClick={() => handleLinkClick(link.path)}
-                    className="sidebar__menu-link"
+          {isSidebarOpen || !isSmallScreen ? (
+            <Col md={2} className="dashboard__sidebar" ref={sidebarRef}>
+              <ul className="sidebar__menu">
+                {links.map((link, index) => (
+                  <li
+                    key={index}
+                    className={`sidebar__menu-item ${
+                      location.pathname === link.path ? "active" : ""
+                    }`}
                   >
-                    <span className="sidebar__menu-icon">{link.icon}</span>
-                    <span className="sidebar__menu-text">{link.text}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Col>
+                    <Link
+                      to={link.path}
+                      onClick={() => handleLinkClick(link.path)}
+                      className="sidebar__menu-link"
+                    >
+                      <span className="sidebar__menu-icon">{link.icon}</span>
+                      <span className="sidebar__menu-text">{link.text}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+          ) : null}
 
-          <Col className="" md={10}>
-            <Outlet />
+          <Col className="" md={isSidebarOpen || !isSmallScreen ? 10 : 12}>
+            {isSmallScreen ? (
+              <Button onClick={toggleSidebar} className="toggle-button">
+                {isSidebarOpen ? <FaTimes /> : <FaBars />}
+              </Button>
+            ) : null}
+            <div ref={rightContentRef} style={{ minHeight: "100vh" }}>
+              <Outlet />
+            </div>
           </Col>
         </Row>
       </Container>
     </div>
   );
 };
-
 
 export default VendorDashboard;
