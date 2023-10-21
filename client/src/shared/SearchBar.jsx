@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
 import "./search-bar.css";
-import { Col, Form, FormGroup } from "reactstrap";
+import { Col, Form, FormGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
+
 const SearchBar = () => {
   const maxGroupSizeRef = useRef(0);
   const [query, setQuery] = useState("");
@@ -64,57 +65,55 @@ const SearchBar = () => {
   };
 
   return (
-    <>
-      <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
-        <Col lg="12">
-          <div className="search__bar mx-auto">
-            <Form className="d-flex align-items-center gap-2">
-              <FormGroup className="d-flex gap-3 form__group form__group-fast">
-                <span>
-                  <i className="ri-map-pin-line"></i>
-                </span>
-                <div>
-                  <h6 className="text-center">Location</h6>
-
-                  <StandaloneSearchBox
-                    ref={searchBoxRef}
-                    onLoad={(ref) => (searchBoxRef.current = ref)}
-                    onPlacesChanged={handlePlacesChanged}
-                    options={searchBoxOptions}
-                  >
-                    <input
-                      type="text"
-                      className="text-center"
-                      placeholder="Search for a city"
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                    />
-                  </StandaloneSearchBox>
-                </div>
-              </FormGroup>
-
-              <FormGroup className="d-flex gap-3 form__group form__group-last">
-                <span>
-                  <i className="ri-group-line"></i>
-                </span>
-                <div>
-                  <h6>Max People</h6>
-                  <input type="number" placeholder="0" ref={maxGroupSizeRef} />
-                </div>
-              </FormGroup>
-
-              <span
-                className="search__icon"
-                type="submit"
-                onClick={searchHandler}
-              >
-                <i className="ri-search-line"></i>
+    <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+      <Col lg="12">
+        <div className="search__bar mx-auto">
+          <Form className="d-flex align-items-center gap-2">
+            <FormGroup className="d-flex gap-2 form__group">
+              <span>
+                <i className="ri-map-pin-line"></i>
               </span>
-            </Form>
-          </div>
-        </Col>
-      </LoadScript>
-    </>
+              <div className="flex-grow-1">
+                <h6 className="text-center">Location</h6>
+                <StandaloneSearchBox
+                  ref={searchBoxRef}
+                  onLoad={(ref) => (searchBoxRef.current = ref)}
+                  onPlacesChanged={handlePlacesChanged}
+                  options={searchBoxOptions}
+                >
+                  <input
+                    type="text"
+                    className="form-control text-center shadow-none"
+                    placeholder="Search for a city"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                </StandaloneSearchBox>
+              </div>
+            </FormGroup>
+
+            <FormGroup className="d-flex gap-2 form__group">
+              <span>
+                <i className="ri-group-line"></i>
+              </span>
+              <div className="flex-grow-1">
+                <h6>Max People</h6>
+                <input
+                  type="number"
+                  className="form-control shadow-none"
+                  placeholder="0"
+                  ref={maxGroupSizeRef}
+                />
+              </div>
+            </FormGroup>
+
+            <span className="search__icon" onClick={searchHandler}>
+              <i className="ri-search-line"></i>
+            </span>
+          </Form>
+        </div>
+      </Col>
+    </LoadScript>
   );
 };
 

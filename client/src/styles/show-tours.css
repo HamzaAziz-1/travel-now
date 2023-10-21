@@ -1,3 +1,4 @@
+/* Custom styling for the entire table */
 .show-tours-container {
   padding: 2em;
 }
@@ -6,14 +7,20 @@
   text-align: center;
   margin-top: 1em;
   padding: 1em;
-  /* background-color: #f4f4f4; */
+  background-color: #f4f4f4; /* Light gray background color */
   border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
-
+.form-select-filter{
+  width: 20vw;
+  border-radius: 4px;
+  outline: none;
+}
 .tours-container h1 {
   color: #4b6584;
   font-weight: bold;
-  margin-bottom: 5em;
+  margin-bottom: 2em;
+  font-size: 40px; /* Adjust the font size */
 }
 
 .tours-table thead {
@@ -25,104 +32,106 @@
   background-color: #f1f1f1;
 }
 
-.tours-table button:hover {
-  transform: scale(1.05);
-}
-
-.tour-link {
-  color: #000;
+/* Style for links */
+.custom-link {
+  color: #0084ff;
+  font-weight: bold;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.tour-link:hover {
-  color: #0084ff;
+.custom-link:hover {
+  color: #0056b3; /* Slightly darker blue on hover */
 }
 
-.action-link .btn {
-  transition: transform 0.3s ease;
+/* Custom styling for buttons */
+.action-button {
+  padding: 8px 16px; /* Increase padding for buttons */
+  margin: 4px; /* Reduce margin for buttons */
+  border: none;
+  cursor: pointer;
+  border-radius: 4px; /* Slightly rounded corners */
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-.tours-table button {
-  transition: background-color 0.3s ease;
+.action-button:hover {
+  transform: scale(1.05);
 }
 
-.tours-table button:active {
+.action-button:active {
   transform: scale(0.95);
 }
 
-/* Colors for buttons */
-
-.btn-outline-success {
-  color: #009688;
-  border-color: #009688;
-}
-
-.btn-outline-success:hover {
+/* Adjust the colors for buttons */
+.action-button.update-button {
+  background-color: #2196f3; /* Blue */
   color: #fff;
-  background-color: #009688;
-  border-color: #009688;
 }
 
-.btn-outline-info {
-  color: #2196f3;
-  border-color: #2196f3;
-}
-
-.btn-outline-info:hover {
+.action-button.verify-button {
+  background-color: #4CAF50; /* Green */
   color: #fff;
-  background-color: #2196f3;
-  border-color: #2196f3;
 }
 
-.btn-outline-warning {
-  color: #ff5722;
+.action-button.unverify-button {
+  background-color: #ff5722; /* Orange */
+  color: #fff;
+}
+
+.action-button.feature-button {
+  background-color: #FFC107; /* Yellow */
+  color: #fff;
+}
+
+.action-button.unfeature-button {
+  background-color: #f1c40f; /* Slightly darker yellow */
+  color: #fff;
+}
+
+.action-button.delete-button {
+  background-color: #F44336; /* Red */
+  color: #fff;
+}
+
+/* Custom pagination styling */
+.custom-pagination-container {
+  text-align: center;
+  margin-top: 1em;
+}
+
+.custom-pagination-container button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  text-transform: capitalize;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.custom-pagination-container button:hover {
+  transform: scale(1.05);
+}
+
+.custom-pagination-container button:active {
+  transform: scale(0.95);
+}
+
+/* Update the colors for pagination buttons */
+.custom-pagination-container button.btn-outline-warning {
+  color: #ff5722; /* Orange */
   border-color: #ff5722;
 }
 
-.btn-outline-warning:hover {
+.custom-pagination-container button.btn-outline-warning:hover {
   color: #fff;
   background-color: #ff5722;
   border-color: #ff5722;
 }
 
-.btn-outline-danger {
-  color: #f44336;
-  border-color: #f44336;
-}
-
-.btn-outline-danger:hover {
-  color: #fff;
-  background-color: #f44336;
-  border-color: #f44336;
-}
-
-.custom-link {
-  color: #3f51b5;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.custom-link:hover {
-  color: #1a237e;
-}
-
-.pagination span {
-  width: 2rem;
-  height: 2rem;
-  padding: 5px;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--secondary-color);
-  color: var(--heading-color);
-  font-size: 1.1rem;
-  cursor: pointer;
-  font-weight: 700;
-}
-
 .active__page {
-  background: var(--secondary-color);
-  color: #fff !important;
+  background: #ff5722;
+  color: #fff;
 }

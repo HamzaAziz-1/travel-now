@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
@@ -112,10 +112,9 @@ const ShowTours = () => {
         <h1 className="mb-4">Tour Packages</h1>
         <div className="filter-container mb-4">
           <select
-            id="filter"
-            value={filter}
+            id="filter"            value={filter}
             onChange={handleFilterChange}
-            className="form-select"
+            className="form-select-filter"
           >
             <option value="all">All</option>
             <option value="verified">Verified</option>
@@ -148,21 +147,23 @@ const ShowTours = () => {
                       className="action-link"
                       to={`/vendor/dashboard/update-tour/${tour.id}`}
                     >
-                      <Button variant="outline-info">Update</Button>
+                      <Button className="action-button update-button">
+                        Update
+                      </Button>
                     </Link>
                   </td>
                   {user && user.role === "admin" && (
                     <td>
                       {!tour.verified ? (
                         <Button
-                          variant="outline-success"
+                          className="action-button verify-button"
                           onClick={() => handleVerify(tour.id)}
                         >
                           Verify
                         </Button>
                       ) : (
                         <Button
-                          variant="outline-warning"
+                          className="action-button unverify-button"
                           onClick={() => handleVerify(tour.id)}
                         >
                           Unverify
@@ -174,14 +175,14 @@ const ShowTours = () => {
                     <td>
                       {!tour.featured ? (
                         <Button
-                          variant="outline-info"
+                          className="action-button feature-button"
                           onClick={() => handleFeatured(tour.id)}
                         >
                           Feature
                         </Button>
                       ) : (
                         <Button
-                          variant="outline-warning"
+                          className="action-button unfeature-button"
                           onClick={() => handleFeatured(tour.id)}
                         >
                           Unfeature
@@ -191,7 +192,7 @@ const ShowTours = () => {
                   )}
                   <td>
                     <Button
-                      variant="outline-danger"
+                      className="action-button delete-button"
                       onClick={() => handleDelete(tour.id)}
                     >
                       Delete
