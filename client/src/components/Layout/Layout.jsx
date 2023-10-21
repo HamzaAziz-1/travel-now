@@ -17,7 +17,17 @@ const Layout = () => {
 
   return (
     <>
-      <ToastContainer position="top-center" />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {!shouldExcludeHeader && <Header />}
       <Routers />
       {!shouldExcludeFooter && <Footer />}

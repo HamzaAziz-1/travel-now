@@ -21,7 +21,13 @@ router
   .patch(authenticateUser, authorizePermissions("admin"), blockUser);
 
 router.route("/showMe").get(authenticateUser, showCurrentUser);
-router.route("/updateUser").put(authenticateUser,updateUser);
+router
+  .route("/updateUser")
+  .put(
+    authenticateUser,
+    authorizePermissions("tourist", "vendor", "admin"),
+    updateUser
+  );
 router.route("/updateUserPassword").patch(authenticateUser, updateUserPassword);
 
 router.route("/:id").get(authenticateUser, getSingleUser);

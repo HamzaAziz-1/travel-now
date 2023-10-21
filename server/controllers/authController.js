@@ -43,7 +43,7 @@ const register = async (req, res) => {
     verificationToken: user.verificationToken,
     origin,
   });
-  
+
   res.status(StatusCodes.CREATED).json({
     msg: "Success! Please check your email to verify account",
   });
@@ -107,7 +107,10 @@ const login = async (req, res) => {
     }
     refreshToken = existingToken.refreshToken;
     attachCookiesToResponse({ res, user: tokenUser, refreshToken });
-    res.status(StatusCodes.OK).json({ user });
+    const userWithoutPassword = { ...user.toObject() };
+    delete userWithoutPassword.password;
+
+    res.status(StatusCodes.OK).json({ user: userWithoutPassword });
     return;
   }
 
@@ -120,7 +123,10 @@ const login = async (req, res) => {
 
   attachCookiesToResponse({ res, user: tokenUser, refreshToken });
 
-  res.status(StatusCodes.OK).json({ user });
+  const userWithoutPassword = { ...user.toObject() };
+  delete userWithoutPassword.password;
+
+  res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 };
 const logout = async (req, res) => {
   await Token.findOneAndDelete({ user: req.user.userId });

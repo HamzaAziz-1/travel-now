@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const AppContext = createContext();
 
@@ -41,8 +42,9 @@ const AppProvider = ({ children }) => {
     try {
       await axios.delete("/api/v1/auth/logout");
       removeUser();
+      toast.success("Logout Successfully")
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.msg)
     }
   };
 

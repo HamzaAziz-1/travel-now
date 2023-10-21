@@ -1,15 +1,12 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
-const {
-  createTokenUser,
-  attachCookiesToResponse,
-} = require("../utils");
+const { createTokenUser, attachCookiesToResponse } = require("../utils");
 
 const getAllUsers = async (req, res) => {
-  const users = await User.find({ role: { $in: ["tourist", "vendor"] } }).select(
-    "-password"
-  );
+  const users = await User.find({
+    role: { $in: ["tourist", "vendor"] },
+  }).select("-password");
   res.status(StatusCodes.OK).json({ users });
 };
 
@@ -32,7 +29,7 @@ const getSingleUser = async (req, res) => {
 };
 
 const showCurrentUser = async (req, res) => {
-  const user = await User.findById(req.user.userId);
+  const user = await User.findById(req.user.userId).select("-password");
   res.status(StatusCodes.OK).json({ user });
 };
 // update user with user.save()

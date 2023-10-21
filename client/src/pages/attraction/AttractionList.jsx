@@ -19,6 +19,7 @@ import heroImg02 from "../../assets/images/hero1.jpg";
 import "../../styles/home.css";
 import Subtitle from "../../shared/Subtitle";
 import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import { toast } from "react-toastify";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
@@ -90,6 +91,9 @@ const AttractionList = () => {
   };
 
   const search = async () => {
+    if (query.length < 3 || !query.match(/^[A-Za-z\s]+$/)) {
+      return toast.error("Enter a valid city name");
+    }
     setLoading(true);
 
     try {

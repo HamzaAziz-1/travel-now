@@ -9,19 +9,19 @@ const quick__links = [
     display: "Home",
   },
   {
-    path: "/about",
-    display: "About",
-  },
-  {
     path: "/tours",
     display: "Tours",
+  },
+  {
+    path: "/search/spots",
+    display: "Discover",
   },
 ];
 
 const quick__links2 = [
   {
-    path: "/gallery",
-    display: "Gallery",
+    path: "/contact-us",
+    display: "Contact Us",
   },
   {
     path: "/login",
