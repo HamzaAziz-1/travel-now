@@ -20,49 +20,20 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import Spinner from "../components/Spinner/Spinner";
+import { toast } from "react-toastify";
 
 const TourDetails = () => {
-  const [tourVendor, setTourVendor] = useState(null);
   const { id } = useParams();
   const reviewMsgRef = useRef("");
   const [tourRating, setTourRating] = useState(null);
   const { user } = useGlobalContext();
-  const [reviews, setReviews] = useState([]);
   const reviewTitleRef = useRef("");
 
   // fetch data from database
   const { data, loading, error } = useFetch(`/api/v1/tours/${id}`);
   const tour= data?.tour
-  useEffect(() => {
-    fetchReviews();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
- useEffect(() => {
-   window.scrollTo(0, 0);
-
-   const fetchTourVendor = async () => {
-     if (tour && tour?.vendor) {
-       try {
-         const response = await axios.get(`/api/v1/users/${tour.vendor}`);
-         setTourVendor(response.data);
-       } catch (error) {
-         console.error("Error fetching tour vendor data:", error);
-       }
-     }
-   };
-   fetchTourVendor();
- }, [tour]);
 
 
-  const fetchReviews = async () => {
-    try {
-      const response = await axios.get(`/api/v1/reviews/tour/${id}`);
-      setReviews(response.data.reviews);
-    } catch (error) {
-      console.error("Failed to fetch reviews:", error);
-    }
-  };
   if (loading) {
     return <Spinner />;
   }
@@ -76,8 +47,10 @@ const TourDetails = () => {
     duration,
     availableDays,
     timeSlots,
+    averageRating,
+    reviews,
+    vendor
   } = tour;
-  const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   // format date
   const options = { day: "numeric", month: "long", year: "numeric" };
@@ -108,10 +81,8 @@ const TourDetails = () => {
       }
 
       // Show some message to user
-      alert("Review submitted successfully");
+      toast.info("Review submitted successfully");
 
-      // Refresh the reviews
-      fetchReviews();
     } catch (err) {
       console.error(err);
       alert(err.response.data.msg);
@@ -142,8 +113,8 @@ const TourDetails = () => {
                     <div className="d-flex align-items-center gap-5 tour-detail-icons">
                       <span className="tour__rating d-flex align-items-center gap-1">
                         <FaStar style={{ color: "var(--secondary-color)" }} />
-                        {avgRating === 0 ? null : avgRating}
-                        {totalRating === 0 ? (
+                        {averageRating === 0 ? null : averageRating}
+                        {averageRating === 0 ? (
                           "Not rated"
                         ) : (
                           <span>({reviews?.length})</span>
@@ -185,14 +156,13 @@ const TourDetails = () => {
                       </span>
                       <span>
                         <FaUsers className="tour-icon" />
-                        {tourVendor && (
+                     
                           <Link
                             className="tour-link"
-                            to={`/users/${tourVendor.user._id}`}
+                            to={`/users/${vendor._id}`}
                           >
-                            {tourVendor.user.name}
+                            {vendor.name}
                           </Link>
-                        )}
                       </span>
                     </div>
                     <h5>Description</h5>

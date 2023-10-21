@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
 import "../../styles/tour-details.css";
 import Carousel from "react-bootstrap/Carousel";
 import { Container, Row, Col } from "reactstrap";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   FaStar,
@@ -16,43 +14,13 @@ import {
 import Spinner from "../../components/Spinner/Spinner";
 
 const TourDetails = () => {
-  const [tourVendor, setTourVendor] = useState(null);
-  const { id } = useParams();
-  const [reviews, setReviews] = useState([]);
- 
+  const { id } = useParams(); 
 
   // fetch data from database
   const { data, loading, error } = useFetch(`/api/v1/tours/${id}`);
   const tour = data?.tour;
-  useEffect(() => {
-    fetchReviews();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  console.log(tour);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-
-    const fetchTourVendor = async () => {
-      if (tour && tour?.vendor) {
-        try {
-          const response = await axios.get(`/api/v1/users/${tour.vendor}`);
-          setTourVendor(response.data);
-        } catch (error) {
-          console.error("Error fetching tour vendor data:", error);
-        }
-      }
-    };
-    fetchTourVendor();
-  }, [tour]);
-
-  const fetchReviews = async () => {
-    try {
-      const response = await axios.get(`/api/v1/reviews/tour/${id}`);
-      setReviews(response.data.reviews);
-    } catch (error) {
-      console.error("Failed to fetch reviews:", error);
-    }
-  };
   if (loading) {
     return <Spinner />;
   }
@@ -66,7 +34,9 @@ const TourDetails = () => {
     duration,
     availableDays,
     timeSlots,
-    averageRating
+    averageRating,
+    reviews,
+    vendor
   } = tour;
   return (
     <>
@@ -135,22 +105,18 @@ const TourDetails = () => {
                       </span>
                       <span>
                         <FaUsers className="tour-icon" />
-                        {tourVendor && (
                           <Link
                             className="tour-link"
-                            to={`/users/${tourVendor.user._id}`}
+                            to={`/users/${vendor._id}`}
                           >
-                            {tourVendor.user.name}
+                            {vendor.name}
                           </Link>
-                        )}
+                      
                       </span>
                     </div>
                     <h5>Description</h5>
                     <p>{description}</p>
                   </div>
-
-                 
-                  {/* ========== tour reviews section end =========== */}
                 </div>
               </Col>
             </Row>

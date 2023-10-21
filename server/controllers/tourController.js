@@ -58,7 +58,17 @@ const getVerifiedTours = async (req, res) => {
 const getSingleTour = async (req, res) => {
   const { id: tourId } = req.params;
 
-  const tour = await Tour.findOne({ _id: tourId }).populate("reviews").limit(8);
+  const tour = await Tour.findOne({ _id: tourId })
+    .populate({
+      path: "reviews",
+      populate: {
+        path: "user", 
+        select: "name image", 
+      },
+    })
+    .limit(8)
+    .populate("vendor", "name");
+
   if (!tour) {
     throw new CustomError.NotFoundError(`No tour with id : ${tourId}`);
   }
