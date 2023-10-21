@@ -54,7 +54,7 @@ const ShowTours = () => {
       .then((res) => {
         const updatedTours = data.map((tour) => {
           if (tour.id === id) {
-            return res.data.tour; // update with the tour data from the server
+            return res.data.tour; 
           }
           return tour;
         });
@@ -103,7 +103,7 @@ const ShowTours = () => {
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
-    setCurrentPage(1); // Reset current page when filter changes
+    setCurrentPage(1); 
   };
 
   return (

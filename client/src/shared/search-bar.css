@@ -67,6 +67,10 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .search__bar {
+ 
+  width: auto;
+}
   .form__group {
     flex-basis: 100%;
   }
