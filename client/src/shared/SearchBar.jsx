@@ -3,6 +3,7 @@ import "./search-bar.css";
 import { Col, Form, FormGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import { toast } from "react-toastify";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
@@ -19,15 +20,25 @@ const SearchBar = () => {
   const searchHandler = async () => {
     const maxGroupSize = maxGroupSizeRef.current.value;
 
+   const cityPattern = /^[A-Za-z\s]+$/;
+
     if (query === "" || maxGroupSize === "") {
-      return alert("All fields are required!");
+      return toast.error("All fields are required!");
+    }
+    if (!cityPattern.test(query) || query.length<4) {
+      return toast.error("Enter a valid city name");
+    }
+    if (maxGroupSize <= 0 || maxGroupSize > 4) {
+      return toast.error("Group size should be between 1 and 4");
     }
 
     const res = await fetch(
       `/api/v1/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}`
     );
 
-    if (!res.ok) alert("Something went wrong");
+    if (!res.ok) {
+      return toast.error(res.data.msg ? res.data.msg : "Something went wrong");
+    }
 
     const result = await res.json();
 
