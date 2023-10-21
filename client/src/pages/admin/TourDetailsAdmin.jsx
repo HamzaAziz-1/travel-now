@@ -114,7 +114,7 @@ const TourDetails = () => {
                       
                       </span>
                     </div>
-                    <h5>Description</h5>
+                    <h5 className="mt-4">Description</h5>
                     <p>{description}</p>
                   </div>
                 </div>

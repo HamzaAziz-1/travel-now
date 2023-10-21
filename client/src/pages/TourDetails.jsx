@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "../styles/tour-details.css";
 import Carousel from "react-bootstrap/Carousel";
 import { Container, Row, Col, ListGroup } from "reactstrap";
 import { Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import calculateAvgRating from "./../utils/avgRating";
 import Booking from "../components/Booking/Booking";
 import Newsletter from "./../shared/Newsletter";
-import { Alert } from "react-bootstrap";
 import useFetch from "../hooks/useFetch";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -29,15 +27,13 @@ const TourDetails = () => {
   const { user } = useGlobalContext();
   const reviewTitleRef = useRef("");
 
-  // fetch data from database
   const { data, loading, error } = useFetch(`/api/v1/tours/${id}`);
-  const tour= data?.tour
-
+  const tour = data?.tour;
 
   if (loading) {
     return <Spinner />;
   }
- 
+
   const {
     images,
     title,
@@ -49,13 +45,10 @@ const TourDetails = () => {
     timeSlots,
     averageRating,
     reviews,
-    vendor
+    vendor,
   } = tour;
 
-  // format date
   const options = { day: "numeric", month: "long", year: "numeric" };
-
-  // submit request to the server
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -63,15 +56,16 @@ const TourDetails = () => {
     const reviewTitle = reviewTitleRef.current.value;
 
     if (!user) {
-      return <Alert variant="warning">Please Login!</Alert>;
+      toast.error("Please log in to leave a review");
+      return;
     }
 
     const reviewObj = {
-      tour: id, // tour ID
-      user: user.userId, // user ID
-      rating: tourRating, // rating
-      title: reviewTitle, // title of review
-      comment: reviewText, // comment text
+      tour: id,
+      user: user.userId,
+      rating: tourRating,
+      title: reviewTitle,
+      comment: reviewText,
     };
 
     try {
@@ -80,12 +74,10 @@ const TourDetails = () => {
         throw new Error("Failed to post review");
       }
 
-      // Show some message to user
       toast.info("Review submitted successfully");
-
     } catch (err) {
       console.error(err);
-      alert(err.response.data.msg);
+      toast.error(err.response.data.msg);
     }
   };
 
@@ -110,8 +102,8 @@ const TourDetails = () => {
                   <div className="tour__info text-center">
                     <h2>{title}</h2>
 
-                    <div className="d-flex align-items-center gap-5 tour-detail-icons">
-                      <span className="tour__rating d-flex align-items-center gap-1">
+                    <div className="tour-detail-icons">
+                      <span className="tour__rating align-items-center gap-1">
                         <FaStar style={{ color: "var(--secondary-color)" }} />
                         {averageRating === 0 ? null : averageRating}
                         {averageRating === 0 ? (
@@ -131,6 +123,7 @@ const TourDetails = () => {
                             </span>
                           ))}
                       </span>
+
                       <span className="tour__timeslots">
                         Time slots:{" "}
                         {timeSlots &&
@@ -156,58 +149,37 @@ const TourDetails = () => {
                       </span>
                       <span>
                         <FaUsers className="tour-icon" />
-                     
-                          <Link
-                            className="tour-link"
-                            to={`/users/${vendor._id}`}
-                          >
-                            {vendor.name}
-                          </Link>
+                        <Link className="tour-link" to={`/users/${vendor._id}`}>
+                          {vendor.name}
+                        </Link>
                       </span>
                     </div>
-                    <h5>Description</h5>
+                    <h5 className="mt-3">Description</h5>
                     <p>{description}</p>
                   </div>
 
-                  {/* ========== tour reviews section =========== */}
                   <div className="tour__reviews mt-4">
                     <h4>Reviews ({reviews?.length} reviews)</h4>
 
-                    <Form onSubmit={submitHandler} className="review-form">
+                    <Form
+                      onSubmit={submitHandler}
+                      className="review-form d-flex flex-column"
+                    >
                       <div className="d-flex align-items-center gap-3 mb-4 rating__group">
-                        <span
-                          onClick={() => setTourRating(1)}
-                          className={tourRating >= 1 ? "active" : ""}
-                        >
-                          1 <i className="ri-star-s-fill"></i>
-                        </span>
-                        <span
-                          onClick={() => setTourRating(2)}
-                          className={tourRating >= 2 ? "active" : ""}
-                        >
-                          2 <i className="ri-star-s-fill"></i>
-                        </span>
-                        <span
-                          onClick={() => setTourRating(3)}
-                          className={tourRating >= 3 ? "active" : ""}
-                        >
-                          3 <i className="ri-star-s-fill"></i>
-                        </span>
-                        <span
-                          onClick={() => setTourRating(4)}
-                          className={tourRating >= 4 ? "active" : ""}
-                        >
-                          4 <i className="ri-star-s-fill"></i>
-                        </span>
-                        <span
-                          onClick={() => setTourRating(5)}
-                          className={tourRating >= 5 ? "active" : ""}
-                        >
-                          5 <i className="ri-star-s-fill"></i>
-                        </span>
+                        {[1, 2, 3, 4, 5].map((rating) => (
+                          <span
+                            key={rating}
+                            onClick={() => setTourRating(rating)}
+                            className={`${
+                              tourRating >= rating ? "active" : ""
+                            }`}
+                          >
+                            {rating} <i className="ri-star-s-fill"></i>
+                          </span>
+                        ))}
                       </div>
 
-                      <div className="review__input" style={{ width: "50%" }}>
+                      <div className="review__input">
                         <input
                           type="text"
                           ref={reviewTitleRef}
@@ -216,11 +188,11 @@ const TourDetails = () => {
                         />
                       </div>
 
-                      <div className="review__input">
+                      <div className="review__input d-flex">
                         <input
                           type="text"
                           ref={reviewMsgRef}
-                          placeholder="share your thoughts"
+                          placeholder="Share your thoughts"
                           required
                         />
                         <button
@@ -236,7 +208,6 @@ const TourDetails = () => {
                       {reviews?.map((review, index) => (
                         <div className="review__item" key={index}>
                           <div className="text-center">
-                            {" "}
                             <img
                               className="review_box review_box_img"
                               src={review?.user?.image}
@@ -256,18 +227,16 @@ const TourDetails = () => {
                                 </p>
                               </div>
                               <span className="d-flex align-items-center">
-                                {[...Array(5)].map((star, i) => {
-                                  return (
-                                    <i
-                                      key={i}
-                                      className={
-                                        i < review.rating
-                                          ? "ri-star-s-fill"
-                                          : "ri-star-line"
-                                      }
-                                    ></i>
-                                  );
-                                })}
+                                {[...Array(5)].map((star, i) => (
+                                  <i
+                                    key={i}
+                                    className={
+                                      i < review.rating
+                                        ? "ri-star-s-fill"
+                                        : "ri-star-line"
+                                    }
+                                  ></i>
+                                ))}
                               </span>
                             </div>
 
@@ -277,7 +246,6 @@ const TourDetails = () => {
                       ))}
                     </ListGroup>
                   </div>
-                  {/* ========== tour reviews section end =========== */}
                 </div>
               </Col>
 

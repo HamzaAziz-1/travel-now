@@ -182,7 +182,7 @@ const Booking = ({ tour }) => {
           Rs {price} <span>/per person</span>
         </h3>
         <span className="tour__rating d-flex align-items-center ">
-          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} className="rating-icon" />
           {typeof averageRating === "number" && !isNaN(averageRating)
             ? averageRating === 0
               ? null

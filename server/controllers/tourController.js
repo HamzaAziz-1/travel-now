@@ -62,8 +62,8 @@ const getSingleTour = async (req, res) => {
     .populate({
       path: "reviews",
       populate: {
-        path: "user", 
-        select: "name image", 
+        path: "user",
+        select: "name image",
       },
     })
     .limit(8)
@@ -233,8 +233,6 @@ const getTourBySearch = async (req, res) => {
     });
   }
 };
-
-
 
 // get featured tour
 const getFeaturedTour = async (req, res) => {
