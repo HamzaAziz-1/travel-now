@@ -273,7 +273,7 @@ const AttractionList = () => {
                 <div className="search__bar text-center">
                   <Form className="d-flex align-items-center gap-4">
                     <FormGroup
-                      className="d-flex gap-7 form__group form__group-fast text-center"
+                      className="d-flex gap-7 form__group form__group-fast text-center align-items-center justify-content-center"
                       style={{ width: "320px" }}
                     >
                       <span>

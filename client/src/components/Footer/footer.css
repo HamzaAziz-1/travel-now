@@ -4,13 +4,14 @@
 }
 
 .footer .logo img {
-  width: 60%;
-  height: auto;
-  /* margin-bottom: 1rem; */
+   width: auto;
+  height:30px;
+  margin-bottom: 1rem;
 }
 
 .footer .logo p {
   color: var(--text-color);
+  margin-bottom: 1rem;
 }
 
 .social__links span a {

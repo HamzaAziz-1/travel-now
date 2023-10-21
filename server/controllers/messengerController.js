@@ -2,7 +2,8 @@ const User = require('../models/User');
 const Message = require('../models/Message');
 const formidable = require('formidable');
 const fs = require('fs');
-
+const { StatusCodes } = require("http-status-codes");
+const CustomError = require("../errors");
 
 const getLastMessage = async(myId, fdId) => {
      const msg = await Message.findOne({
@@ -51,8 +52,6 @@ module.exports.getFriends = async (req, res) => {
                }]
                
           }
-
-          // const filter = friendGet.filter(d=>d.id !== myId );
           res.status(200).json({success:true, friends : fnd_msg})
 
      }catch (error) {

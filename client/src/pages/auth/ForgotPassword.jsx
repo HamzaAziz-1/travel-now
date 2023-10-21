@@ -56,7 +56,7 @@ const ForgotPassword = () => {
                 <div className="user">
                   <img src={userIcon} alt="" />
                 </div>
-                <h2>Forgot Password</h2>
+                <h2 className='mt-3'>Forgot Password</h2>
                 {alert.show && (
                   <div className={`alert alert-${alert.type}`}>
                     {alert.text}
