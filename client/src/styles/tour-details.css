@@ -188,7 +188,7 @@
 }
 
 .review__input input {
-  width: 100%;
+  /* width: 100%; */
   padding: 0.5rem 0;
   border: none;
 }
@@ -196,7 +196,25 @@
 .review__input input:focus {
   outline: none;
 }
-
+.review__input {
+  align-items: center;
+  justify-content: space-between;
+  /* width: 50%; */
+  padding: 1rem;
+  border-radius: 2rem;
+  border: 1px solid var(--primary-color);
+}
+.review__input .msg__input {
+  width: 50%;
+}
+.review__input button {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+.title-input {
+  width: 50px !important;
+}
 .review__item {
   display: flex;
   align-items: center;

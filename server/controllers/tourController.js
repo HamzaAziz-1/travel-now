@@ -78,7 +78,9 @@ const getSingleTour = async (req, res) => {
 
 const getToursByVendor = async (req, res) => {
   const { id: vendorId } = req.params;
-  const tours = await Tour.find({ vendor: vendorId }).populate("reviews").populate('vendor');
+  const tours = await Tour.find({ vendor: vendorId })
+    .populate("reviews")
+    .populate("vendor");
   if (!tours) {
     throw new CustomError.NotFoundError(`No tour with id : ${vendorId}`);
   }
@@ -257,7 +259,7 @@ const getFeaturedTour = async (req, res) => {
 // get tour counts
 const getTourCount = async (req, res) => {
   try {
-    const tours = await Tour.find({});
+    const tours = await Tour.find({ verified: true });
     const tourCount = tours.length;
     res.status(200).json({ success: true, data: tourCount });
   } catch (err) {

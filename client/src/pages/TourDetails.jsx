@@ -182,9 +182,11 @@ const TourDetails = () => {
                       <div className="review__input">
                         <input
                           type="text"
+                          className="title-input"
                           ref={reviewTitleRef}
                           placeholder="Title for your review"
                           required
+                         
                         />
                       </div>
 
@@ -193,6 +195,7 @@ const TourDetails = () => {
                           type="text"
                           ref={reviewMsgRef}
                           placeholder="Share your thoughts"
+                          className="msg__input"
                           required
                         />
                         <button

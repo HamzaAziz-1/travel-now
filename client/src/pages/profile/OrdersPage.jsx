@@ -21,38 +21,8 @@ function OrdersPage() {
     axios
       .get("/api/v1/orders/showAllMyOrders")
       .then((response) => {
-        const fetchedOrders = response.data.orders;
-        const userPromises = fetchedOrders.map((order) =>
-          axios.get(`/api/v1/users/${order.user}`)
-        );
-        const vendorPromises = fetchedOrders.map((order) =>
-          axios.get(`/api/v1/users/${order.orderItems[0].vendor}`)
-        );
-
-        Promise.all([...userPromises, ...vendorPromises])
-          .then((responses) => {
-            const users = responses
-              .slice(0, fetchedOrders.length)
-              .map((res) => res.data.user);
-            const vendors = responses
-              .slice(fetchedOrders.length)
-              .map((res) => res.data.user);
-            const ordersWithUserAndVendor = fetchedOrders.map(
-              (order, index) => ({
-                ...order,
-                user: users[index],
-                vendor: vendors[index],
-              })
-            );
-
-            setOrders(ordersWithUserAndVendor);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error("Error fetching data: ", error);
-            setError("Failed to fetch data");
-            setLoading(false);
-          });
+        setOrders(response.data.orders);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -72,7 +42,7 @@ function OrdersPage() {
       </Alert>
     );
   }
-
+  console.log(orders);
   const filteredOrders = orders.filter(
     (order) => statusFilter === "all" || order.status === statusFilter
   );
@@ -98,7 +68,7 @@ function OrdersPage() {
   }
 
   return (
-    <div className="container mt-5" style={{height:"100vh"}}>
+    <div className="container mt-5" style={{ height: "100vh" }}>
       <h1 className="text-center mb-5 " style={{ color: "#4b6584" }}>
         Manage Orders
       </h1>
@@ -136,8 +106,8 @@ function OrdersPage() {
                   </Link>
                 </td>
                 <td>
-                  <Link to={`/tour/${item.tour}`} className="custom-link">
-                    {item.name}
+                  <Link to={`/tour/${item.tour._id}`} className="custom-link">
+                    {item.tour.title}
                   </Link>
                 </td>
                 {user?.role === "vendor" ? (
@@ -152,10 +122,10 @@ function OrdersPage() {
                 ) : (
                   <td>
                     <Link
-                      to={`/users/${order.vendor._id}`}
+                      to={`/users/${item?.vendor._id}`}
                       className="custom-link"
                     >
-                      {order.vendor.name}
+                      {item.vendor.name}
                     </Link>
                   </td>
                 )}
