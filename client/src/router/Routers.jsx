@@ -30,6 +30,7 @@ import Checkout from "../pages/Checkout";
 import Newsletter from "../shared/Newsletter";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
+import Messenger from "../components/Chat/Messenger";
 const Routers = () => {
   return (
     <Routes>
@@ -57,7 +58,7 @@ const Routers = () => {
           </PrivateRoute>
         }
       ></Route>
-
+      <Route path="/chat" element={<Messenger />} />
       <Route
         path="/orders/:orderId"
         exact

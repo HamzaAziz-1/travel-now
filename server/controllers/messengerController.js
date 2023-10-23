@@ -157,8 +157,8 @@ module.exports.ImageMessageSend = (req,res) => {
               receiverId,
               imageName 
           } = fields;
-
-          const newPath = __dirname + `../../client/public/image/${imageName}`
+          console.log(__dirname);
+          const newPath = __dirname + `../../../client/public/image/${imageName}`
           files.image.originalFilename = imageName;
 
           try{
@@ -189,7 +189,7 @@ module.exports.ImageMessageSend = (req,res) => {
                } )
 
           } catch (error) {
-               console.log(error);
+               
                res.status(500).json({
                     error : {
                          errorMessage: 'Internal Sever Error'

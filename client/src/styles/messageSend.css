@@ -1,0 +1,102 @@
+.message-send-section {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+.message-send-section .file {
+  display: flex;
+  padding: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--icon-color);
+}
+.message-send-section .file label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+  cursor: pointer;
+  color: var(--icon-color);
+}
+.message-send-section .file #pic {
+  display: none;
+}
+.message-send-section .file .add-image, .message-send-section .file .add-attachment, .message-send-section .file .add-gift {
+  position: fixed;
+  padding: 4px;
+  background: #212d44;
+  font-size: 14px;
+  bottom: 44px;
+  display: none;
+  color: var(--text-white);
+}
+.message-send-section .hover-attachment {
+  position: relative;
+}
+.message-send-section .hover-attachment:hover .add-attachment {
+  display: block;
+}
+.message-send-section .hover-image {
+  position: relative;
+}
+.message-send-section .hover-image:hover .add-image {
+  display: block;
+}
+.message-send-section .hover-gift {
+  position: relative;
+}
+.message-send-section .hover-gift:hover .add-gift {
+  display: block;
+}
+.message-send-section .message-type {
+  display: flex;
+  width: 70%;
+  height: 40px;
+  background-color: #dfdfdf;
+  border-radius: 50px;
+  border: none;
+  align-items: center;
+}
+.message-send-section .message-type .__form-control {
+  width: 100%;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  background-color: transparent;
+  border: none;
+}
+.message-send-section .message-type .__form-control::placeholder {
+  color: var(--text-color);
+}
+.message-send-section .message-type label {
+  font-size: 20px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.message-send-section .emoji-section {
+  width: 200px;
+  background: #0e131d;
+  position: absolute;
+  right: 60px;
+  padding: 6px;
+  bottom: 50px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0px;
+  display: none;
+}
+.message-send-section .emoji-section .emoji {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 4px;
+}
+.message-send-section .emoji-section .emoji span {
+  cursor: pointer;
+}
+.message-send-section #emoji {
+  display: none;
+}
+.message-send-section #emoji:checked ~ .emoji-section {
+  display: block;
+}
+
+/*# sourceMappingURL=messageSend.css.map */

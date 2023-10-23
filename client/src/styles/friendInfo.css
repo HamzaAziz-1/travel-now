@@ -1,0 +1,73 @@
+.friend-info {
+  padding: 12px 15px;
+  display: flex;
+  justify-content: start;
+  height: 100%;
+  flex-direction: column;
+}
+.friend-info .image-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.friend-info .image-name .__image {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+.friend-info .image-name .__image img {
+  width: 100%;
+  height: 100%;
+}
+.friend-info .image-name .active-user {
+  color: rgb(27, 238, 27);
+  margin-bottom: 3px;
+}
+.friend-info .image-name .__name h4 {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+.friend-info .others {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+}
+.friend-info .others .custom-chat, .friend-info .others .privacy, .friend-info .others .media {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 4px 0px;
+  color: var(--text-color);
+  cursor: pointer;
+}
+.friend-info .others .custom-chat h3, .friend-info .others .privacy h3, .friend-info .others .media h3 {
+  font-size: 14px;
+}
+.friend-info .others .custom-chat label, .friend-info .others .privacy label, .friend-info .others .media label {
+  cursor: pointer;
+  color: var(--text-color);
+}
+.friend-info .gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+  overflow-y: auto;
+  display: none;
+}
+.friend-info .gallery::-webkit-scrollbar {
+  display: none;
+}
+.friend-info .gallery img {
+  width: 100%;
+  height: 100%;
+}
+.friend-info #gallery {
+  display: none;
+}
+.friend-info #gallery:checked ~ .gallery {
+  display: grid;
+}

@@ -1,0 +1,116 @@
+.message-show {
+  height: 100%;
+  padding: 10px;
+  overflow-y: auto;
+}
+.message-show::-webkit-scrollbar {
+  overflow: hidden;
+}
+.message-show .friend_connect {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  color: var(--text-color);
+}
+.message-show .friend_connect img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.message-show .friend_connect h3 {
+  margin-top: 10px;
+}
+.message-show .my-message {
+  float: right;
+}
+.message-show .my-message .my-text {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 370px;
+  flex-direction: column;
+}
+.message-show .my-message .my-text img.__img, .message-show .my-message .my-text span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin: 3px 0px 0px 0px;
+  color: var(--text-color);
+}
+.message-show .my-message .my-text .my {
+  background-color: var(--my-message-bg);
+  color: var(--text-white);
+}
+.message-show .my-message .my-text .message-text {
+  text-align: end;
+  padding: 10px;
+  border-radius: 10px;
+}
+.message-show .my-message .my-text .message-text img {
+  width: 220px;
+  height: 270px;
+  margin-right: 0px;
+  border-radius: 5px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.message-show .my-message .time {
+  text-align: end;
+  padding: 5px 0px;
+  color: rgba(114, 114, 114, 0.8509803922);
+  font-size: 12px;
+}
+.message-show .fd-message {
+  float: left;
+}
+.message-show .fd-message .fd-text {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 370px;
+}
+.message-show .fd-message .fd-text .fd {
+  background-color: var(--fd-message-bg);
+  color: var(--text-color);
+}
+.message-show .fd-message .fd-text .message-text {
+  text-align: start;
+  border-radius: 10px;
+}
+.message-show .fd-message .fd-text .message-text img {
+  width: 220px;
+  height: 270px;
+  margin-right: 0px;
+  border-radius: 5px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.image-message-time, .image-message {
+  display: flex;
+}
+.image-message-time img, .image-message img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.image-message-time .message-text, .image-message .message-text {
+  padding: 8px;
+  color: #fff;
+  background-color: #017aff;
+  font-size: 14px;
+  font-weight: 400;
+}
+.image-message-time .time, .image-message .time {
+  padding: 5px 0px;
+  color: rgba(114, 114, 114, 0.8509803922);
+  font-size: 12px;
+}
+
+.typing-message {
+  padding: 0px 10px;
+}

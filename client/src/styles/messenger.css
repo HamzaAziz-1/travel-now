@@ -1,0 +1,127 @@
+.messenger {
+  width: 100%;
+  height: 100vh;
+  background-color: #ffffff;
+}
+.messenger .__row {
+  height: 100%;
+}
+.messenger .__row .__col-3 .left-side {
+  padding: 5px 0px;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: start;
+}
+.messenger .__row .__col-3 .left-side .top {
+  display: flex;
+  flex-direction: __row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 8px;
+}
+.messenger .__row .__col-3 .left-side .top .image-name {
+  display: flex;
+  cursor: pointer;
+}
+.messenger .__row .__col-3 .left-side .top .image-name .__image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.messenger .__row .__col-3 .left-side .top .image-name .__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.messenger .__row .__col-3 .left-side .top .image-name .__name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.messenger .__row .__col-3 .left-side .top .image-name .__name h3 {
+  padding-left: 10px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+.messenger .__row .__col-3 .left-side .top .icons {
+  display: flex;
+  position: relative;
+}
+.messenger .__row .__col-3 .left-side .top .icons .theme_logout.show {
+  transform: scale(1);
+}
+.messenger .__row .__col-3 .left-side .top .icons .theme_logout {
+  width: 200px;
+  background-color: rgb(20, 24, 59);
+  transform: scale(0);
+  position: absolute;
+  transition: all 0.6s;
+  top: 100%;
+  padding: 10px;
+  color: #fff;
+}
+.messenger .__row .__col-3 .left-side .top .icons .theme_logout .on, .messenger .__row .__col-3 .left-side .top .icons .theme_logout .of {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.messenger .__row .__col-3 .left-side .top .icons .theme_logout .on label, .messenger .__row .__col-3 .left-side .top .icons .theme_logout .of label {
+  cursor: pointer;
+  color: #fff;
+}
+.messenger .__row .__col-3 .left-side .top .icons .theme_logout .logout {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.messenger .__row .__col-3 .left-side .top .icons .icon {
+  width: 33px;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--icon-bg-color);
+  margin-left: 8px;
+  border-radius: 24px;
+  color: var(--icon-color);
+  cursor: pointer;
+}
+.search__button{
+  margin-bottom: 20px;
+}
+.messenger .__row .__col-3 .left-side .friend-search {
+  padding: 0px 8px;
+}
+.messenger .__row .__col-3 .left-side .friend-search .__search {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  background-color: var(--search-bg);
+  border-radius: 50px;
+  margin: 20px 0px;
+}
+.messenger .__row .__col-3 .left-side .friend-search .__search button {
+  padding: 12px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  border: none;
+  color: var(--text-color);
+  font-size: 20px;
+  background-color: transparent;
+}
+.messenger .__row .__col-3 .left-side .friend-search .__search .__form-control {
+  width: 100%;
+  padding-left: 0px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50pc;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  color: var(--text-color);
+}
+.messenger .__row .__col-3 .left-side .friend-search .__search .__form-control::placeholder {
+  color: var(--text-color);
+}

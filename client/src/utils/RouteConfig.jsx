@@ -15,8 +15,9 @@ export const RouteConfig = () => {
     "/vendor/dashboard/view-tours",
     "/vendor/dashboard/orders",
     "/vendor/dashboard/update-tour/:id",
+    "/chat"
   ];
-const excludedHeaderRoutes = ["/das"];
+const excludedHeaderRoutes = ["/chat"];
 
 const shouldExcludeFooter = excludedRoutes.includes(location.pathname);
 const shouldExcludeHeader = excludedHeaderRoutes.includes(location.pathname);
