@@ -24,22 +24,22 @@ const Home = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="6" >
+            <Col lg="6">
               <div className="hero__content">
                 <div className="hero__subtitle d-flex align-items-center ">
                   <Subtitle subtitle={"Discover Before You GO"} />
                 </div>
                 <h1>
-                  Unleash the Magic of 
+                  Unleash the Magic of
                   <span className="highlight"> Unforgettable </span>
                   Tours
                 </h1>
                 <p>
                   We help travelers to discover the best attractions of their
-                  destination and plan tours with ease. We offer
-                  comprehensive tour packages, and our user-friendly booking
-                  system allows customers to quickly book a tour package led by
-                  experienced vendors.
+                  destination and plan tours with ease. We offer comprehensive
+                  tour packages, and our user-friendly booking system allows
+                  customers to quickly book a tour package led by experienced
+                  vendors.
                 </p>
               </div>
               <div className="search-top-attractions text-center">
@@ -64,7 +64,7 @@ const Home = () => {
             </Col>
             <Col lg="2" className="mt-5 pt-3">
               <div className="hero__img-box hero__video-box mt-4">
-                <video src={heroVideo} alt="" controls />
+                <video src={heroVideo} alt=""  autoPlay loop muted />
               </div>
             </Col>
             <Col lg="2" className="mt-5 pt-3">
@@ -120,13 +120,13 @@ const Home = () => {
                   At our travel agency, we are dedicated to curating
                   extraordinary experiences that will leave you spellbound. With
                   our extensive knowledge and passion for travel, we have
-                  crafted a diverse range of tours that cater to every
-                  traveler a unique preferences. Whether you crave thrilling
-                  adventures, cultural immersions, or serene retreats, our
-                  expert tour companies will take you on a journey of a lifetime.
-                  We meticulously handpick the top attractions of each
-                  destination, ensuring that you uncover hidden gems and create
-                  cherished memories.
+                  crafted a diverse range of tours that cater to every traveler
+                  a unique preferences. Whether you crave thrilling adventures,
+                  cultural immersions, or serene retreats, our expert tour
+                  companies will take you on a journey of a lifetime. We
+                  meticulously handpick the top attractions of each destination,
+                  ensuring that you uncover hidden gems and create cherished
+                  memories.
                 </p>
               </div>
 

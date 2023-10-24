@@ -72,6 +72,7 @@ const Login = () => {
                   <Form.Group controlId="email" className="mt-2 mb-3">
                     <Form.Control
                       type="email"
+                      className="shadow-none"
                       placeholder="Enter your Email"
                       required
                       name="email"
@@ -84,6 +85,7 @@ const Login = () => {
                       type="password"
                       placeholder="Enter your Password"
                       required
+                      className="shadow-none"
                       name="password"
                       value={values.password}
                       onChange={handleChange}
@@ -98,7 +100,6 @@ const Login = () => {
                   </Button>
                 </Form>
                 <p>
-                 
                   {/* eslint-disable-next-line react/no-unescaped-entities */}
                   Don't have an account?
                   <Link to="/register" className="register-link">

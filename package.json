@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "server": "nodemon server/app.js"
+    "server": "nodemon server/app.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \" npm run server\" \" npm run client \""
   },
   "repository": {
     "type": "git",

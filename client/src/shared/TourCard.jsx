@@ -1,15 +1,22 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
-import calculateAvgRating from "../utils/avgRating";
 import "./tour-card.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
+
 
 const TourCard = ({ tour }) => {
-  const { _id, title, city, images, price, featured, reviews, vendor } = tour;
+  const {
+    _id,
+    title,
+    city,
+    images,
+    price,
+    featured,
+    vendor,
+    averageRating,
+    numOfReviews,
+  } = tour;
     
-  const { totalRating, avgRating } = calculateAvgRating(reviews);
  
 
   return (
@@ -27,11 +34,12 @@ const TourCard = ({ tour }) => {
             </span>
             <span className="tour__rating d-flex align-items-center gap-1">
               <i className="ri-star-s-fill"></i>
-              {avgRating === 0 ? null : avgRating}
-              {totalRating === 0 ? (
+              {console.log(title,numOfReviews)}
+              {averageRating === 0 ? null : averageRating}
+              {numOfReviews === 0 ? (
                 "Not rated"
               ) : (
-                <span>({reviews?.length})</span>
+                <span>({numOfReviews})</span>
               )}
             </span>
           </div>

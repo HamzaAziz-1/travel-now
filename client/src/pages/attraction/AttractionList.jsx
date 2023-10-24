@@ -18,11 +18,10 @@ import heroImg from "../../assets/images/hero.jpg";
 import heroImg02 from "../../assets/images/hero1.jpg";
 import "../../styles/home.css";
 import Subtitle from "../../shared/Subtitle";
-import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import { useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 import { toast } from "react-toastify";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const libraries = ["places"];
 
 const AttractionList = () => {
   const [query, setQuery] = useState("");
@@ -33,7 +32,10 @@ const AttractionList = () => {
   const searchBoxRef = useRef(null);
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-
+ const { isLoaded } = useLoadScript({
+   googleMapsApiKey: apiKey,
+   libraries: ["places"],
+ });
   useEffect(() => {});
 
   const handlePlacesChanged = async () => {
@@ -235,10 +237,12 @@ const AttractionList = () => {
         </Card>
       </div>
     ));
-
+  if (!isLoaded) {
+  return <Spinner/>
+}
   return (
     <>
-      <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+  
         <section>
           <Container>
             <Row>
@@ -314,8 +318,6 @@ const AttractionList = () => {
             </Row>
           </Container>
         </section>
-      </LoadScript>
-
       {loading ? (
         <Spinner />
       ) : (

@@ -2,11 +2,15 @@ import { useRef, useState } from "react";
 import "./search-bar.css";
 import { Col, Form, FormGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import {
+  
+  StandaloneSearchBox,
+  useLoadScript,
+} from "@react-google-maps/api";
 import { toast } from "react-toastify";
+import Spinner from "../components/Spinner/Spinner";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const libraries = ["places"];
 
 const SearchBar = () => {
   const maxGroupSizeRef = useRef(0);
@@ -16,7 +20,10 @@ const SearchBar = () => {
   const searchBoxOptions = {
     types: ["(cities)"],
   };
-
+ const { isLoaded } = useLoadScript({
+   googleMapsApiKey: apiKey,
+   libraries: ["places"],
+ });
   const searchHandler = async () => {
     const maxGroupSize = maxGroupSizeRef.current.value;
 
@@ -74,9 +81,12 @@ const SearchBar = () => {
       }
     }
   };
+  if (!isLoaded) {
+    return <Spinner/>
+  }
 
   return (
-    <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+    // <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
       <Col lg="12">
         <div className="search__bar mx-auto">
           <Form className="d-flex align-items-center gap-2">
@@ -124,7 +134,7 @@ const SearchBar = () => {
           </Form>
         </div>
       </Col>
-    </LoadScript>
+    // </LoadScript>
   );
 };
 

@@ -1,20 +1,19 @@
-/* eslint-disable no-unused-vars */
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import CommonSection from "../shared/CommonSection";
 import Spinner from "../components/Spinner/Spinner";
-import "../styles/tour.css";
 import TourCard from "./../shared/TourCard";
 import SearchBar from "./../shared/SearchBar";
 import { Container, Row, Col } from "react-bootstrap";
 import useFetch from "../hooks/useFetch";
-
+import '../styles/tour.css'
 const Tours = () => {
   const [page, setPage] = useState(1);
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sortOption, setSortOption] = useState(""); // State to store sorting option
 
-  const tourDataUrl = `/api/v1/tours/verified?page=${page}`;
+  const tourDataUrl = `/api/v1/tours/verified?page=${page}&sort=${sortOption}`; // Include sorting option in the URL
   const tourCountUrl = "/api/v1/tours/search/getTourCount";
 
   const {
@@ -44,11 +43,15 @@ const Tours = () => {
     if (newPage >= 1 && newPage <= pageCount) {
       setPage(newPage);
       setLoading(true); // Set loading to true when changing pages
-       window.scrollTo({ top: 50, behavior: "smooth" });
+      window.scrollTo({ top: 50, behavior: "smooth" });
     }
   };
 
-  // Check if the new data has been loaded
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+    setPage(1); // Reset page to 1 when changing sorting
+  };
+
   useEffect(() => {
     if (tourData || error) {
       setLoading(false);
@@ -60,9 +63,22 @@ const Tours = () => {
       <CommonSection title={"All Tours"} />
       <section>
         <Container>
-          <Row>
-            <SearchBar />
-          </Row>
+          <div className="search-sort d-flex  flex-column align-items-center">
+            <div>
+              <SearchBar />
+            </div>
+            <div className="d-flex align-items-center">
+              <select
+                className="sorting__input mt-4"
+                value={sortOption}
+                onChange={handleSortChange}
+              >
+                <option value="">Sort By</option>
+                <option value="rating">Rating</option>
+                <option value="city">City</option>
+              </select>
+            </div>
+          </div>
         </Container>
       </section>
       <section className="pt-0">

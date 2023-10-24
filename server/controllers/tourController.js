@@ -41,11 +41,24 @@ const getVerifiedTours = async (req, res) => {
   const pageSize = 8;
   const skip = (page - 1) * pageSize;
 
+  const sortOption = req.query.sort; // Get the sorting option from the query
+
+  // Define the sort order based on the selected option
+  let sortOrder = {};
+
+  if (sortOption === "rating") {
+    sortOrder = { averageRating: -1 }; // Sort by averageRating in descending order
+  } else if (sortOption === "city") {
+    sortOrder = { city: 1 }; // Sort by city in ascending order
+  }
+
   try {
     const tours = await Tour.find({ verified: true })
       .skip(skip)
       .limit(pageSize)
-      .populate("reviews");
+      .populate("reviews")
+      .populate("vendor","name image")
+      .sort(sortOrder); // Apply the specified sorting
 
     res.status(StatusCodes.OK).json({ tours });
   } catch (error) {
@@ -54,6 +67,7 @@ const getVerifiedTours = async (req, res) => {
       .json({ error: error.message });
   }
 };
+
 
 const getSingleTour = async (req, res) => {
   const { id: tourId } = req.params;
