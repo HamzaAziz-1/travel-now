@@ -7,9 +7,11 @@ import axios from "axios";
 import { BASE_URL } from "./../utils/config";
 import { useGlobalContext } from "./../context/AuthContext";
 import "../styles/show-tours.css";
-
+import { toast } from "react-toastify";
+import Spinner from "../components/Spinner/Spinner";
 const ShowTours = () => {
   const [data, setData] = useState([]);
+  const [loading,setLoading]=useState(false)
   const { user } = useGlobalContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
@@ -17,24 +19,30 @@ const ShowTours = () => {
 
   useEffect(() => {
     if (user?.role === "vendor") {
+      setLoading(true)
       axios
         .get(`/api/v1/tours/vendor/${user._id}`, {
           withCredentials: true,
         })
         .then((response) => {
           setData(response.data.tours);
+          setLoading(false)
         })
         .catch((error) => {
-          console.error(error);
+          toast.error(error.message);
+          setLoading(false);
         });
     } else {
+      setLoading(true);
       axios
         .get(`/api/v1/tours`)
         .then((response) => {
           setData(response.data.tours);
+          setLoading(false);
         })
         .catch((error) => {
-          console.error(error);
+          setLoading(false);
+          toast.error(error);
         });
     }
   }, [user]);
@@ -54,7 +62,7 @@ const ShowTours = () => {
       .then((res) => {
         const updatedTours = data.map((tour) => {
           if (tour.id === id) {
-            return res.data.tour; 
+            return res.data.tour;
           }
           return tour;
         });
@@ -103,16 +111,19 @@ const ShowTours = () => {
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   return (
-    <Container className="show-tours-container">
+    <>
+      {loading ? (<Spinner/>): (
+        <Container className="show-tours-container">
       <div className="tours-container">
         <h1 className="mb-4">Tour Packages</h1>
         <div className="filter-container mb-4">
           <select
-            id="filter"            value={filter}
+            id="filter"
+            value={filter}
             onChange={handleFilterChange}
             className="form-select-filter"
           >
@@ -236,7 +247,9 @@ const ShowTours = () => {
           Next &gt;
         </button>
       </div>
-    </Container>
+    </Container >
+      )}
+            </>
   );
 };
 

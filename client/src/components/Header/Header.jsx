@@ -84,6 +84,15 @@ const Header = () => {
                 <NavDropdown.Item
                   className="nav-dropdown"
                   onClick={() => {
+                    navigate("/chat");
+                  }}
+                >
+                  Chat
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  className="nav-dropdown"
+                  onClick={() => {
                     logoutUser();
                     navigate("/");
                   }}

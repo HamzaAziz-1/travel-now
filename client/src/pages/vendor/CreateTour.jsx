@@ -8,12 +8,11 @@ import Button from "react-bootstrap/Button";
 import { Container } from "react-bootstrap";
 import useLocalState from "../../utils/localState";
 import axios from "axios";
-import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import { useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 import "../../styles/create-tour.css";
 import DayNamePicker from "../../components/Forms/DayNamePicker";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const libraries = ["places"];
-
+import Spinner from "../../components/Spinner/Spinner";
 const CreateTour = () => {
   const searchBoxRef = useRef(null);
   const [title, setTitle] = useState("");
@@ -30,7 +29,10 @@ const CreateTour = () => {
 
   const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState();
   const navigate = useNavigate();
-
+ const { isLoaded } = useLoadScript({
+   googleMapsApiKey: apiKey,
+   libraries: ["places"],
+ });
   const handleSubmit = async (e) => {
     e.preventDefault();
     hideAlert();
@@ -158,9 +160,12 @@ const CreateTour = () => {
     setTimeSlots(timeSlots.filter((_, i) => i !== index));
   };
 
+    if (!isLoaded) {
+      return <Spinner />;
+    }
+
   return (
-    <>
-      <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+    
         <Container className="create-tour-container mt-5 pt-2 mb-5 pb-5">
           <div className="create-tour-heading text-center mb-5">
             <h1>Create a Tour Package</h1>
@@ -397,8 +402,7 @@ const CreateTour = () => {
             </Col>
           </Row>
         </Container>
-      </LoadScript>
-    </>
+    
   );
 };
 

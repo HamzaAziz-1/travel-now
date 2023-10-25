@@ -9,9 +9,10 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import "../../styles/update-profile.css";
 import avatar from "../../assets/images/avatar.jpg";
+import { toast } from "react-toastify";
 
 const UpdateProfile = () => {
-  const [user, setUser] = useState([]);
+  const { user, updateUser } = useGlobalContext();
   const [name, setName] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
   const [image, setImage] = useState("");
@@ -23,73 +24,64 @@ const UpdateProfile = () => {
   const [editingPhoneNo, setEditingPhoneNo] = useState(false);
   const [editingImage, setEditingImage] = useState(false);
   const [loading, setLoading] = useState(true);
-   useEffect(() => {
-     const fetchUser = async () => {
-       try {
-         const { data } = await axios.get(`/api/v1/users/showMe`);         
-           setUser(data.user);
-           setName(data.user.name);
-           setPhoneNo(data.user.phoneNo);
-           setImage(data.user.image);
-           setOriginalImage(data.user.image);
-           setCountry(data.user.country);
-           setLoading(false);
-         } 
-        catch (error) {
-         console.log("error", error);
-       }
-     };
-     fetchUser();
-   }, []);
-
+  const [show, setShow] = useState(false);
+  const [password,setPassword] = useState("")
+  const [newPassword,setNewPassword] = useState("")
+  useEffect(() => {
+    setName(user?.name);
+    setPhoneNo(user?.phoneNo);
+    setImage(user?.image);
+    setOriginalImage(user?.image);
+    setCountry(user?.country);
+    setLoading(false);
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-
-      let src = originalImage; // Default value for src
-
+    let src = originalImage;
+    try {
       if (image !== originalImage) {
         // If image has been added or updated, upload the new image
         const formData = new FormData();
-        formData.append("image", image);
+        formData.append("images", image);
 
-        const {
-          data: {
-            image: { src: newSrc },
-          },
-        } = await axios.post("/api/v1/tours/uploadImage", formData, {
+        const data = await axios.post("/api/v1/tours/uploadImage", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
 
-        src = newSrc; // Update the src value with the new image URL
+        const newSrc = data.data.images[0];
+        src = newSrc;
+        toast.success("Image Updated Successfully");
       }
+    } catch (error) {
+      const msg = error.response.data.msg;
+      toast.error(msg ? msg : "An error occured");
+    }
 
-      const userData = { name, phoneNo, image: src, country };
-         axios
-           .put(`/api/v1/users/updateUser`, userData)
-           .then((response) => {
-             const { data } = response.data;
-               // check if data and data.user exist
-               setUser(response.data.user);
-               setSuccess("Profile updated successfully!");
-               setEditingName(false);
-               setEditingPhoneNo(false);
-               setEditingImage(false);
-            
-           })
-           .catch((error) => {
-             setError(error.message);
-           });
-
+    const userData = { name, phoneNo, image: src, country };
+    axios
+      .put(`/api/v1/users/updateUser`, userData)
+      .then((response) => {
+        const { data } = response.data;
+        // check if data and data.user exist
+        updateUser(response.data.user);
+        toast.success("Profile updated successfully!");
+        setEditingName(false);
+        setEditingPhoneNo(false);
+        setEditingImage(false);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (
-    <Container className="py-5 update-profile">
-      <h1 className="header text-center pt-3" style={{ color: "#4b6584" }}>
+    <div className="update-profile">
+      <h1 className="header text-center" style={{ color: "#4b6584" }}>
         Update Your Profile
       </h1>
       {error && <div className="alert alert-danger">{error}</div>}
@@ -97,9 +89,6 @@ const UpdateProfile = () => {
       {!loading && (
         <Form onSubmit={handleSubmit} className="profile-form">
           <Form.Group controlId="formBasicImage" className="image-container">
-            <Form.Label>
-              <strong>Profile Picture</strong>
-            </Form.Label>
             {editingImage ? (
               <Form.Control
                 type="file"
@@ -122,15 +111,14 @@ const UpdateProfile = () => {
                     alt={image}
                   />
                 )}
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  onClick={() => setEditingImage(true)}
-                  className="edit-icon"
-                />
               </div>
             )}
+            <FontAwesomeIcon
+              icon={faEdit}
+              onClick={() => setEditingImage(!editingImage)}
+              className="edit-icon"
+            />
           </Form.Group>
-
           <Form.Group controlId="formBasicName" className="field-group">
             <Form.Label>
               <strong>Name</strong>
@@ -155,7 +143,6 @@ const UpdateProfile = () => {
               </Row>
             )}
           </Form.Group>
-
           <Form.Group className="field-group">
             <Form.Label>
               <strong>Phone Number</strong>
@@ -181,7 +168,6 @@ const UpdateProfile = () => {
               </Row>
             )}
           </Form.Group>
-
           <Form.Group controlId="formBasicCountry" className="field-group">
             <Form.Label>
               <strong>Country</strong>
@@ -193,15 +179,43 @@ const UpdateProfile = () => {
               disabled
             />
           </Form.Group>
-
           {(editingName || editingPhoneNo || editingImage) && (
             <Button variant="primary" type="submit" className="submit-btn">
               Save Changes
             </Button>
           )}
+          <div className="text-center">
+            {show && (
+              <>
+              <Form.Group  className="field-group">
+                <Form.Label>
+                  <strong>Old Password</strong>
+                </Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter your Old Password"
+                  onChange={(value)=>setPassword(value)}
+                />
+              </Form.Group>
+              <Form.Group  className="field-group">
+                <Form.Label>
+                  <strong>New Password</strong>
+                </Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter your New Password"
+                  onChange={(value)=>setNewPassword(value)}
+                />
+              </Form.Group>
+              </>
+            )}
+            <Button onClick={() => setShow(!show)} variant="danger">
+              Update Password
+            </Button>
+          </div>
         </Form>
       )}
-    </Container>
+    </div>
   );
 };
 

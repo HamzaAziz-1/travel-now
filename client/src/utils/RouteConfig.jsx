@@ -15,6 +15,9 @@ export const RouteConfig = () => {
     "/vendor/dashboard/view-tours",
     "/vendor/dashboard/orders",
     "/vendor/dashboard/update-tour/:id",
+    "/tourist/dashboard",
+    "/admin/dashboard",
+    "/vendor/dashboard",
     "/chat"
   ];
 const excludedHeaderRoutes = ["/chat"];

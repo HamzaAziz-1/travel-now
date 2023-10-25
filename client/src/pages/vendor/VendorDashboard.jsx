@@ -75,11 +75,11 @@ const VendorDashboard = () => {
   }, []);
 
   return (
-    <div className="dashboard mt-5 pt-2">
+    <div className="dashboard mt-3">
       <Container fluid>
         <Row>
           {isSidebarOpen || !isSmallScreen ? (
-            <Col md={2} className="dashboard__sidebar" ref={sidebarRef}>
+            <Col md={2} className="dashboard__sidebar pt-5" ref={sidebarRef}>
               <ul className="sidebar__menu">
                 {links.map((link, index) => (
                   <li

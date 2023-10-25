@@ -72,7 +72,7 @@ console.log(orders);
       </h1>
       <div className="">
         <select
-          className="form-select mb-1"
+          className="form-select mb-1 shadow-none select-input"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
@@ -85,7 +85,7 @@ console.log(orders);
           placeholder="Search by Order ID"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="form-control mb-3"
+          className="form-control mb-3 shadow-none"
         />
       </div>
       <Table responsive="md" striped bordered hover>

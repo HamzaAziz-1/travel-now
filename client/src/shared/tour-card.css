@@ -8,7 +8,13 @@
   border: none !important;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
 }
-
+.vendor-img{
+  height: 35px;
+  width: 35px;
+}
+.vendor-img:hover{
+ cursor: pointer;
+}
 .tour__img {
   position: relative;
 }
@@ -57,7 +63,10 @@
   color: var(--heading-color);
   transition: 0.3s;
 }
+.tour-link{
+  font-weight: 600;
 
+}
 .tour__title a:hover {
   color: var(--secondary-color);
 }

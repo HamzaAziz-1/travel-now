@@ -220,14 +220,14 @@ const getTourBySearch = async (req, res) => {
             verified: true,
           },
         },
-        {
-          $lookup: {
-            from: "reviews", // Assuming the reviews collection name is "reviews"
-            localField: "_id",
-            foreignField: "tour", // Assuming a "tour" field in the reviews collection referencing the tour
-            as: "reviews",
-          },
-        },
+        // {
+        //   $lookup: {
+        //     from: "reviews", // Assuming the reviews collection name is "reviews"
+        //     localField: "_id",
+        //     foreignField: "tour", // Assuming a "tour" field in the reviews collection referencing the tour
+        //     as: "reviews",
+        //   },
+        // },
         {
           $skip: skipCount, // Skip documents based on the current page
         },
