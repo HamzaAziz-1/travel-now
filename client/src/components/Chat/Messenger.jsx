@@ -20,13 +20,14 @@ import useSound from "use-sound";
 import notificationSound from "../../assets/audio/notification.mp3";
 import sendingSound from "../../assets/audio/sending.mp3";
 import { useGlobalContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const Messenger = () => {
   const [notificationSPlay] = useSound(notificationSound);
   const [sendingSPlay] = useSound(sendingSound);
   const { user } = useGlobalContext();
   const scrollRef = useRef();
   const socket = useRef();
-
+  const navigate = useNavigate();
   const {
     friends,
     message,
@@ -337,9 +338,9 @@ const Messenger = () => {
                     />
                   </div>
 
-                  {/* <div onClick={logout} className="logout">
-                    <FaSignOutAlt /> Logout
-                  </div> */}
+                  <div onClick={()=>navigate(`/${user?.role}/dashboard`)} className="logout">
+                    Back to Dashboard
+                  </div>
                 </div>
               </div>
             </div>
