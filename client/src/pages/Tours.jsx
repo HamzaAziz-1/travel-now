@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import CommonSection from "../shared/CommonSection";
 import Spinner from "../components/Spinner/Spinner";
 import TourCard from "./../shared/TourCard";
@@ -76,6 +76,8 @@ const Tours = () => {
                 <option value="">Sort By</option>
                 <option value="rating">Rating</option>
                 <option value="city">City</option>
+                <option value="price">Price</option>
+                <option value="title">Title</option>
               </select>
             </div>
           </div>

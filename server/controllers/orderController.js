@@ -33,31 +33,29 @@ const createOrder = async (req, res) => {
       throw new CustomError.NotFoundError(`No tour with id : ${item.tour}`);
     }
     // Check if there is an order with a 'paid' status for the same tour and time slot
-   const paidOrderExists = await Order.findOne({
-     "orderItems.tour": item.tour,
-     "orderItems.availableDays": {
-       $in: item.availableDays,
-     },
-     "orderItems.date": {
-       $in: item.date,
-     },
-     "orderItems.timeSlots.start": {
-       $in: item.timeSlots.map((slot) => slot.start),
-     },
-     "orderItems.timeSlots.end": {
-       $in: item.timeSlots.map((slot) => slot.end),
-     },
-     status: "paid",
-   });
-
+    const paidOrderExists = await Order.findOne({
+      "orderItems.tour": item.tour,
+      "orderItems.availableDays": {
+        $in: item.availableDays,
+      },
+      "orderItems.date": {
+        $in: item.date,
+      },
+      "orderItems.timeSlots.start": {
+        $in: item.timeSlots.map((slot) => slot.start),
+      },
+      "orderItems.timeSlots.end": {
+        $in: item.timeSlots.map((slot) => slot.end),
+      },
+      status: "paid",
+    });
 
     if (paidOrderExists) {
       throw new CustomError.BadRequestError(
         `Cannot book the selected time slot as it is already booked`
       );
     }
-    const { vendor, duration, _id,price } =
-      dbTour;
+    const { vendor, duration, _id, price } = dbTour;
     const singleOrderItem = {
       amount: item.amount,
       vendor,
@@ -76,8 +74,8 @@ const createOrder = async (req, res) => {
   }
   const serviceCharges = 500;
   // calculate total
-  const total = subtotal+serviceCharges;
-  
+  const total = subtotal + serviceCharges;
+
   const paymentIntent = await createPaymentIntent({
     amount: total,
     currency: "PKR",
@@ -97,49 +95,32 @@ const createOrder = async (req, res) => {
 };
 
 const getAllOrders = async (req, res) => {
-    try {
-        const ordersStatus = await Order.find({ status: "paid" });
+  try {
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate()}/${
+      currentDate.getMonth() + 1
+    }/${currentDate.getFullYear()}`;
 
-        for (const order of ordersStatus) {
-          let allItemsCompleted = true;
-          for (const orderItem of order.orderItems) {
-            if (
-              orderItem.endTime &&
-              new Date(orderItem.endTime) <= new Date()
-            ) {
-              let timeSlotIsValid = false;
-              const currentTime = new Date();
-              for (const timeSlot of orderItem.timeSlots) {
-                const startTime = new Date(
-                  orderItem.date + " " + timeSlot.start
-                );
-                const endTime = new Date(orderItem.date + " " + timeSlot.end);
-                if (startTime <= currentTime && currentTime <= endTime) {
-                  timeSlotIsValid = true;
-                  break;
-                }
-              }
-              if (!timeSlotIsValid) {
-                allItemsCompleted = false;
-                break;
-              }
-            }
-          }
+    const updatedOrders = await Order.updateMany(
+      {
+        status: "paid",
+        "orderItems.endTime": { $lt: formattedDate },
+      },
+      {
+        $set: { status: "completed" },
+      }
+    );
 
-          if (allItemsCompleted) {
-            order.status = "completed";
-            await order.save();
-          }
-        }
+    const orders = await Order.find({ status: { $ne: "pending" } })
+      .populate("user", "name")
+      .populate("orderItems.vendor", "name");
 
-      const orders = await Order.find({ status: { $ne: 'pending' } })
-            .populate('user', 'name')
-            .populate('orderItems.vendor', 'name');
-
-        res.status(StatusCodes.OK).json({ orders, count: orders.length });
-    } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
-    }
+    res.status(StatusCodes.OK).json({ orders, count: orders.length });
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: error.message });
+  }
 };
 
 const getSingleOrder = async (req, res) => {
@@ -156,13 +137,49 @@ const getCurrentUserOrders = async (req, res) => {
   try {
     const user = req.user;
     if (user.role === "tourist") {
+      // Find and update orders where all orderItems are completed
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getDate()}/${
+        currentDate.getMonth() + 1
+      }/${currentDate.getFullYear()}`;
+
+      const updatedOrders = await Order.updateMany(
+        {
+          status: "paid",
+          "orderItems.endTime": { $lt: formattedDate },
+        },
+        {
+          $set: { status: "completed" },
+        }
+      );
+
       const orders = await Order.find({
         user: req.user.userId,
         status: { $ne: "pending" },
-      }).populate("orderItems.tour",'title').populate('user','name').populate('orderItems.vendor','name');
+      })
+        .populate("orderItems.tour", "title")
+        .populate("user", "name")
+        .populate("orderItems.vendor", "name");
+
       res.status(StatusCodes.OK).json({ orders, count: orders.length });
       return;
     } else if (user.role === "vendor") {
+      // Find and update orders where all orderItems are completed
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getDate()}/${
+        currentDate.getMonth() + 1
+      }/${currentDate.getFullYear()}`;
+
+      const updatedOrders = await Order.updateMany(
+        {
+          status: "paid",
+          "orderItems.endTime": { $lt: formattedDate },
+        },
+        {
+          $set: { status: "completed" },
+        }
+      );
+
       const orders = await Order.find({
         "orderItems.vendor": req.user.userId,
         status: { $ne: "pending" },
@@ -170,8 +187,9 @@ const getCurrentUserOrders = async (req, res) => {
         .populate("orderItems.tour", "title")
         .populate("user", "name")
         .populate("orderItems.vendor", "name");
+
       res.status(StatusCodes.OK).json({ orders, count: orders.length });
-      return
+      return;
     } else {
       throw new CustomError.NotFoundError(`No order found`);
     }

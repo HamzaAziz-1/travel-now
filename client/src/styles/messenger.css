@@ -55,7 +55,7 @@
 }
 .messenger .__row .__col-3 .left-side .top .icons .theme_logout {
   width: 200px;
-  background-color: rgb(20, 24, 59);
+  background-color: var(--secondary-color);
   transform: scale(0);
   position: absolute;
   transition: all 0.6s;

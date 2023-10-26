@@ -30,7 +30,7 @@ const RegisterForm = ({
       try {
         await axios.post(`/api/v1/auth/register`, values);
         formik.resetForm(); 
-        toast.success("Registration Successfull")
+        toast.success("Registration Successful")
         setTimeout(() => {
           navigate('/login');
         }, 2500)

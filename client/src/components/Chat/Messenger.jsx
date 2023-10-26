@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from "react";
-import { FaEllipsisH, FaSistrix, FaSignOutAlt } from "react-icons/fa";
+import { FaEllipsisH, FaSistrix } from "react-icons/fa";
 import Friends from "./Friends";
 import RightSide from "./RightSide";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +23,7 @@ import { useGlobalContext } from "../../context/AuthContext";
 const Messenger = () => {
   const [notificationSPlay] = useSound(notificationSound);
   const [sendingSPlay] = useSound(sendingSound);
-  const { user,logoutUser } = useGlobalContext();
+  const { user } = useGlobalContext();
   const scrollRef = useRef();
   const socket = useRef();
 
@@ -270,10 +270,6 @@ const Messenger = () => {
 
   const [hide, setHide] = useState(true);
 
-  const logout = () => {
-   logoutUser()
-    socket.current.emit("logout", user._id);
-  };
 
   useEffect(() => {
     dispatch(getTheme());

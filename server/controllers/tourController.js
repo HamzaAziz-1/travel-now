@@ -51,6 +51,12 @@ const getVerifiedTours = async (req, res) => {
   } else if (sortOption === "city") {
     sortOrder = { city: 1 }; // Sort by city in ascending order
   }
+   else if (sortOption === "title") {
+    sortOrder = { title: 1 }; // Sort by city in ascending order
+  
+  } else if (sortOption === "price") {
+    sortOrder = { price: -1 }; // Sort by city in ascending order
+  }
 
   try {
     const tours = await Tour.find({ verified: true })
@@ -220,14 +226,6 @@ const getTourBySearch = async (req, res) => {
             verified: true,
           },
         },
-        // {
-        //   $lookup: {
-        //     from: "reviews", // Assuming the reviews collection name is "reviews"
-        //     localField: "_id",
-        //     foreignField: "tour", // Assuming a "tour" field in the reviews collection referencing the tour
-        //     as: "reviews",
-        //   },
-        // },
         {
           $skip: skipCount, // Skip documents based on the current page
         },
@@ -255,7 +253,8 @@ const getFeaturedTour = async (req, res) => {
   try {
     const tours = await Tour.find({ featured: true })
       .populate("reviews")
-      .limit(8);
+      .limit(8)
+      .populate("vendor","name image");
 
     res.status(200).json({
       success: true,

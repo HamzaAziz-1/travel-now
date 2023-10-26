@@ -13,7 +13,7 @@ const createReview = async (req, res) => {
   if (!isValidTour) {
     throw new CustomError.NotFoundError(`No tour with id : ${tourId}`);
   }
-  const isOrder = await Order.findOne({ user: req.user.userId,tour:tourId });
+  const isOrder = await Order.findOne({ user: req.user.userId,"orderItems.tour":tourId,status:"paid" });
   if (!isOrder) {
      throw new CustomError.BadRequestError(
        "You haven't booked this tour."

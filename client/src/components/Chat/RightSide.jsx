@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { FaPhoneAlt, FaVideo, FaRocketchat } from "react-icons/fa";
+import { FaPhoneAlt, FaVideo } from "react-icons/fa";
 import FriendInfo from "./FriendInfo";
 import Message from "./Message";
 import MessageSend from "./MessageSend";
@@ -52,12 +52,12 @@ const RightSide = (props) => {
                     <FaVideo />
                   </div>
 
-                  <div className="icon">
+                  {/* <div className="icon">
                     <label className="__label" htmlFor="dot">
                       {" "}
                       <FaRocketchat />{" "}
                     </label>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
