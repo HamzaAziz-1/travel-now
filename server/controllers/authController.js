@@ -149,14 +149,16 @@ const forgotPassword = async (req, res) => {
   }
 
   const user = await User.findOne({ email });
-   if (!user.isVerified) {
-     throw new CustomError.UnauthenticatedError("Please verify your email first");
-   }
-   if (user.isBlocked) {
-     throw new CustomError.BadRequestError(
-       "Your account is blocked by admin. Contact admin by sending email"
-     );
-   }
+  if (!user.isVerified) {
+    throw new CustomError.UnauthenticatedError(
+      "Please verify your email first"
+    );
+  }
+  if (user.isBlocked) {
+    throw new CustomError.BadRequestError(
+      "Your account is blocked by admin. Contact admin by sending email"
+    );
+  }
 
   if (user) {
     const passwordToken = crypto.randomBytes(70).toString("hex");
