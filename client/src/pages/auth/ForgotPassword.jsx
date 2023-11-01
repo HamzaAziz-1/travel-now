@@ -9,6 +9,7 @@ import useLocalState from '../../utils/localState';
 import Container from "react-bootstrap/Container";
 import Button from 'react-bootstrap/Button';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../utils/config';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ const ForgotPassword = () => {
       return;
     }
     try {
-      const { data } = await axios.post('/api/v1/auth/forgot-password', {
+      const { data } = await axios.post(`${BASE_URL}/auth/forgot-password`, {
         email,
       });
       toast.success(data?.msg);

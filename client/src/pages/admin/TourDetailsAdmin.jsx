@@ -12,12 +12,12 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import Spinner from "../../components/Spinner/Spinner";
-
+import { BASE_URL } from "../../utils/config";
 const TourDetails = () => {
   const { id } = useParams(); 
 
   // fetch data from database
-  const { data, loading, error } = useFetch(`/api/v1/tours/${id}`);
+  const { data, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
   const tour = data?.tour;
   console.log(tour);
 

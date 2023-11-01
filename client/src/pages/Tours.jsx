@@ -6,6 +6,7 @@ import SearchBar from "./../shared/SearchBar";
 import { Container, Row, Col } from "react-bootstrap";
 import useFetch from "../hooks/useFetch";
 import '../styles/tour.css'
+import { BASE_URL } from "../utils/config";
 const Tours = () => {
   const [page, setPage] = useState(1);
   const [tours, setTours] = useState([]);
@@ -13,8 +14,8 @@ const Tours = () => {
   const [error, setError] = useState(null);
   const [sortOption, setSortOption] = useState(""); // State to store sorting option
 
-  const tourDataUrl = `/api/v1/tours/verified?page=${page}&sort=${sortOption}`; // Include sorting option in the URL
-  const tourCountUrl = "/api/v1/tours/search/getTourCount";
+  const tourDataUrl = `${BASE_URL}/tours/verified?page=${page}&sort=${sortOption}`; // Include sorting option in the URL
+  const tourCountUrl = `${BASE_URL}/tours/search/getTourCount`;
 
   const {
     data: tourData,

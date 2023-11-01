@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../utils/config";
 
 import { Container, Row, Col, Form } from "react-bootstrap";
 import TourCard from "../../shared/TourCard";
@@ -18,7 +19,7 @@ const TourVendorDetails = () => {
   useEffect(() => {
     const fetchVendorDetails = async () => {
       try {
-        const { data } = await axios.get(`/api/v1/users/${id}`);
+        const { data } = await axios.get(`${BASE_URL}/users/${id}`);
         setVendor(data.user);
       } catch (error) {
         console.error("Failed to fetch user data: ", error);
@@ -27,7 +28,7 @@ const TourVendorDetails = () => {
 
     const fetchVendorTours = async () => {
       try {
-        const { data } = await axios.get(`/api/v1/tours/vendor/${id}`);
+        const { data } = await axios.get(`${BASE_URL}/tours/vendor/${id}`);
         const verifiedTours = data.tours.filter((tour) => tour.verified);
         setTours(verifiedTours);
       } catch (error) {

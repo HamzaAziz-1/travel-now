@@ -3,7 +3,7 @@ import CommonSection from "./../shared/CommonSection";
 import { Container, Row, Col } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import TourCard from "./../shared/TourCard";
-
+import { BASE_URL } from "../utils/config";
 const SearchResultList = () => {
   const location = useLocation();
   const { data, totalCount, query, maxGroupSize } = location.state || {};
@@ -19,7 +19,7 @@ const SearchResultList = () => {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `/api/v1/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}&page=${page}`
+          `${BASE_URL}/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}&page=${page}`
         );
 
         if (!res.ok) {

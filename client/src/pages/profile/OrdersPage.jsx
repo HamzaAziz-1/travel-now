@@ -6,6 +6,7 @@ import "../../styles/manage-order.css";
 import { Alert, Table, Badge, Pagination } from "react-bootstrap";
 import Spinner from "../../components/Spinner/Spinner";
 import { useGlobalContext } from "../../context/AuthContext";
+import { BASE_URL } from "../../utils/config";
 
 function OrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -19,7 +20,7 @@ function OrdersPage() {
 
   useEffect(() => {
     axios
-      .get("/api/v1/orders/showAllMyOrders")
+      .get(`${BASE_URL}/orders/showAllMyOrders`)
       .then((response) => {
         setOrders(response.data.orders);
         setLoading(false);

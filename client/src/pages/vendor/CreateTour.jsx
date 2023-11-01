@@ -13,6 +13,8 @@ import "../../styles/create-tour.css";
 import DayNamePicker from "../../components/Forms/DayNamePicker";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 import Spinner from "../../components/Spinner/Spinner";
+import { BASE_URL } from "../../utils/config";
+
 const CreateTour = () => {
   const searchBoxRef = useRef(null);
   const [title, setTitle] = useState("");
@@ -61,12 +63,13 @@ const CreateTour = () => {
       try {
         // Upload the images to the server
         const response = await axios.post(
-          "/api/v1/tours/uploadImage",
+          `${BASE_URL}/tours/uploadImage`,
           formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
             },
+            withCredentials:true
           }
         );
 
@@ -85,7 +88,7 @@ const CreateTour = () => {
           timeSlots,
         };
 
-        await axios.post("/api/v1/tours", tourData);
+        await axios.post(`${BASE_URL}/tours`, tourData,{withCredentials:true});
 
         showAlert({
           text: `Tour created successfully!`,

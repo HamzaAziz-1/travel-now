@@ -4,7 +4,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import { Link } from "react-router-dom";
 import "../../styles/manage-order.css";
 import { Alert, Table, Badge, Pagination } from "react-bootstrap";
-
+import { BASE_URL } from "../../utils/config";
 function ManageOrders() {
   const [orders, setOrders] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
@@ -16,7 +16,7 @@ function ManageOrders() {
 
   useEffect(() => {
     axios
-      .get("/api/v1/orders")
+      .get(`${BASE_URL}/orders`)
       .then((response) => {
         const fetchedOrders = response.data.orders;
         setOrders(fetchedOrders);

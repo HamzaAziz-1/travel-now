@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import {Container,Row,Col} from "react-bootstrap";
+import { BASE_URL } from "../../utils/config";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -15,10 +16,10 @@ const Verify = () => {
     
     try {
       // eslint-disable-next-line
-      const { data } = await axios.post('/api/v1/auth/verify-email', {
+      const { data } = await axios.post(`${BASE_URL}/auth/verify-email`, {
         verificationToken: query.get('token'),
         email: query.get('email'),
-      });
+      },{withCredentials:true});
     } catch (error) {
 
       setError(true);

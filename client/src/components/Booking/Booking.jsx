@@ -11,6 +11,7 @@ import { faStar, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../utils/config";
 
 const Booking = ({ tour }) => {
   const { price, reviews, name, averageRating } = tour;
@@ -162,7 +163,7 @@ const Booking = ({ tour }) => {
         },
       ];
 
-      const res = await axios.post(`/api/v1/orders`, { items: cartItems });
+      const res = await axios.post(`${BASE_URL}/orders`, { items: cartItems }, {withCredentials:true});
 
       const result = res.data;
 

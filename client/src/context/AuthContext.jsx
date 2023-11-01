@@ -4,7 +4,7 @@
 import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
-
+import { BASE_URL } from "../utils/config";
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
@@ -29,7 +29,7 @@ const AppProvider = ({ children }) => {
   const fetchUser = async () => {
     if (!isUserFetched) {
       try {
-        const { data } = await axios.get(`/api/v1/users/showMe`);
+        const { data } = await axios.get(`${BASE_URL}/users/showMe`,{withCredentials:true});
         saveUser(data.user);
       } catch (error) {
         removeUser();
@@ -40,7 +40,7 @@ const AppProvider = ({ children }) => {
 
   const logoutUser = async () => {
     try {
-      await axios.delete("/api/v1/auth/logout");
+      await axios.delete("${BASE_URL}/auth/logout",{withCredentials:true});
       removeUser();
       toast.success("Logout Successfully")
     } catch (error) {

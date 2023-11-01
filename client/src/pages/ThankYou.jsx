@@ -3,7 +3,7 @@ import { useState , useEffect} from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../styles/thank-you.css";
-
+import { BASE_URL } from "../utils/config";
 const ThankYou = () => {
   // const [order, setOrder] = useState([]);
   // const [paymentIntentId, setPaymentInTentId] = useState("");
@@ -19,9 +19,9 @@ const ThankYou = () => {
        
        const id = order?._id;
        console.log(paymentIntentId);
-       const res = axios.patch(`/api/v1/orders/${id}`, {
+       const res = axios.patch(`${BASE_URL}/orders/${id}`, {
         paymentIntentId
-       }
+       },{withCredentials:true}
        );
        const result = await res.data;
        console.log(result)

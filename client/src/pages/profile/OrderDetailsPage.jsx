@@ -25,6 +25,7 @@ import Button from "react-bootstrap/Button";
 import Contact from "../../shared/Contact";
 import { useGlobalContext } from "../../context/AuthContext";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+import { BASE_URL } from "../../utils/config";
 
 function OrderDetailsPage() {
   const { user } = useGlobalContext();
@@ -35,7 +36,7 @@ function OrderDetailsPage() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`/api/v1/orders/${orderId}`)
+      .get(`${BASE_URL}/orders/${orderId}`)
       .then((response) => {
         const orderData = response.data.order;
         setOrder(orderData);
@@ -43,7 +44,7 @@ function OrderDetailsPage() {
         const tourId = orderData.orderItems[0].tour;
 
         axios
-          .get(`/api/v1/tours/${tourId}`)
+          .get(`${BASE_URL}/tours/${tourId}`)
           .then((tourResponse) => {
             const tourData = tourResponse.data.tour;
             setOrder((prevOrder) => ({

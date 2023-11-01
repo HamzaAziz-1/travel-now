@@ -5,7 +5,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import { Pagination } from "react-bootstrap";
 import "../../styles/manage-users.css";
 import { toast } from "react-toastify";
-
+import { BASE_URL } from "../../utils/config";
 function ManageUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +15,7 @@ function ManageUsers() {
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     axios
-      .get(`/api/v1/users`)
+      .get(`${BASE_URL}/users`)
       .then((response) => {
         const result = response.data.users;
         const verifiedUsers = result.filter(
@@ -29,7 +29,7 @@ function ManageUsers() {
   }, [role]);
 
   const toggleBlockUser = (userId, isBlocked) => {
-    fetch(`/api/v1/users/${userId}`, {
+    fetch(`${BASE_URL}/users/${userId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ isBlocked: !isBlocked }),

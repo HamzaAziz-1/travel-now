@@ -8,7 +8,7 @@ import { validationSchema } from "../../utils/validationSchema";
 import { countryList } from "../../utils/countryList";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { BASE_URL } from "../../utils/config";
 const RegisterForm = ({
   loading,
   setLoading,
@@ -28,7 +28,7 @@ const RegisterForm = ({
     onSubmit: async (values) => {
       setLoading(true);
       try {
-        await axios.post(`/api/v1/auth/register`, values);
+        await axios.post(`${BASE_URL}/auth/register`, values,{withCredentials:true});
         formik.resetForm(); 
         toast.success("Registration Successful")
         setTimeout(() => {

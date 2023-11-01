@@ -16,6 +16,8 @@ import { toast } from "react-toastify";
 import Carousel from "react-bootstrap/Carousel";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
+import { BASE_URL } from "../../utils/config";
+
 
 const DayNamePicker = ({ selectedDays, onDayChange }) => {
   const days = [
@@ -81,7 +83,7 @@ const UpdateTour = () => {
   useEffect(() => {
     const fetchTour = async () => {
       try {
-        const response = await axios.get(`/api/v1/tours/${tourId}`);
+        const response = await axios.get(`${BASE_URL}/tours/${tourId}`);
         const {
           title,
           price,
@@ -137,12 +139,13 @@ const UpdateTour = () => {
         });
         try {
           const response = await axios.post(
-            "/api/v1/tours/uploadImage",
+            `${BASE_URL}/tours/uploadImage`,
             formData,
             {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
+              withCredentials:true
             }
           );
           updatedImages = response.data.images;
@@ -166,7 +169,7 @@ const UpdateTour = () => {
       };
 
       try {
-        await axios.patch(`/api/v1/tours/${tourId}`, tourData);
+        await axios.patch(`${BASE_URL}/tours/${tourId}`, tourData,{withCredentials:true});
         showAlert({
           text: `Tour updated successfully!`,
           type: "success",

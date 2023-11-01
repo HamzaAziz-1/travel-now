@@ -10,6 +10,7 @@ import PhoneInput from "react-phone-number-input";
 import "../../styles/update-profile.css";
 import avatar from "../../assets/images/avatar.jpg";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../utils/config";
 
 const UpdateProfile = () => {
   const { user, updateUser } = useGlobalContext();
@@ -47,10 +48,12 @@ const UpdateProfile = () => {
         const formData = new FormData();
         formData.append("images", image);
 
-        const data = await axios.post("/api/v1/tours/uploadImage", formData, {
+        const data = await axios.post(`${BASE_URL}/tours/uploadImage`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            
           },
+          withCredentials:true
         });
 
         const newSrc = data.data.images[0];
@@ -64,7 +67,7 @@ const UpdateProfile = () => {
 
     const userData = { name, phoneNo, image: src, country };
     axios
-      .put(`/api/v1/users/updateUser`, userData)
+      .put(`${BASE_URL}/users/updateUser`, userData,{withCredentials:true})
       .then((response) => {
         const { data } = response.data;
         // check if data and data.user exist

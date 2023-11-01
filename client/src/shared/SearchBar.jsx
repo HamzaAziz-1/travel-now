@@ -9,7 +9,7 @@ import {
 } from "@react-google-maps/api";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner/Spinner";
-
+import { BASE_URL } from "../utils/config";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const SearchBar = () => {
@@ -40,7 +40,7 @@ const SearchBar = () => {
     }
 
     const res = await fetch(
-      `/api/v1/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}`
+      `${BASE_URL}/tours/search/getTourBySearch?city=${query}&maxGroupSize=${maxGroupSize}`
     );
 
     if (!res.ok) {

@@ -7,6 +7,7 @@ import userIcon from "../../assets/images/user.png";
 import axios from "axios";
 import useLocalState from "../../utils/localState";
 import { toast } from 'react-toastify';
+import { BASE_URL } from "../../utils/config";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -32,11 +33,11 @@ const ResetPasswordForm = () => {
     }
     try {
       // eslint-disable-next-line no-unused-vars
-      const { data } = await axios.post("/api/v1/auth/reset-password", {
+      const { data } = await axios.post(`${BASE_URL}/auth/reset-password`, {
         password,
         token: query.get("token"),
         email: query.get("email"),
-      });
+      },{withCredentials:true});
       setLoading(false);
       setSuccess(true);
       toast.success("Success, redirecting to login page shortly");

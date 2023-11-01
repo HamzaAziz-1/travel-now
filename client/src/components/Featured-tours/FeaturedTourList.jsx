@@ -2,14 +2,14 @@ import TourCard from "../../shared/TourCard";
 import { Col } from "react-bootstrap";
 import Spinner from "../Spinner/Spinner";
 import useFetch from '../../hooks/useFetch'
-
+import { BASE_URL } from "../../utils/config";
 const FeaturedTourList = () => {
  
   const {
     data,
     loading,
     error,
-  } = useFetch(`/api/v1/tours/search/getFeaturedTours`);
+  } = useFetch(`${BASE_URL}/tours/search/getFeaturedTours`);
   
   if (loading) {
     return <Spinner />;

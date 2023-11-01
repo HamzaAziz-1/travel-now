@@ -21,7 +21,7 @@ const ShowTours = () => {
     if (user?.role === "vendor") {
       setLoading(true)
       axios
-        .get(`/api/v1/tours/vendor/${user._id}`, {
+        .get(`${BASE_URL}/tours/vendor/${user._id}`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -35,7 +35,7 @@ const ShowTours = () => {
     } else {
       setLoading(true);
       axios
-        .get(`/api/v1/tours`)
+        .get(`${BASE_URL}/tours`)
         .then((response) => {
           setData(response.data.tours);
           setLoading(false);
@@ -58,7 +58,7 @@ const ShowTours = () => {
   };
   const handleVerify = (id) => {
     axios
-      .patch(`/api/v1/tours/verify/${id}`, {}, { withCredentials: true })
+      .patch(`${BASE_URL}/tours/verify/${id}`, {}, { withCredentials: true })
       .then((res) => {
         const updatedTours = data.map((tour) => {
           if (tour.id === id) {
@@ -73,7 +73,7 @@ const ShowTours = () => {
 
   const handleFeatured = (id) => {
     axios
-      .patch(`/api/v1/tours/feature/${id}`, {}, { withCredentials: true })
+      .patch(`${BASE_URL}/tours/feature/${id}`, {}, { withCredentials: true })
       .then((res) => {
         const updatedTours = data.map((tour) => {
           if (tour.id === id) {
@@ -156,7 +156,7 @@ const ShowTours = () => {
                   <td>
                     <Link
                       className="action-link"
-                      to={`/vendor/dashboard/update-tour/${tour.id}`}
+                      to={`/${user?.role}/dashboard/update-tour/${tour.id}`}
                     >
                       <Button className="action-button update-button">
                         Update

@@ -19,7 +19,7 @@ import {
 } from "react-icons/fa";
 import Spinner from "../components/Spinner/Spinner";
 import { toast } from "react-toastify";
-
+import { BASE_URL } from "../utils/config";
 const TourDetails = () => {
   const { id } = useParams();
   const reviewMsgRef = useRef("");
@@ -27,7 +27,7 @@ const TourDetails = () => {
   const { user } = useGlobalContext();
   const reviewTitleRef = useRef("");
 
-  const { data, loading, error } = useFetch(`/api/v1/tours/${id}`);
+  const { data, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
   const tour = data?.tour;
 
   if (loading) {
@@ -69,7 +69,7 @@ const TourDetails = () => {
     };
 
     try {
-      const res = await axios.post(`/api/v1/reviews`, reviewObj);
+      const res = await axios.post(`${BASE_URL}/reviews`, reviewObj,{withCredentials:true});
       if (!res.data) {
         throw new Error("Failed to post review");
       }
