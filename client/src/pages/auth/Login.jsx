@@ -27,7 +27,7 @@ const Login = () => {
     const { email, password } = values;
     const loginUser = { email, password };
     try {
-      const { data } = await axios.post(`${BASE_URL}/auth/login`, loginUser,{withCredentials:true});
+      const { data } = await axios.post(`${BASE_URL}/api/v1/auth/login`, loginUser,{withCredentials:true});
       setValues({ email: "", password: "" });
       toast.info(`Welcome, ${data.user.name}`);
       setLoading(false);
