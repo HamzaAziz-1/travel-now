@@ -11,7 +11,7 @@ import useLocalState from "../../utils/localState";
 import axios from "axios";
 import "../../styles/create-tour.css";
 import { useGlobalContext } from "../../context/AuthContext";
-import { LoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import { useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 import { toast } from "react-toastify";
 import Carousel from "react-bootstrap/Carousel";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -114,7 +114,10 @@ const UpdateTour = () => {
     };
     fetchTour();
   }, [tourId, user]);
-
+ const { isLoaded } = useLoadScript({
+   googleMapsApiKey: apiKey,
+   libraries: ["places"],
+ });
   const handleSubmit = async (e) => {
     e.preventDefault();
     let updatedImages = imgValue;
@@ -254,10 +257,12 @@ const UpdateTour = () => {
   const removeTimeSlot = (index) => {
     setTimeSlots(timeSlots.filter((_, i) => i !== index));
   };
+   if (!isLoaded) {
+     return <Spinner />;
+   }
 
   return (
     <>
-      <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
         <Container className="create-tour-container mt-5 pt-5">
           <div className="create-tour-heading text-center mb-5">
             <h2>Update this Tour Package</h2>
@@ -505,7 +510,6 @@ const UpdateTour = () => {
             </Col>
           </Row>
         </Container>
-      </LoadScript>
     </>
   );
 };

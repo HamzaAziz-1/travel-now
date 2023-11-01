@@ -5,7 +5,7 @@ const io = require('socket.io')(8000,{
           methods : ['GET','POST']
      }
 })
- 
+ console.log("hello")
 let users = [];
 const addUser = (userId,socketId,userInfo) => {
      const checkUser = users.some(u=> u.userId === userId );
