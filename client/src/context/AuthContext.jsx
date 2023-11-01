@@ -40,7 +40,7 @@ const AppProvider = ({ children }) => {
 
   const logoutUser = async () => {
     try {
-      await axios.delete("${BASE_URL}/auth/logout",{withCredentials:true});
+      await axios.delete(`${BASE_URL}/auth/logout`,{withCredentials:true});
       removeUser();
       toast.success("Logout Successfully")
     } catch (error) {
