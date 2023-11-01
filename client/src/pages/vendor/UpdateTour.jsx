@@ -83,7 +83,9 @@ const UpdateTour = () => {
   useEffect(() => {
     const fetchTour = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/tours/${tourId}`);
+        const response = await axios.get(`${BASE_URL}/tours/${tourId}`, {
+          withCredentials: true,
+        });
         const {
           title,
           price,

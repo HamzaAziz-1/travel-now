@@ -16,7 +16,7 @@ function ManageOrders() {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/orders`)
+      .get(`${BASE_URL}/orders`, { withCredentials: true })
       .then((response) => {
         const fetchedOrders = response.data.orders;
         setOrders(fetchedOrders);

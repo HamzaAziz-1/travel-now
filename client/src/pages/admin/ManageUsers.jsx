@@ -15,7 +15,7 @@ function ManageUsers() {
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/users`)
+      .get(`${BASE_URL}/users`, { withCredentials: true })
       .then((response) => {
         const result = response.data.users;
         const verifiedUsers = result.filter(

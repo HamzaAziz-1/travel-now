@@ -19,7 +19,9 @@ const TourVendorDetails = () => {
   useEffect(() => {
     const fetchVendorDetails = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URL}/users/${id}`);
+        const { data } = await axios.get(`${BASE_URL}/users/${id}`, {
+          withCredentials: true,
+        });
         setVendor(data.user);
       } catch (error) {
         console.error("Failed to fetch user data: ", error);
@@ -28,7 +30,9 @@ const TourVendorDetails = () => {
 
     const fetchVendorTours = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URL}/tours/vendor/${id}`);
+        const { data } = await axios.get(`${BASE_URL}/tours/vendor/${id}`, {
+          withCredentials: true,
+        });
         const verifiedTours = data.tours.filter((tour) => tour.verified);
         setTours(verifiedTours);
       } catch (error) {

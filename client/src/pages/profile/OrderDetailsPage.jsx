@@ -36,7 +36,7 @@ function OrderDetailsPage() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/orders/${orderId}`)
+      .get(`${BASE_URL}/orders/${orderId}`,{withCredentials:true})
       .then((response) => {
         const orderData = response.data.order;
         setOrder(orderData);
@@ -44,7 +44,7 @@ function OrderDetailsPage() {
         const tourId = orderData.orderItems[0].tour;
 
         axios
-          .get(`${BASE_URL}/tours/${tourId}`)
+          .get(`${BASE_URL}/tours/${tourId}`, { withCredentials: true })
           .then((tourResponse) => {
             const tourData = tourResponse.data.tour;
             setOrder((prevOrder) => ({

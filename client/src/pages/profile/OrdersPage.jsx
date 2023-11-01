@@ -20,7 +20,7 @@ function OrdersPage() {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/orders/showAllMyOrders`)
+      .get(`${BASE_URL}/orders/showAllMyOrders`, { withCredentials: true })
       .then((response) => {
         setOrders(response.data.orders);
         setLoading(false);
