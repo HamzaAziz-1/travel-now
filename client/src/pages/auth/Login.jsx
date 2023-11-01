@@ -8,7 +8,6 @@ import axios from "axios";
 import useLocalState from "../../utils/localState";
 import { useGlobalContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
-import {BASE_URL} from '../../utils/config'
 const Login = () => {
   const { saveUser } = useGlobalContext();
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ const Login = () => {
     const { email, password } = values;
     const loginUser = { email, password };
     try {
-      const { data } = await axios.post(`${BASE_URL}/api/v1/auth/login`, loginUser,{withCredentials:true});
+      const { data } = await axios.post(`/api/v1/auth/login`, loginUser,{withCredentials:true});
       setValues({ email: "", password: "" });
       toast.info(`Welcome, ${data.user.name}`);
       setLoading(false);
