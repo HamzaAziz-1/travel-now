@@ -15,10 +15,6 @@ const cors = require("cors");
 const cloudinary = require("cloudinary").v2;
 const mongoSanitize = require("express-mongo-sanitize");
 
-// public
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import path from 'path';
 
 // database
 const connectDB = require("./db/connect");
