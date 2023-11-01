@@ -10,7 +10,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import OrderDetailsPage from "./profile/OrderDetailsPage.jsx";
 import UpdateProfile from "./profile/UpdateProfile";
-import TourVendorDetails from "./Profile/TourVendorDetails";
+import TourVendorDetails from "./profile/TourVendorDetails";
 import OrdersPage from "./profile/OrdersPage.jsx";
 import TouristDashboard from "./tourist/TouristDashboard";
 import CreateTour from "./vendor/CreateTour";
