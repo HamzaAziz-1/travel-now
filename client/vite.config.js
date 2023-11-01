@@ -9,7 +9,6 @@ export default defineConfig({
       "/api": {
         target: "https://travel-now-server.cyclic.app",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },
