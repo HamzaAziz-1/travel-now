@@ -1,4 +1,10 @@
-const {io} = require('../app')
+
+const io = require('socket.io')(8000,{
+     cors : {
+          origin : '*',
+          methods : ['GET','POST']
+     }
+})
  console.log("hello")
 let users = [];
 const addUser = (userId,socketId,userInfo) => {
