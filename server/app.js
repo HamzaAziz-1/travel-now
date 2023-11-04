@@ -64,7 +64,7 @@ app.use("/api/v1/messenger", messengerRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
  const server = http.createServer(app); // Create an HTTP server
- const io = new Server(server, {
+ export const io = new Server(server, {
    cors: {
      origin: ["http://localhost:3000", "https://travel-now-client.vercel.app"],
    },
