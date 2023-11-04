@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
 import {FRIEND_GET_SUCCESS,MESSAGE_GET_SUCCESS,MESSAGE_SEND_SUCCESS} from "../types/messengerType";
-
+import {BASE_URL} from '../../utils/config'
 export const getFriends = () => async(dispatch) => {
      try{
-          const response = await axios.get('/api/v1/messenger/get-friends');
+          const response = await axios.get(`${BASE_URL}/messenger/get-friends`);
           console.log(response);
            dispatch({
                 type: FRIEND_GET_SUCCESS,
@@ -20,7 +20,7 @@ export const getFriends = () => async(dispatch) => {
 
 export const messageSend = (data) => async(dispatch) => {
     try{
-     const response = await axios.post('/api/v1/messenger/send-message',data);
+     const response = await axios.post(`${BASE_URL}/messenger/send-message`,data);
      dispatch({
           type : MESSAGE_SEND_SUCCESS,
           payload : {
@@ -36,7 +36,9 @@ export const messageSend = (data) => async(dispatch) => {
 export const getMessage = (id) => {
      return async(dispatch) => {
           try{
-               const response = await axios.get(`/api/v1/messenger/get-message/${id}`)
+               const response = await axios.get(
+                 `${BASE_URL}/messenger/get-message/${id}`
+               );
               dispatch({
                    type : MESSAGE_GET_SUCCESS,
                    payload : {
@@ -53,7 +55,7 @@ export const getMessage = (id) => {
 export const ImageMessageSend = (data) => async(dispatch)=>{
 
      try{
-          const response = await axios.post('/api/v1/messenger/image-message-send',data);
+          const response = await axios.post(`${BASE_URL}/messenger/image-message-send`,data);
           dispatch({
                type: MESSAGE_SEND_SUCCESS,
                payload : {
@@ -69,7 +71,7 @@ export const ImageMessageSend = (data) => async(dispatch)=>{
 
 export const seenMessage = (msg) => async(dispatch)=> {
      try{
-          const response = await axios.post('/api/v1/messenger/seen-message',msg);
+          const response = await axios.post(`${BASE_URL}/messenger/seen-message`,msg);
           console.log(response.data);
      }catch (error){
           console.log(error.response.message)
@@ -80,7 +82,7 @@ export const seenMessage = (msg) => async(dispatch)=> {
 
 export const updateMessage = (msg) => async(dispatch)=> {
      try{
-          const response = await axios.post('/api/v1/messenger/delivered-message',msg);
+          const response = await axios.post(`${BASE_URL}/messenger/delivered-message`,msg);
           console.log(response.data);
      }catch (error){
           console.log(error.response.message)
