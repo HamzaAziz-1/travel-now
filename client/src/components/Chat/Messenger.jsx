@@ -46,7 +46,7 @@ const Messenger = () => {
   const [typingMessage, setTypingMessage] = useState("");
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8000");
+    socket.current = io("https://travel-now-server.cyclic.app");
     socket.current.on("getMessage", (data) => {
       setSocketMessage(data);
     });

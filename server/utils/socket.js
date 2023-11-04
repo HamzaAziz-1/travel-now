@@ -1,4 +1,4 @@
-const {io} = require('../app')
+const io = require('../app')
  console.log("hello")
 let users = [];
 const addUser = (userId,socketId,userInfo) => {
