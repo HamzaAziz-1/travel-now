@@ -13,8 +13,8 @@ const helmet = require("helmet");
 const cors = require("cors");
 const cloudinary = require("cloudinary").v2;
 const mongoSanitize = require("express-mongo-sanitize");
-const http = require("http");
-const { Server } = require("socket.io");
+const http = require("http"); 
+const { Server } = require("socket.io")
 
 // database
 const connectDB = require("./db/connect");
@@ -36,7 +36,7 @@ app.set("trust proxy", 1);
 app.use(helmet());
 app.use(
   cors({
-    origin: ["https://travel-now-client.vercel.app", "http://localhost:3000"],
+    origin: ["https://travel-now-client.vercel.app","http://localhost:3000"],
     credentials: true,
   })
 );
@@ -63,13 +63,13 @@ app.use("/api/v1/messenger", messengerRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
-const server = http.createServer(app); // Create an HTTP server
-const io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:3000", "https://travel-now-client.vercel.app"],
-  },
-});
-
+ const server = http.createServer(app); // Create an HTTP server
+ export const io = new Server(server, {
+   cors: {
+     origin: ["http://localhost:3000", "https://travel-now-client.vercel.app"],
+   },
+ });
+  
 const port = process.env.PORT || 5000;
 const start = async () => {
   try {
@@ -83,5 +83,3 @@ const start = async () => {
 };
 
 start();
-
-module.exports = io;
