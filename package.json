@@ -4,9 +4,9 @@
   "description": "",
   "main": "server/app.js",
   "scripts": {
-    "setup-production": "npm run install-client && npm run build-client && npm install",
-    "install-client": "cd client && npm install",
-    "build-client": "cd client && npm run build",
+    "setup-production":"npm run install-client && npm run build-client && npm install",
+    "install-client":"cd client && npm install",
+    "build-client":"cd client && npm run build",
     "server": "nodemon server/app.js",
     "client": "npm run dev --prefix client",
     "dev": "concurrently \" npm run server\" \" npm run client \""
@@ -39,7 +39,6 @@
     "mongoose": "^7.5.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "socket.io": "^4.7.2",
     "stripe": "^13.5.0",
     "validator": "^13.11.0",
     "xss-clean": "^0.1.4"
