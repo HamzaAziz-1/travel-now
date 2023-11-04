@@ -15,7 +15,7 @@ import { useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 import { toast } from "react-toastify";
 import Carousel from "react-bootstrap/Carousel";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const libraries = ["places"];
+import Spinner from '../../components/Spinner/Spinner'
 import { BASE_URL } from "../../utils/config";
 
 
