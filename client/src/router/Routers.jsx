@@ -45,7 +45,6 @@ const Routers = () => {
       <Route path="/search/spots" element={<AttractionList />} />
       <Route path="/users/:id" exact element={<TourVendorDetails />}></Route>
       <Route path="/forgot-password" exact element={<ForgotPassword />}></Route>
-      <Route path="*" element={<Error />}></Route>
       <Route path="/thank-you" element={<ThankYou />} />
       <Route path="/tours/search" element={<SearchResultList />} />
       <Route path="/:type/:id" element={<PlaceDetails />} />
@@ -116,6 +115,7 @@ const Routers = () => {
         <Route index element={<UpdateProfile />} />
         <Route path="view-orders" element={<ManageOrders />} />
       </Route>
+      <Route path="*" element={<Error />}></Route>
     </Routes>
   );
 };
