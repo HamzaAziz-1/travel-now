@@ -5,8 +5,9 @@ import TourCard from "./../shared/TourCard";
 import SearchBar from "./../shared/SearchBar";
 import { Container, Row, Col } from "react-bootstrap";
 import useFetch from "../hooks/useFetch";
-import '../styles/tour.css'
+import "../styles/tour.css";
 import { BASE_URL } from "../utils/config";
+
 const Tours = () => {
   const [page, setPage] = useState(1);
   const [tours, setTours] = useState([]);
@@ -27,7 +28,7 @@ const Tours = () => {
     if (tourData) {
       setTours(tourData.tours);
     }
-    setLoading(tourLoading); // Update the loading state
+    setLoading(tourLoading);
   }, [tourData, tourLoading]);
 
   const { data: tourCountData } = useFetch(tourCountUrl);
