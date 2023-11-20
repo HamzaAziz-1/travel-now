@@ -35,7 +35,7 @@ app.set("trust proxy", 1);
 app.use(helmet());
 app.use(
   cors({
-    origin: ["https://travel-now-client.vercel.app","http://localhost:3000"],
+    origin: "https://travel-now-client.vercel.app",
     credentials: true,
   })
 );
