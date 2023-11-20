@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const ReviewSchema = mongoose.Schema(
   {
@@ -6,26 +6,26 @@ const ReviewSchema = mongoose.Schema(
       type: Number,
       min: 1,
       max: 5,
-      required: [true, 'Please provide rating'],
+      required: [true, "Please provide rating"],
     },
     title: {
       type: String,
       trim: true,
-      required: [true, 'Please provide review title'],
+      required: [true, "Please provide review title"],
       maxlength: 100,
     },
     comment: {
       type: String,
-      required: [true, 'Please provide review text'],
+      required: [true, "Please provide review text"],
     },
     user: {
       type: mongoose.Schema.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     tour: {
       type: mongoose.Schema.ObjectId,
-      ref: 'Tour',
+      ref: "Tour",
       required: true,
     },
   },
@@ -58,13 +58,12 @@ ReviewSchema.statics.calculateAverageRating = async function (tourId) {
   }
 };
 
-
-ReviewSchema.post('save', async function () {
+ReviewSchema.post("save", async function () {
   await this.constructor.calculateAverageRating(this.tour);
 });
 
-ReviewSchema.post('remove', async function () {
+ReviewSchema.post("remove", async function () {
   await this.constructor.calculateAverageRating(this.tour);
 });
 
-module.exports = mongoose.model('Review', ReviewSchema);
+module.exports = mongoose.model("Review", ReviewSchema);
