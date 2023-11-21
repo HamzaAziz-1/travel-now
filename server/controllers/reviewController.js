@@ -1,23 +1,25 @@
-const Review = require('../models/Review');
-const Tour = require('../models/Tour');
-const Order = require('../models/Order')
-const { StatusCodes } = require('http-status-codes');
-const CustomError = require('../errors');
-const { checkPermissions } = require('../utils');
+const Review = require("../models/Review");
+const Tour = require("../models/Tour");
+const Order = require("../models/Order");
+const { StatusCodes } = require("http-status-codes");
+const CustomError = require("../errors");
+const { checkPermissions } = require("../utils");
 
 const createReview = async (req, res) => {
   const { tour: tourId } = req.body;
-  
+
   const isValidTour = await Tour.findOne({ _id: tourId });
 
   if (!isValidTour) {
     throw new CustomError.NotFoundError(`No tour with id : ${tourId}`);
   }
-  const isOrder = await Order.findOne({ user: req.user.userId,"orderItems.tour":tourId,status:"paid" });
+  const isOrder = await Order.findOne({
+    user: req.user.userId,
+    "orderItems.tour": tourId,
+    status: "paid",
+  });
   if (!isOrder) {
-     throw new CustomError.BadRequestError(
-       "You haven't booked this tour."
-     );
+    throw new CustomError.BadRequestError("You haven't booked this tour.");
   }
 
   const alreadySubmitted = await Review.findOne({
@@ -27,7 +29,7 @@ const createReview = async (req, res) => {
 
   if (alreadySubmitted) {
     throw new CustomError.BadRequestError(
-      'Already submitted review for this tour'
+      "Already submitted review for this tour"
     );
   }
   const isOrderCompleted = await Order.find({
@@ -36,9 +38,7 @@ const createReview = async (req, res) => {
     status: "completed",
   });
   if (!isOrderCompleted) {
-    throw new CustomError.BadRequestError(
-      "Your Tour is not completed yet!"
-    );
+    throw new CustomError.BadRequestError("Your Tour is not completed yet!");
   }
 
   req.body.user = req.user.userId;
@@ -47,8 +47,8 @@ const createReview = async (req, res) => {
 };
 const getAllReviews = async (req, res) => {
   const reviews = await Review.find({}).populate({
-    path: 'tour',
-    select: 'city price',
+    path: "tour",
+    select: "city price",
   });
 
   res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
@@ -94,12 +94,15 @@ const deleteReview = async (req, res) => {
 
   checkPermissions(req.user, review.user);
   await review.deleteOne();
-  res.status(StatusCodes.OK).json({ msg: 'Success! Review removed' });
+  res.status(StatusCodes.OK).json({ msg: "Success! Review removed" });
 };
 
 const getSingleTourReviews = async (req, res) => {
   const { id: tourId } = req.params;
-  const reviews = await Review.find({ tour: tourId }).populate('user','name image');
+  const reviews = await Review.find({ tour: tourId }).populate(
+    "user",
+    "name image"
+  );
   res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 };
 
